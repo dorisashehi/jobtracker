@@ -1,18 +1,18 @@
 import { pool } from "./database.js";
 import users from "../data/Users.js";
-import { user } from "pg/lib/defaults";
+import applications from "../data/Applications.js";
 
 const createUsersTable = async () => {
   //create users table
   const createTableQuery = `
-    DROP TABLE IF EXISTS users;
+    DROP TABLE IF EXISTS users CASCADE;
     CREATE TABLE users (
       id SERIAL PRIMARY KEY,
       username varchar(128) NOT NULL,
       email varchar(128) NOT NULL,
       password varchar(128) NOT NULL,
       token varchar(128) NULL,
-      created_on TIMESTAMP
+      created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP)
     `;
 
   try {
@@ -20,7 +20,7 @@ const createUsersTable = async () => {
     const res = await pool.query(createTableQuery);
     console.log("🎉 users table created successfully");
   } catch (error) {
-    console.error("⚠️ error creating wheels table", error);
+    console.error("⚠️ error creating users table", error);
   }
 };
 
@@ -34,12 +34,13 @@ const seedTableUsers = async () => {
 
     const values = [user.username, user.email, user.password];
 
-    try {
-      pool.query(insertUserQuery, values);
+    pool.query(insertUserQuery, values, (err, res) => {
+      if (err) {
+        console.error("⚠️ error inserting user into users table", err);
+        return;
+      }
       console.log(`✅ ${user.username} added successfully`);
-    } catch (error) {
-      console.error("⚠️ error inserting user into users table", err);
-    }
+    });
   });
 };
 
@@ -63,11 +64,12 @@ const createApplicationsTable = async () => {
         offer_amount FLOAT NULL,
         rejected varchar(128) NULL,
         contact_name varchar(128) NULL,
-        conatact_email varchar(128) NULL,
-        contact_phone varchra(128) NULL,
+        contact_email varchar(128) NULL,
+        contact_phone varchar(128) NULL,
         notes TEXT NULL,
-        created_on TIMESTAMP,
-        updated_on TIMESTAMP
+        created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE )
       `;
 
   try {
@@ -83,7 +85,8 @@ const seedApplicationsTable = async () => {
   await createApplicationsTable();
   applications.forEach((application) => {
     const insertApplicationsQuery = `
-            INSERT INTO applications ( user_id, company_name, company_website, favorite, apply_date, apply_method, apply_url, position, fit_rating, location, interview_date, offer_amount, rejected, contact_name, contact_email, contact_phone, notes) values ($1, $2, $3, $4, $5, $6, $7, $7, $8, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19))
+            INSERT INTO applications ( user_id, company_name, company_website, favorite, apply_date, apply_method, apply_url, position, fit_rating, location, interview_date, offer_amount, rejected, contact_name, contact_email, contact_phone, notes) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
+
         `;
 
     const values = [
@@ -106,15 +109,18 @@ const seedApplicationsTable = async () => {
       application.notes,
     ];
 
-    try {
-      pool.query(insertApplicationsQuery, values);
-      console.log(`✅ ${user.company_name} added successfully`);
-    } catch (error) {
-      console.error(
-        "⚠️ error inserting application into applications table",
-        err
+    pool.query(insertApplicationsQuery, values, (err, res) => {
+      if (err) {
+        console.error(
+          "⚠️ error inserting application into applications table",
+          err
+        );
+        return;
+      }
+      console.log(
+        `✅ Application with ID: ${application.id} added successfully`
       );
-    }
+    });
   });
 };
 
