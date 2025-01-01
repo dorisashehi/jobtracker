@@ -125,8 +125,8 @@ const seedApplicationsTable = async () => {
 };
 
 const seedDatabase = async () => {
-  await seedTableUsers();
-  await seedApplicationsTable();
+  await seedTableUsers(); //seed users table first
+  await seedApplicationsTable(); //seed applications table
 };
 
 seedDatabase().catch((err) => {
