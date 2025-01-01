@@ -1,0 +1,18 @@
+.navigation-container {
+  @apply bg-white fixed w-full z-10 border-t-primaryGreen border-t-4 border-b-borderColor border-b-2;
+}
+
+.navigation-content {
+  @apply p-3 flex flex-wrap;
+}
+
+.navigation-content .col-logo {
+  @apply lg:w-1/5 flex items-center;
+}
+
+.navigation-content .col-links {
+  @apply flex lg:flex-row lg:w-4/5 justify-end items-center;
+}
+.menu-item {
+  @apply border-[1px] border-secondaryButton text-[13px] py-[5px] px-[20px] rounded-md hover:bg-[#dff8e1];
+}

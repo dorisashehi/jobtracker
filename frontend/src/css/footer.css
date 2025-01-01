@@ -1,0 +1,12 @@
+.footer-container {
+  @apply w-full pt-10 pb-5 bg-primaryText;
+}
+.footer-content {
+  @apply flex flex-col md:flex-row gap-5;
+}
+.footer-left-col {
+  @apply flex flex-1 md:w-1/2 items-center text-secondaryText text-[12px];
+}
+.footer-right-col {
+  @apply flex flex-1 md:w-1/2 items-center justify-end;
+}

@@ -1,0 +1,15 @@
+.welcome-container {
+  @apply flex flex-wrap flex-col items-center justify-center;
+}
+
+.welcome-header {
+  @apply text-primaryText font-epilogue text-5xl font-bold;
+}
+
+.welcome-description {
+  @apply mt-4 text-generalText flex flex-col items-center;
+}
+
+.getStarted-btn {
+  @apply menu-item mt-5 bg-black text-[#FFFFFF] hover:text-black;
+}
