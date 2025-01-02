@@ -11,5 +11,5 @@
 }
 
 .getStarted-btn {
-  @apply menu-item mt-5 bg-black text-[#FFFFFF] hover:text-black;
+  @apply menu-item bg-black text-[#FFFFFF] hover:text-black;
 }

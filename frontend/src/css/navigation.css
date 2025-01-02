@@ -14,5 +14,5 @@
   @apply flex lg:flex-row lg:w-4/5 justify-end items-center;
 }
 .menu-item {
-  @apply border-[1px] border-secondaryButton text-[13px] py-[5px] px-[20px] rounded-md hover:bg-[#dff8e1];
+  @apply border-[1px] border-secondaryButton text-[13px] py-[5px] px-[20px] rounded-none hover:bg-[#dff8e1];
 }

@@ -1,6 +1,8 @@
 import Layout from "../components/Layout";
 import Welcome from "../pages/Welcome";
-import Dashboard from "../pages/Dashboard";
+import LogIn from "../pages/LogIn";
+import SignUp from "../pages/SignUp";
+
 const routes = [
   {
     path: "",
@@ -8,8 +10,12 @@ const routes = [
     children: [
       { index: true, element: <Welcome /> },
       {
-        path: "dashboard",
-        element: <Dashboard />,
+        path: "login",
+        element: <LogIn />,
+      },
+      {
+        path: "SignUp",
+        element: <SignUp />,
       },
     ],
   },

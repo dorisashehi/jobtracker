@@ -11,10 +11,11 @@ export default {
         primaryGreen: "#00c200",
         lightGreen: "#dff8e1",
         secondary: "#caefcd",
-        borderColor: "#f2f2f2",
+        borderColor: "#f0f1f2",
         primaryText: "#0e0e0e",
         secondaryText: "#8c8c8c",
         generalText: "#101010",
+        headerTest: "#1d1d1d",
         secondaryButton: "#dadada",
       },
 

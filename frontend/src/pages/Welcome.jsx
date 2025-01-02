@@ -8,14 +8,15 @@ const Welcome = () => {
           <div className="welcome-description">
             <p>
               A user-friendly web application designed to help you effortlessly
-              track your job applications.{" "}
+              track your job applications.
             </p>
             <p>
-              Job hunting doesn't have to be stressful—let's make it simpler
-              together.
+              {
+                "Job hunting doesn't have to be stressful—let's make it simpler together."
+              }
             </p>
           </div>
-          <Link to="/" className="getStarted-btn" aria-current="page">
+          <Link to="/login" className="getStarted-btn mt-5" aria-current="page">
             Continue
           </Link>
         </div>
