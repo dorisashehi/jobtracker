@@ -14,6 +14,7 @@ export default {
         borderColor: "#f0f1f2",
         primaryText: "#0e0e0e",
         secondaryText: "#8c8c8c",
+        redText: "#e4696d",
         generalText: "#101010",
         headerTest: "#1d1d1d",
         secondaryButton: "#dadada",
