@@ -35,7 +35,6 @@ const authenticateUser = (email, password, done) => {
 };
 
 const initializePassport = (passport) => {
-  console.log("Initialized");
   passport.use(
     new LocalStrategy(
       {

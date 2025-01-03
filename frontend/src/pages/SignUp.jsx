@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
   const [user, setUser] = useState({
@@ -7,6 +8,8 @@ const SignIn = () => {
     email: "",
     password: "",
   });
+  let navigate = useNavigate();
+
   const [submitActionError, setSubmitActionError] = useState({ error: "" });
   const handleChange = (e) => {
     //handle form inputs change
@@ -30,7 +33,7 @@ const SignIn = () => {
       setSubmitActionError({ error: result.error });
       return;
     }
-    window.location = "/login";
+    navigate(result.redirectTo);
   };
 
   return (

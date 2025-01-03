@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const LogIn = () => {
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
+  let navigate = useNavigate();
 
   const [submitActionError, setSubmitActionError] = useState({ error: "" });
 
@@ -31,7 +33,7 @@ const LogIn = () => {
       setSubmitActionError({ error: result.error });
       return;
     }
-    //window.location = "/dashboard";
+    navigate(result.redirectTo);
   };
   return (
     <div className="container-main justify-center bg-[#f5f7f9]">
