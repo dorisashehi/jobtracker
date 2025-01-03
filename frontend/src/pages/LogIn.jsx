@@ -1,6 +1,38 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const LogIn = () => {
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [submitActionError, setSubmitActionError] = useState({ error: "" });
+
+  const handleChange = (e) => {
+    //handle form inputs change
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+
+  const submitAction = async (e) => {
+    e.preventDefault();
+    //submit form signup
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    };
+    const response = await fetch("http://localhost:3000/users/login", options);
+    const result = await response.json();
+    console.log(result);
+    if (result.error) {
+      setSubmitActionError({ error: result.error });
+      return;
+    }
+    //window.location = "/dashboard";
+  };
   return (
     <div className="container-main justify-center bg-[#f5f7f9]">
       <div className="content">
@@ -17,6 +49,7 @@ const LogIn = () => {
                 name="email"
                 placeholder="Enter your email"
                 className="login-input"
+                onChange={(e) => handleChange(e)}
               />
             </div>
             <div className="login-input-container">
@@ -29,6 +62,7 @@ const LogIn = () => {
                 name="password"
                 placeholder="Enter your password"
                 className="login-input"
+                onChange={(e) => handleChange(e)}
               />
             </div>
             <div className="login-input-container">
@@ -39,7 +73,17 @@ const LogIn = () => {
                 </Link>
               </em>
             </div>
-            <button type="submit" className="main-btn float-right mt-0">
+            {submitAction.error !== "" && (
+              <div className="login-input-container">
+                <p className="text-redText">{submitActionError.error}</p>
+              </div>
+            )}
+
+            <button
+              type="submit"
+              className="main-btn float-right mt-0"
+              onClick={(e) => submitAction(e)}
+            >
               Log In
             </button>
           </form>

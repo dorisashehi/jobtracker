@@ -2,7 +2,7 @@ import Layout from "../components/Layout";
 import Welcome from "../pages/Welcome";
 import LogIn from "../pages/LogIn";
 import SignUp from "../pages/SignUp";
-
+import Dashboard from "../pages/Dashboard";
 const routes = [
   {
     path: "",
@@ -14,8 +14,12 @@ const routes = [
         element: <LogIn />,
       },
       {
-        path: "SignUp",
+        path: "signup",
         element: <SignUp />,
+      },
+      {
+        path: "dashboard",
+        element: <Dashboard />,
       },
     ],
   },

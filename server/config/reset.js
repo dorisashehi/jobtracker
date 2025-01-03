@@ -47,7 +47,7 @@ const seedTableUsers = async () => {
 const createApplicationsTable = async () => {
   //create users table
   const createTableQuery = `
-      DROP TABLE IF EXISTS applications;
+      DROP TABLE IF EXISTS applications CASCADE;
       CREATE TABLE applications (
         id SERIAL PRIMARY KEY,
         user_id INT NOT NULL,
