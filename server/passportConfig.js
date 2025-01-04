@@ -1,10 +1,9 @@
-import LocalStrategy1 from "passport-local";
+import LocalStrategyModule from "passport-local";
 import { pool } from "./config/database.js";
 import passport from "passport";
 import bcrypt from "bcryptjs";
-import { error } from "console";
 
-const LocalStrategy = LocalStrategy1.Strategy;
+const LocalStrategy = LocalStrategyModule.Strategy;
 
 passport.use(
   new LocalStrategy(
@@ -36,11 +35,13 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
+  //run automatically when user logged in
   //store user id in session
   return done(null, user.id);
 });
 
 passport.deserializeUser(async (id, done) => {
+  //run automatically when user logged in
   try {
     const user = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
 
