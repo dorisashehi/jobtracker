@@ -25,15 +25,28 @@ const LogIn = () => {
         "Content-type": "application/json",
       },
       body: JSON.stringify(user),
+      credentials: "include",
     };
-    const response = await fetch("http://localhost:3000/users/login", options);
-    const result = await response.json();
-    console.log(result);
-    if (result.error) {
-      setSubmitActionError({ error: result.error });
-      return;
+    try {
+      const response = await fetch(
+        "http://localhost:3000/users/login",
+        options
+      );
+      const data = await response.json();
+      //const result = await response.json();
+      if (data.success) {
+        navigate("/dashboard");
+      }
+      if (data.error) {
+        //error accoured during login
+        setSubmitActionError({ error: data.error });
+      }
+      //navigate("/dashboard");
+    } catch (error) {
+      setSubmitActionError({
+        error: error.response?.data?.error || "Login Failed",
+      });
     }
-    navigate(result.redirectTo);
   };
   return (
     <div className="container-main justify-center bg-[#f5f7f9]">
@@ -75,7 +88,7 @@ const LogIn = () => {
                 </Link>
               </em>
             </div>
-            {submitAction.error !== "" && (
+            {submitActionError.error !== "" && (
               <div className="login-input-container">
                 <p className="text-redText">{submitActionError.error}</p>
               </div>
