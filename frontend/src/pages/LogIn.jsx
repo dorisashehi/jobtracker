@@ -41,7 +41,6 @@ const LogIn = () => {
         //error accoured during login
         setSubmitActionError({ error: data.error });
       }
-      //navigate("/dashboard");
     } catch (error) {
       setSubmitActionError({
         error: error.response?.data?.error || "Login Failed",

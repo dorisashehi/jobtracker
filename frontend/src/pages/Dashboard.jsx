@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 const Dashboard = () => {
   const [submitActionError, setSubmitActionError] = useState({ error: "" });
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState({});
   let navigate = useNavigate();
 
   const fetchUser = async () => {
-    console.log("fetching user");
     const options = {
       method: "GET",
       headers: {
@@ -25,6 +25,7 @@ const Dashboard = () => {
       console.log(data.error);
 
       if (data.id) {
+        setUser(data);
         setIsAuthenticated(true);
       }
 
@@ -68,6 +69,13 @@ const Dashboard = () => {
     <>
       <div className="container-main justify-center bg-[#f5f7f9]">
         <div className="content">
+          {Object.keys(user).length > 0 && (
+            <div className="login-input-container">
+              <p>id: {user.id}</p>
+              <p>username: {user.username}</p>
+              <p>email: {user.email}</p>
+            </div>
+          )}
           {submitActionError.error !== "" && (
             <div className="login-input-container">
               <p className="text-redText">{submitActionError.error}</p>
