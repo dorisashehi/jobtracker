@@ -18,7 +18,7 @@ const Dashboard = () => {
     };
     try {
       const response = await fetch(
-        "http://localhost:3000/users/dashboard",
+        "http://localhost:3000/users/authuser",
         options
       );
       const data = await response.json();
@@ -32,6 +32,7 @@ const Dashboard = () => {
         setSubmitActionError({ error: data.error });
       }
     } catch (error) {
+      console.log(error);
       setIsAuthenticated(false);
     }
   };

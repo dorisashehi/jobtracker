@@ -8,7 +8,7 @@ const Navigation = () => {
           <div className="col-logo">JBtracker</div>
           <ul className="col-links">
             <li className="">
-              <Link to="/" className="menu-item" aria-current="page">
+              <Link to="/login" className="menu-item" aria-current="page">
                 Login
               </Link>
             </li>

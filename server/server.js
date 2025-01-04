@@ -121,7 +121,7 @@ app.get("/users/logout", (req, res) => {
   });
 });
 
-app.get("/users/dashboard", ensureAuthenticated, (req, res) => {
+app.get("/users/authuser", ensureAuthenticated, (req, res) => {
   res.json({
     id: req.user.id,
     username: req.user.username,
