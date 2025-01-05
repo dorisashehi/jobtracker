@@ -10,30 +10,103 @@ const SignIn = () => {
   });
   let navigate = useNavigate();
 
-  const [submitActionError, setSubmitActionError] = useState({ error: "" });
+  const [errors, setErrors] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  const validate = (name, value) => {
+    let newErrors = { ...errors };
+    let valid = true;
+
+    if (name === "username") {
+      if (!value) {
+        newErrors.username = "Username is required.";
+        valid = false;
+      } else {
+        newErrors.username = "";
+      }
+    }
+
+    if (name === "email") {
+      if (!value) {
+        newErrors.email = "Email is required.";
+        valid = false;
+      } else if (!/\S+@\S+\.\S+/.test(value)) {
+        newErrors.email = "Please enter a valid email address.";
+        valid = false;
+      } else {
+        newErrors.email = "";
+      }
+    }
+
+    // Password validation
+    if (name === "password") {
+      if (!value) {
+        newErrors.password = "Password is required.";
+        valid = false;
+      } else if (value.length < 8) {
+        newErrors.password = "Password must be at least 8 characters.";
+        valid = false;
+      } else if (!/[A-Z]/.test(value)) {
+        newErrors.password =
+          "Password must contain at least one uppercase letter.";
+        valid = false;
+      } else if (!/[0-9]/.test(value)) {
+        newErrors.password = "Password must contain at least one number.";
+        valid = false;
+      } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
+        newErrors.password =
+          "Password must contain at least one special character.";
+        valid = false;
+      } else {
+        newErrors.password = "";
+      }
+    }
+
+    setErrors(newErrors);
+    return valid;
+  };
+
   const handleChange = (e) => {
+    const { name, value } = e.target;
+    console.log({ name, value });
     //handle form inputs change
-    setUser({ ...user, [e.target.name]: e.target.value });
+    setUser({ ...user, [name]: value });
+
+    validate(name, value);
   };
 
   const submitAction = async (e) => {
     e.preventDefault();
-    //submit form signup
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(user),
-    };
-    const response = await fetch("http://localhost:3000/users/signup", options);
-    const result = await response.json();
+    if (
+      validate("username", user.username) &&
+      validate("email", user.email) &&
+      validate("password", user.password)
+    ) {
+      //submit form signup
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(user),
+      };
+      const response = await fetch(
+        "http://localhost:3000/users/signup",
+        options
+      );
+      const data = await response.json();
 
-    if (result.error) {
-      setSubmitActionError({ error: result.error });
-      return;
+      if (data.error) {
+        setErrors({ submission_error: data.error });
+        return;
+      }
+      if (data.success) {
+        navigate("/login");
+      }
     }
-    navigate(result.redirectTo);
   };
 
   return (
@@ -54,6 +127,9 @@ const SignIn = () => {
                 className="login-input"
                 onChange={(e) => handleChange(e)}
               />
+              {errors.username && (
+                <em className="err-message">{errors.username}</em>
+              )}
             </div>
             <div className="login-input-container">
               <label htmlFor="email" className="login-label">
@@ -67,6 +143,7 @@ const SignIn = () => {
                 className="login-input"
                 onChange={(e) => handleChange(e)}
               />
+              {errors.email && <em className="err-message">{errors.email}</em>}
             </div>
             <div className="login-input-container">
               <label htmlFor="password" className="login-label">
@@ -80,6 +157,9 @@ const SignIn = () => {
                 className="login-input"
                 onChange={(e) => handleChange(e)}
               />
+              {errors.password && (
+                <em className="err-message">{errors.password}</em>
+              )}
             </div>
             <div className="login-input-container">
               <em className="text-secondaryText text-[12px]">
@@ -91,8 +171,11 @@ const SignIn = () => {
             </div>
             {submitAction.error !== "" && (
               <div className="login-input-container">
-                <p className="text-redText">{submitActionError.error}</p>
+                <p className="text-redText">{errors.submission_error}</p>
               </div>
+            )}
+            {errors.submission_error && (
+              <em className="err-message">{errors.submission_error}</em>
             )}
             <button
               type="submit"

@@ -63,7 +63,7 @@ app.post("/users/signup", async (req, res) => {
           }
           console.log(results.rows);
           //req.flush("success_msg", "You are now registered and can log in");
-          res.status(201).json({ success: true, redirectTo: "/login" });
+          res.status(201).json({ success: true, message: "User created" });
         }
       );
     }
