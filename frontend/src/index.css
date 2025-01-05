@@ -28,3 +28,7 @@ body {
 .main-btn {
   @apply menu-item mt-0 bg-primaryGreen text-[#FFFFFF] hover:text-black rounded-none;
 }
+
+.err-message {
+  @apply text-redText text-[12px] mt-2;
+}
