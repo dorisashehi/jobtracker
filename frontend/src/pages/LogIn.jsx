@@ -101,6 +101,8 @@ const LogIn = () => {
               Log In
             </button>
           </form>
+          <br />
+          {/* <a href="http://localhost:3000/auth/google">Login WIth Google</a> */}
         </div>
       </div>
     </div>

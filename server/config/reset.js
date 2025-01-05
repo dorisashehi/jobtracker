@@ -10,8 +10,9 @@ const createUsersTable = async () => {
       id SERIAL PRIMARY KEY,
       username varchar(128) NOT NULL,
       email varchar(128) NOT NULL,
-      password varchar(128) NOT NULL,
+      password varchar(128) NULL,
       token varchar(128) NULL,
+      googleid varchar(128) NULL,
       created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP)
     `;
 

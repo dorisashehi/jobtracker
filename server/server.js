@@ -8,6 +8,7 @@ import session from "express-session";
 import flash from "express-flash";
 import passport from "passport";
 import "./passportConfig.js";
+import GoogleStrategyModule from "passport-google-oauth20";
 import { ensureAuthenticated } from "./middlewares/auth.js";
 
 dotenv.config();
@@ -90,7 +91,7 @@ app.post("/users/login", (req, res, next) => {
         return res.status(500).json({ error: "Failed to create session" });
       }
 
-      // Send success response with the redirect path
+      // Send success response
       return res.status(200).json({
         success: true,
         id: user.id,
@@ -128,6 +129,55 @@ app.get("/users/authuser", ensureAuthenticated, (req, res) => {
     email: req.user.email,
   });
 });
+
+const GoogleStrategy = GoogleStrategyModule.Strategy;
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "/auth/google/callback",
+    },
+    async (accessToken, refreshToken, profile, done) => {
+      try {
+        const user = await pool.query(
+          "SELECT * FROM users WHERE googleid = $1",
+          [profile.id]
+        );
+
+        const usrObj = user.rows[0];
+        console.log(profile);
+
+        if (usrObj) {
+          return done(null, usrObj);
+        }
+
+        const newUser = await pool.query(
+          "INSERT INTO users(googleid, username, email) VALUES($1, $2, $3) RETURNING id, googleid, username, email",
+          [profile.id, profile.displayName, profile.emails[0].value]
+        );
+
+        done(null, newUser);
+      } catch (error) {
+        done(error);
+      }
+    }
+  )
+);
+
+app.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google", { failureRedirect: false }),
+  (req, res) => {
+    console.log(req.user);
+    //res.redirect("http://localhost:5173/dashboard");
+  }
+);
 
 app.listen(PORT, () => {
   console.log("Server running on port: " + PORT);
