@@ -1,5 +1,5 @@
 import { AuthenticatedContext } from "./AuthenticatedContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import propTypes from "prop-types";
 
 const AuthenticatedProvider = ({ children }) => {
@@ -36,9 +36,9 @@ const AuthenticatedProvider = ({ children }) => {
     }
   };
 
-  //   useEffect(() => {
-  //     fetchUser();
-  //   }, []);
+  useEffect(() => {
+    fetchUser();
+  }, []);
   return (
     <AuthenticatedContext.Provider
       value={{ isAuthenticated, user, fetchUser, setIsAuthenticated, setUser }}
