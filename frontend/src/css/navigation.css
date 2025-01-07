@@ -7,11 +7,15 @@
 }
 
 .navigation-content .col-logo {
-  @apply lg:w-1/5 flex items-center;
+  @apply flex items-center;
+}
+
+.navigation-content .col-navigation-menu {
+  @apply flex items-start gap-5;
 }
 
 .navigation-content .col-links {
-  @apply flex lg:flex-row lg:w-4/5 justify-end items-center;
+  @apply flex lg:flex-row justify-end items-center;
 }
 .menu-item {
   @apply border-[1px] border-secondaryButton text-[13px] py-[5px] px-[20px] rounded-none hover:bg-[#dff8e1];

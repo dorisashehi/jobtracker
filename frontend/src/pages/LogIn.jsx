@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthenticatedContext } from "../context/AuthenticatedContext";
+import { useContext } from "react";
 
 const LogIn = () => {
   let navigate = useNavigate();
+
+  const { fetchUser } = useContext(AuthenticatedContext);
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -91,6 +95,7 @@ const LogIn = () => {
         const data = await response.json();
         //const result = await response.json();
         if (data.success) {
+          fetchUser();
           navigate("/dashboard");
         }
         if (data.error) {
