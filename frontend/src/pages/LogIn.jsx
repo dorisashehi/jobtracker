@@ -111,7 +111,7 @@ const LogIn = () => {
   return (
     <div className="container-main justify-center bg-[#f5f7f9]">
       <div className="content">
-        <div className="login-container">
+        <div className="login-container items-center flex flex-col">
           <h1 className="general-header">Log In</h1>
           <form className="login-form">
             <div className="login-input-container">

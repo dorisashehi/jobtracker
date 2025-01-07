@@ -8,12 +8,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        primaryGreen: "#00c200",
+        primaryGreen: "#00a00d",
         lightGreen: "#dff8e1",
         secondary: "#caefcd",
         borderColor: "#f0f1f2",
         primaryText: "#0e0e0e",
-        secondaryText: "#8c8c8c",
+        secondaryText: "#525252",
         redText: "#e4696d",
         generalText: "#101010",
         headerTest: "#1d1d1d",

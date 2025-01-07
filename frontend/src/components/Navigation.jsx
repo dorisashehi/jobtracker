@@ -69,11 +69,13 @@ const Navigation = () => {
               isAuthenticated ? "lg:w-[50%]" : "lg:w-[80%]"
             }`}
           >
-            <li className="">
-              <Link to="/login" className="" aria-current="page">
-                Login
-              </Link>
-            </li>
+            {!isAuthenticated && (
+              <li className="">
+                <Link to="/login" className="" aria-current="page">
+                  Login
+                </Link>
+              </li>
+            )}
             {isAuthenticated && (
               <li className="">
                 <Link

@@ -17,8 +17,12 @@ body {
   @apply max-w-screen-xl mx-auto px-5;
 }
 
+.full-screen {
+  @apply w-full py-20 flex-grow;
+}
+
 .container-main {
-  @apply flex flex-col min-h-[calc(100vh-90px)];
+  @apply full-screen min-h-[calc(100vh-90px)];
 }
 
 .general-header {
@@ -26,9 +30,39 @@ body {
 }
 
 .main-btn {
-  @apply menu-item mt-0 bg-primaryGreen text-[#FFFFFF] hover:text-black rounded-none;
+  @apply menu-item mt-0 bg-primaryGreen text-[#FFFFFF] rounded-none;
 }
 
 .err-message {
   @apply text-redText text-[12px] mt-2;
+}
+
+.header-text-desc {
+  @apply text-[12px] text-secondaryText;
+}
+
+.header-w-text {
+  @apply flex gap-[5px] items-center flex-1;
+}
+.header-main {
+  @apply text-black text-[20px] font-medium;
+}
+
+.table-item {
+  @apply pl-6 pr-6 py-3 font-[500] text-[14px]  text-secondaryText capitalize;
+}
+.table-head {
+  @apply pl-6 pr-6 py-4 font-[500] text-[14px]  text-black capitalize;
+}
+
+.table-design {
+  @apply text-left cursor-pointer border-[1.5px] border-borderColor;
+}
+
+.icon-style-large {
+  @apply h-[25px] w-[25px];
+}
+
+.icon-style-small {
+  @apply h-[19px] w-[19px];
 }

@@ -44,7 +44,6 @@ app.post("/users/signup", async (req, res) => {
   }
 
   let hashedPassword = await bycrypt.hash(password, 10);
-  console.log(hashedPassword);
 
   pool.query("SELECT * FROM users WHERE email=$1", [email], (err, results) => {
     if (err) {
@@ -61,7 +60,6 @@ app.post("/users/signup", async (req, res) => {
           if (err) {
             throw err;
           }
-          console.log(results.rows);
           //req.flush("success_msg", "You are now registered and can log in");
           res.status(201).json({ success: true, message: "User created" });
         }
