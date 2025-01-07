@@ -20,7 +20,6 @@ const AuthenticatedProvider = ({ children }) => {
         options
       );
       const data = await response.json();
-      console.log(data.error);
 
       if (data.id) {
         setUser(data);

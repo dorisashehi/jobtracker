@@ -2,6 +2,7 @@
 @import "./css/footer.css";
 @import "./css/welcome.css";
 @import "./css/login.css";
+@import "./css/table.css";
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
@@ -30,7 +31,7 @@ body {
 }
 
 .main-btn {
-  @apply menu-item mt-0 bg-primaryGreen text-[#FFFFFF] rounded-none;
+  @apply menu-item mt-0 bg-primaryGreen text-[#FFFFFF] rounded-none flex flex-row justify-center capitalize max-w-fit;
 }
 
 .err-message {
@@ -48,21 +49,21 @@ body {
   @apply text-black text-[20px] font-medium;
 }
 
-.table-item {
-  @apply pl-6 pr-6 py-3 font-[500] text-[14px]  text-secondaryText capitalize;
-}
-.table-head {
-  @apply pl-6 pr-6 py-4 font-[500] text-[14px]  text-black capitalize;
-}
-
-.table-design {
-  @apply text-left cursor-pointer border-[1.5px] border-borderColor;
-}
-
 .icon-style-large {
   @apply h-[25px] w-[25px];
 }
 
 .icon-style-small {
   @apply h-[19px] w-[19px];
+}
+
+.ReactModal__Overlay--after-open {
+  @apply z-50 bg-[#0b0b0bbf] !important;
+}
+
+.ReactModal__Content--after-open {
+  @apply w-[90%];
+}
+.modal-input {
+  @apply min-w-[300px];
 }

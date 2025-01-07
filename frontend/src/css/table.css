@@ -1,0 +1,10 @@
+.table-item {
+  @apply pl-6 pr-6 py-3 font-[500] text-[14px]  text-secondaryText capitalize;
+}
+.table-head {
+  @apply pl-6 pr-6 py-4 font-[500] text-[14px]  text-black capitalize;
+}
+
+.table-design {
+  @apply text-left cursor-pointer border-[1.5px] border-borderColor;
+}

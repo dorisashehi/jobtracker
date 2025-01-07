@@ -25,7 +25,8 @@
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0",
-    "pg": "^8.13.1"
+    "pg": "^8.13.1",
+    "react-modal": "^3.16.3"
   },
   "devDependencies": {
     "@types/pg": "^8.11.10"
