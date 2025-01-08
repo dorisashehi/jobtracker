@@ -3,6 +3,8 @@
 @import "./css/welcome.css";
 @import "./css/login.css";
 @import "./css/table.css";
+@import "./css/filter.css";
+@import "./css/modal.css";
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
@@ -31,7 +33,7 @@ body {
 }
 
 .main-btn {
-  @apply menu-item mt-0 bg-primaryGreen text-[#FFFFFF] rounded-none flex flex-row justify-center capitalize max-w-fit;
+  @apply menu-item items-center mt-0 bg-primaryGreen text-[#FFFFFF] rounded-none flex flex-row justify-center capitalize max-w-fit;
 }
 
 .err-message {
@@ -55,18 +57,4 @@ body {
 
 .icon-style-small {
   @apply h-[19px] w-[19px];
-}
-
-.ReactModal__Overlay--after-open {
-  @apply z-50 bg-[#0b0b0bbf] !important;
-}
-/* .ReactModal__Content--after-open {
-  @apply w-[80%] top-[50%] right-[auto] left-[50%] translate-y-[-50%] translate-x-[-50%] bottom-[auto] !impo mr-[-50%];
-} */
-.ReactModal__Content--after-open {
-  @apply w-[80%];
-}
-/* top-[50%] right-[auto] left-[50%] translate-y-[-50%] translate-x-[-50%]; */
-.modal-input {
-  @apply min-w-[300px];
 }

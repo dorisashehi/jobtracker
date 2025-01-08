@@ -1,0 +1,28 @@
+.ReactModal__Overlay--after-open {
+  @apply z-50 bg-[#0b0b0bbf] !important;
+}
+/* .ReactModal__Content--after-open {
+    @apply w-[80%] top-[50%] right-[auto] left-[50%] translate-y-[-50%] translate-x-[-50%] bottom-[auto] !impo mr-[-50%];
+  } */
+.ReactModal__Content--after-open {
+  @apply w-[80%];
+}
+/* top-[50%] right-[auto] left-[50%] translate-y-[-50%] translate-x-[-50%]; */
+.modal-input {
+  @apply min-w-[300px];
+}
+
+.modal-container {
+  @apply flex flex-row items-center justify-between px-[20px] pb-[10px] border-b-[2px] border-borderColor;
+}
+
+.modal-header {
+  @apply flex items-center gap-1;
+}
+.modal-close {
+  @apply icon-style-small cursor-pointer;
+}
+
+.modal-content {
+  @apply flex flex-wrap gap-10;
+}

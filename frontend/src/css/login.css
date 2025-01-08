@@ -6,15 +6,18 @@
   @apply pb-2;
 }
 
-.login-input-container {
+.login-input-container,
+.modal-input-container {
   @apply flex flex-col pb-5;
 }
 
-.login-label {
+.login-label,
+.modal-label {
   @apply font-medium text-[14px];
 }
 
-.login-form {
+.login-form,
+.modal-form {
   @apply p-[20px] w-[350px];
 }
 

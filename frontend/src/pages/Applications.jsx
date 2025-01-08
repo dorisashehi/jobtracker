@@ -77,11 +77,11 @@ const Applications = () => {
                 </div>
               </div>
 
-              <div className="flex-1 py-10 flex flex-col">
+              <div className="flex-1 filter-bar">
                 <button
                   type="submit"
                   onClick={() => openModal("creation")}
-                  className="main-btn float-right mt-0  mb-5 "
+                  className="main-btn float-right mt-0"
                 >
                   <p>Create</p>
                   <svg
@@ -92,10 +92,55 @@ const Applications = () => {
                     <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
                   </svg>
                 </button>
+                <div className="flex gap-5">
+                  <div className="relative w-fit">
+                    <div className="search-container">
+                      <svg
+                        className="search-icon"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                        />
+                      </svg>
+                    </div>
+                    <input
+                      type="search"
+                      id="default-search"
+                      className="search-input-box"
+                      placeholder="Search by company name, position, or location"
+                      required
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    // onClick={() => openModal("creation")}
+                    className="main-btn float-right mt-0"
+                  >
+                    <p>Export</p>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 -960 960 960"
+                      className="icon-style-small fill-[#FFFFFF]"
+                    >
+                      <path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h200v80H160v480h640v-480H600v-80h200q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-184L280-544l56-56 104 104v-304h80v304l104-104 56 56-200 200Z" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div className="flex-1">
                 <table className="table-design">
                   <thead className="uppercase border-[1.5px] border-borderColor">
                     <tr>
-                      <th className="pl-0 table-head">Date</th>
+                      <th className="table-head"></th>
+                      <th className="table-head">Date</th>
                       <th className="table-head">Name</th>
                       <th className="table-head">Method</th>
                       <th className="table-head">Position</th>
@@ -109,7 +154,17 @@ const Applications = () => {
 
                   <tbody>
                     <tr>
-                      <td className="table-item pl-0">2025-01-01</td>
+                      <td className="table-item">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 -960 960 960"
+                          fill="#5f6368"
+                          className="icon-style-small"
+                        >
+                          <path d="M240-400q-33 0-56.5-23.5T160-480q0-33 23.5-56.5T240-560q33 0 56.5 23.5T320-480q0 33-23.5 56.5T240-400Zm240 0q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm240 0q-33 0-56.5-23.5T640-480q0-33 23.5-56.5T720-560q33 0 56.5 23.5T800-480q0 33-23.5 56.5T720-400Z" />
+                        </svg>
+                      </td>
+                      <td className="table-item">2025-01-01</td>
                       <td className="table-item">John Doe</td>
                       <td className="table-item">Online</td>
                       <td className="table-item">Software Engineer</td>
@@ -128,7 +183,17 @@ const Applications = () => {
                     </tr>
 
                     <tr>
-                      <td className="table-item pl-0">2025-01-01</td>
+                      <td className="table-item">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 -960 960 960"
+                          fill="#5f6368"
+                          className="icon-style-small"
+                        >
+                          <path d="M240-400q-33 0-56.5-23.5T160-480q0-33 23.5-56.5T240-560q33 0 56.5 23.5T320-480q0 33-23.5 56.5T240-400Zm240 0q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm240 0q-33 0-56.5-23.5T640-480q0-33 23.5-56.5T720-560q33 0 56.5 23.5T800-480q0 33-23.5 56.5T720-400Z" />
+                        </svg>
+                      </td>
+                      <td className="table-item">2025-01-01</td>
                       <td className="table-item">John Doe</td>
                       <td className="table-item">Online</td>
                       <td className="table-item">Software Engineer</td>
@@ -155,11 +220,10 @@ const Applications = () => {
           <Modal
             isOpen={modalIsOpen.creation}
             onRequestClose={() => closeModal("creation")}
-            style={{ customStyles }}
             contentLabel="Create Application"
           >
-            <div className="flex flex-row items-center justify-between px-[20px] pb-[10px] border-b-[2px] border-borderColor">
-              <h1 className="header-main flex items-center gap-1">
+            <div className="modal-container">
+              <h1 className="header-main modal-header">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 -960 960 960"
@@ -173,7 +237,7 @@ const Applications = () => {
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 -960 960 960"
-                className="icon-style-small cursor-pointer"
+                className="modal-close"
                 fill="#5f6368"
                 onClick={() => closeModal("creation")}
               >
@@ -181,10 +245,10 @@ const Applications = () => {
               </svg>
             </div>
 
-            <form className="login-form flex w-fit flex-col">
-              <div className="flex flex-wrap gap-10">
-                <div className="login-input-container">
-                  <label htmlFor="company_name" className="login-label">
+            <form className="modal-form flex w-fit flex-col">
+              <div className="modal-content">
+                <div className="modal-input-container">
+                  <label htmlFor="company_name" className="modal-label">
                     Company Name<em className="text-redText">*</em>
                   </label>
                   <input
@@ -195,8 +259,8 @@ const Applications = () => {
                     className="login-input modal-input"
                   />
                 </div>
-                <div className="login-input-container">
-                  <label htmlFor="company_web" className="login-label">
+                <div className="modal-input-container">
+                  <label htmlFor="company_web" className="modal-label">
                     Company Website<em className="text-redText">*</em>
                   </label>
                   <input
@@ -207,8 +271,8 @@ const Applications = () => {
                     className="login-input modal-input"
                   />
                 </div>
-                <div className="login-input-container flex items-start min-w-[300px] ">
-                  <label htmlFor="favorite" className="login-label ">
+                <div className="modal-input-container flex items-start min-w-[300px] ">
+                  <label htmlFor="favorite" className="modal-label ">
                     Favorite
                   </label>
 
@@ -219,8 +283,8 @@ const Applications = () => {
                     className="login-input mr-[8px]"
                   />
                 </div>
-                <div className="login-input-container w-[1/3]">
-                  <label htmlFor="application_date" className="login-label">
+                <div className="modal-input-container w-[1/3]">
+                  <label htmlFor="application_date" className="modal-label">
                     Apply Date<em className="text-redText">*</em>
                   </label>
                   <input
@@ -231,8 +295,8 @@ const Applications = () => {
                     className="login-input modal-input"
                   />
                 </div>
-                <div className="login-input-container w-[1/3]">
-                  <label htmlFor="application_method" className="login-label">
+                <div className="modal-input-container w-[1/3]">
+                  <label htmlFor="application_method" className="modal-label">
                     Apply Method<em className="text-redText">*</em>
                   </label>
                   <Select
@@ -244,8 +308,8 @@ const Applications = () => {
                     className="login-input modal-input p-[0px] outline-none active:outline-none"
                   />
                 </div>
-                <div className="login-input-container w-[1/3]">
-                  <label htmlFor="application_url" className="login-label">
+                <div className="modal-input-container w-[1/3]">
+                  <label htmlFor="application_url" className="modal-label">
                     Apply URL<em className="text-redText">*</em>
                   </label>
                   <input
@@ -256,8 +320,8 @@ const Applications = () => {
                     className="login-input modal-input"
                   />
                 </div>
-                <div className="login-input-container w-[1/3]">
-                  <label htmlFor="positon" className="login-label">
+                <div className="modal-input-container w-[1/3]">
+                  <label htmlFor="positon" className="modal-label">
                     Position<em className="text-redText">*</em>
                   </label>
                   <input
@@ -268,8 +332,8 @@ const Applications = () => {
                     className="login-input modal-input"
                   />
                 </div>
-                <div className="login-input-container w-[1/3]">
-                  <label htmlFor="location" className="login-label">
+                <div className="modal-input-container w-[1/3]">
+                  <label htmlFor="location" className="modal-label">
                     Location<em className="text-redText">*</em>
                   </label>
                   <Select
@@ -281,8 +345,8 @@ const Applications = () => {
                     className="login-input modal-input p-[0px] outline-none active:outline-none"
                   />
                 </div>
-                <div className="login-input-container w-[1/3]">
-                  <label htmlFor="interview_date" className="login-label">
+                <div className="modal-input-container w-[1/3]">
+                  <label htmlFor="interview_date" className="modal-label">
                     Interview Date
                   </label>
                   <input
@@ -293,8 +357,8 @@ const Applications = () => {
                     className="login-input modal-input"
                   />
                 </div>
-                <div className="login-input-container w-[1/3]">
-                  <label htmlFor="amount_offered" className="login-label">
+                <div className="modal-input-container w-[1/3]">
+                  <label htmlFor="amount_offered" className="modal-label">
                     Offer Amount
                   </label>
                   <input
@@ -305,8 +369,8 @@ const Applications = () => {
                     className="login-input modal-input"
                   />
                 </div>
-                <div className="login-input-container w-[1/3]">
-                  <label htmlFor="rejected" className="login-label">
+                <div className="modal-input-container w-[1/3]">
+                  <label htmlFor="rejected" className="modal-label">
                     Rejected
                   </label>
                   <Select
@@ -318,8 +382,8 @@ const Applications = () => {
                     className="login-input modal-input p-[0px] outline-none active:outline-none"
                   />
                 </div>
-                <div className="login-input-container w-[1/3]">
-                  <label htmlFor="contact_name" className="login-label">
+                <div className="modal-input-container w-[1/3]">
+                  <label htmlFor="contact_name" className="modal-label">
                     Contact Name
                   </label>
                   <input
@@ -330,8 +394,8 @@ const Applications = () => {
                     className="login-input modal-input"
                   />
                 </div>
-                <div className="login-input-container w-[1/3]">
-                  <label htmlFor="notes" className="login-label">
+                <div className="modal-input-container w-[1/3]">
+                  <label htmlFor="notes" className="modal-label">
                     Notes
                   </label>
                   <textarea
@@ -342,8 +406,8 @@ const Applications = () => {
                     className="login-input modal-input"
                   ></textarea>
                 </div>
-                <div className="login-input-container w-[1/3]">
-                  <label htmlFor="contact_email" className="login-label">
+                <div className="modal-input-container w-[1/3]">
+                  <label htmlFor="contact_email" className="modal-label">
                     Contact Email
                   </label>
                   <input
@@ -354,8 +418,8 @@ const Applications = () => {
                     className="login-input modal-input"
                   />
                 </div>
-                <div className="login-input-container w-[1/3]">
-                  <label htmlFor="company_phone" className="login-label">
+                <div className="modal-input-container w-[1/3]">
+                  <label htmlFor="company_phone" className="modal-label">
                     Company Phone
                   </label>
                   <input
@@ -381,11 +445,10 @@ const Applications = () => {
           <Modal
             isOpen={modalIsOpen.view}
             onRequestClose={() => closeModal("view")}
-            style={{ customStyles }}
             contentLabel="Edit Application"
           >
-            <div className="flex flex-row items-center justify-between px-[20px] pb-[10px] border-b-[2px] border-borderColor">
-              <h1 className="header-main flex items-center gap-1">
+            <div className="modal-container">
+              <h1 className="header-main modal-header">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 -960 960 960"
@@ -407,10 +470,10 @@ const Applications = () => {
               </svg>
             </div>
 
-            <form className="login-form flex w-fit flex-col">
-              <div className="flex flex-wrap gap-10">
-                <div className="login-input-container">
-                  <label htmlFor="company_name" className="login-label">
+            <form className="modal-form flex w-fit flex-col">
+              <div className="modal-content">
+                <div className="modal-input-container">
+                  <label htmlFor="company_name" className="modal-label">
                     Company Name<em className="text-redText">*</em>
                   </label>
                   <input
@@ -421,8 +484,8 @@ const Applications = () => {
                     className="login-input modal-input"
                   />
                 </div>
-                <div className="login-input-container">
-                  <label htmlFor="company_web" className="login-label">
+                <div className="modal-input-container">
+                  <label htmlFor="company_web" className="modal-label">
                     Company Website<em className="text-redText">*</em>
                   </label>
                   <input
@@ -433,8 +496,8 @@ const Applications = () => {
                     className="login-input modal-input"
                   />
                 </div>
-                <div className="login-input-container flex items-start min-w-[300px] ">
-                  <label htmlFor="favorite" className="login-label ">
+                <div className="modal-input-container flex items-start min-w-[300px] ">
+                  <label htmlFor="favorite" className="modal-label ">
                     Favorite
                   </label>
 
@@ -445,8 +508,8 @@ const Applications = () => {
                     className="login-input mr-[8px]"
                   />
                 </div>
-                <div className="login-input-container w-[1/3]">
-                  <label htmlFor="application_date" className="login-label">
+                <div className="modal-input-container w-[1/3]">
+                  <label htmlFor="application_date" className="modal-label">
                     Apply Date<em className="text-redText">*</em>
                   </label>
                   <input
@@ -457,8 +520,8 @@ const Applications = () => {
                     className="login-input modal-input"
                   />
                 </div>
-                <div className="login-input-container w-[1/3]">
-                  <label htmlFor="application_method" className="login-label">
+                <div className="modal-input-container w-[1/3]">
+                  <label htmlFor="application_method" className="modal-label">
                     Apply Method<em className="text-redText">*</em>
                   </label>
                   <Select
@@ -470,8 +533,8 @@ const Applications = () => {
                     className="login-input modal-input p-[0px] outline-none active:outline-none"
                   />
                 </div>
-                <div className="login-input-container w-[1/3]">
-                  <label htmlFor="application_url" className="login-label">
+                <div className="modal-input-container w-[1/3]">
+                  <label htmlFor="application_url" className="modal-label">
                     Apply URL<em className="text-redText">*</em>
                   </label>
                   <input
@@ -482,8 +545,8 @@ const Applications = () => {
                     className="login-input modal-input"
                   />
                 </div>
-                <div className="login-input-container w-[1/3]">
-                  <label htmlFor="positon" className="login-label">
+                <div className="modal-input-container w-[1/3]">
+                  <label htmlFor="positon" className="modal-label">
                     Position<em className="text-redText">*</em>
                   </label>
                   <input
@@ -494,8 +557,8 @@ const Applications = () => {
                     className="login-input modal-input"
                   />
                 </div>
-                <div className="login-input-container w-[1/3]">
-                  <label htmlFor="location" className="login-label">
+                <div className="modal-input-container w-[1/3]">
+                  <label htmlFor="location" className="modal-label">
                     Location<em className="text-redText">*</em>
                   </label>
                   <Select
@@ -507,8 +570,8 @@ const Applications = () => {
                     className="login-input modal-input p-[0px] outline-none active:outline-none"
                   />
                 </div>
-                <div className="login-input-container w-[1/3]">
-                  <label htmlFor="interview_date" className="login-label">
+                <div className="modal-input-container w-[1/3]">
+                  <label htmlFor="interview_date" className="modal-label">
                     Interview Date
                   </label>
                   <input
@@ -519,8 +582,8 @@ const Applications = () => {
                     className="login-input modal-input"
                   />
                 </div>
-                <div className="login-input-container w-[1/3]">
-                  <label htmlFor="amount_offered" className="login-label">
+                <div className="modal-input-container w-[1/3]">
+                  <label htmlFor="amount_offered" className="modal-label">
                     Offer Amount
                   </label>
                   <input
@@ -531,8 +594,8 @@ const Applications = () => {
                     className="login-input modal-input"
                   />
                 </div>
-                <div className="login-input-container w-[1/3]">
-                  <label htmlFor="rejected" className="login-label">
+                <div className="modal-input-container w-[1/3]">
+                  <label htmlFor="rejected" className="modal-label">
                     Rejected
                   </label>
                   <Select
@@ -544,8 +607,8 @@ const Applications = () => {
                     className="login-input modal-input p-[0px] outline-none active:outline-none"
                   />
                 </div>
-                <div className="login-input-container w-[1/3]">
-                  <label htmlFor="contact_name" className="login-label">
+                <div className="modal-input-container w-[1/3]">
+                  <label htmlFor="contact_name" className="modal-label">
                     Contact Name
                   </label>
                   <input
@@ -556,8 +619,8 @@ const Applications = () => {
                     className="login-input modal-input"
                   />
                 </div>
-                <div className="login-input-container w-[1/3]">
-                  <label htmlFor="notes" className="login-label">
+                <div className="modal-input-container w-[1/3]">
+                  <label htmlFor="notes" className="modal-label">
                     Notes
                   </label>
                   <textarea
@@ -568,8 +631,8 @@ const Applications = () => {
                     className="login-input modal-input"
                   ></textarea>
                 </div>
-                <div className="login-input-container w-[1/3]">
-                  <label htmlFor="contact_email" className="login-label">
+                <div className="modal-input-container w-[1/3]">
+                  <label htmlFor="contact_email" className="modal-label">
                     Contact Email
                   </label>
                   <input
@@ -580,8 +643,8 @@ const Applications = () => {
                     className="login-input modal-input"
                   />
                 </div>
-                <div className="login-input-container w-[1/3]">
-                  <label htmlFor="company_phone" className="login-label">
+                <div className="modal-input-container w-[1/3]">
+                  <label htmlFor="company_phone" className="modal-label">
                     Company Phone
                   </label>
                   <input
