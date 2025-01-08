@@ -6,5 +6,5 @@
 }
 
 .table-design {
-  @apply text-left cursor-pointer border-[1.5px] border-borderColor;
+  @apply text-left cursor-pointer border-[1.5px] border-borderColor w-full;
 }
