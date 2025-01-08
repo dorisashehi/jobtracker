@@ -1,6 +1,6 @@
 import { AuthenticatedContext } from "../context/AuthenticatedContext";
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import Select from "react-select";
 import Modal from "react-modal";
 const Applications = () => {
   const { user, isAuthenticated } = useContext(AuthenticatedContext);
@@ -16,19 +16,56 @@ const Applications = () => {
   Modal.setAppElement("#root");
 
   const customStyles = {
-    // content: {
+    // modal: {
+    //   position: "absolute",
+    //   inset: "40px",
+    //   border: "1px solid rgb(204, 204, 204)",
+    //   background: "rgb(255, 255, 255)",
+    //   overflow: "auto",
+    //   borderRadius: "4px",
+    //   outline: "none",
+    //   padding: "20px",
     //   top: "50%",
     //   left: "50%",
     //   right: "auto",
     //   bottom: "auto",
     //   marginRight: "-50%",
     //   transform: "translate(-50%, -50%)",
+    //   width: "80%", // Adjust width
     // },
-    // ReactModal__Overlay--after-open{
-    //   background: rgba(0, 0, 0, 0.5
-    // }
+    // overlay: {
+    //   backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent background
+    // },
   };
 
+  const locationOptions = [
+    { value: "onsite", label: "On-Site" },
+    { value: "remote", label: "Remote" },
+    { value: "hybrid", label: "Hybrid" },
+    { value: "optional", label: "Optional" },
+  ];
+
+  const [selectedLocation, setLocationSelected] = useState(null);
+
+  const rejectedOptions = [
+    { value: "response", label: "From Response" },
+    { value: "interview", label: "After Interview" },
+    { value: "offer", label: "After Offer" },
+    { value: "other", label: "Other" },
+  ];
+
+  const [selectedRejection, setRejectedSelected] = useState(null);
+
+  const methodOptions = [
+    { value: "company_web", label: "Company Website" },
+    { value: "job_board", label: "Job Board" },
+    { value: "recruiter", label: "Recruiter" },
+    { value: "referal", label: "Referal" },
+    { value: "email", label: "Email" },
+    { value: "other", label: "Other" },
+  ];
+
+  const [selectedMethod, setMethodSelected] = useState(null);
   return (
     <>
       <div className="container-main justify-center bg-[#f5f7f9]">
@@ -124,11 +161,21 @@ const Applications = () => {
           <Modal
             isOpen={modalIsOpen}
             onRequestClose={closeModal}
-            style={customStyles}
+            style={{ customStyles }}
             contentLabel="Create Application"
           >
-            <div className="flex flex-row items-center justify-between">
-              <h1 className="header-main">Add Application Details</h1>
+            <div className="flex flex-row items-center justify-between px-[20px] pb-[10px] border-b-[2px] border-borderColor">
+              <h1 className="header-main flex items-center gap-1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 -960 960 960"
+                  className="icon-style-large"
+                  fill="#5f6368"
+                >
+                  <path d="M120-320v-80h280v80H120Zm0-160v-80h440v80H120Zm0-160v-80h440v80H120Zm520 480v-160H480v-80h160v-160h80v160h160v80H720v160h-80Z" />
+                </svg>
+                Application Details
+              </h1>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 -960 960 960"
@@ -141,124 +188,189 @@ const Applications = () => {
             </div>
 
             <form className="login-form flex w-fit flex-col">
-              <div className="flex flex-wrap gap-5">
-                <div className="login-input-container w-[1/3]">
-                  <label htmlFor="email" className="login-label">
-                    Email<em className="text-redText">*</em>
+              <div className="flex flex-wrap gap-10">
+                <div className="login-input-container">
+                  <label htmlFor="company_name" className="login-label">
+                    Company Name<em className="text-redText">*</em>
                   </label>
                   <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="Enter your email"
+                    type="text"
+                    id="company_name"
+                    name="company_name"
+                    placeholder="TechCorp Inc."
                     className="login-input modal-input"
-                    // onChange={(e) => handleChange(e)}
                   />
-                  {/* {errors.email && (
-                  <em className="err-message">{errors.email}</em>
-                )} */}
                 </div>
-                <div className="login-input-container w-[1/3]">
-                  <label htmlFor="password" className="login-label">
-                    Password<em className="text-redText">*</em>
+                <div className="login-input-container">
+                  <label htmlFor="company_web" className="login-label">
+                    Company Website<em className="text-redText">*</em>
                   </label>
                   <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="Enter your password"
+                    type="text"
+                    id="company_web"
+                    name="company_web"
+                    placeholder="www.techcorp.com"
                     className="login-input modal-input"
-                    // onChange={(e) => handleChange(e)}
                   />
                 </div>
-                <div className="login-input-container w-[1/3]">
-                  <label htmlFor="password" className="login-label">
-                    Password<em className="text-redText">*</em>
+                <div className="login-input-container flex items-start min-w-[300px] ">
+                  <label htmlFor="favorite" className="login-label ">
+                    Favorite
                   </label>
-                  <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="Enter your password"
-                    className="login-input modal-input"
-                    // onChange={(e) => handleChange(e)}
-                  />
-                </div>
 
+                  <input
+                    type="checkbox"
+                    id="favorite"
+                    name="favorite"
+                    className="login-input mr-[8px]"
+                  />
+                </div>
                 <div className="login-input-container w-[1/3]">
-                  <label htmlFor="email" className="login-label">
-                    Email<em className="text-redText">*</em>
+                  <label htmlFor="application_date" className="login-label">
+                    Apply Date<em className="text-redText">*</em>
+                  </label>
+                  <input
+                    type="date"
+                    id="application_date"
+                    name="application_date"
+                    placeholder="2024-01-15"
+                    className="login-input modal-input"
+                  />
+                </div>
+                <div className="login-input-container w-[1/3]">
+                  <label htmlFor="application_method" className="login-label">
+                    Apply Method<em className="text-redText">*</em>
+                  </label>
+                  <Select
+                    defaultValue={selectedMethod}
+                    onChange={setMethodSelected}
+                    options={methodOptions}
+                    id="application_method"
+                    name="application_method"
+                    className="login-input modal-input p-[0px] outline-none active:outline-none"
+                  />
+                </div>
+                <div className="login-input-container w-[1/3]">
+                  <label htmlFor="application_url" className="login-label">
+                    Apply URL<em className="text-redText">*</em>
+                  </label>
+                  <input
+                    type="text"
+                    id="application_url"
+                    name="application_url"
+                    placeholder="www.techcorp.com/careers"
+                    className="login-input modal-input"
+                  />
+                </div>
+                <div className="login-input-container w-[1/3]">
+                  <label htmlFor="positon" className="login-label">
+                    Position<em className="text-redText">*</em>
+                  </label>
+                  <input
+                    type="text"
+                    id="positon"
+                    name="positon"
+                    placeholder="Software Engineer"
+                    className="login-input modal-input"
+                  />
+                </div>
+                <div className="login-input-container w-[1/3]">
+                  <label htmlFor="location" className="login-label">
+                    Location<em className="text-redText">*</em>
+                  </label>
+                  <Select
+                    defaultValue={selectedLocation}
+                    onChange={setLocationSelected}
+                    options={locationOptions}
+                    id="location"
+                    name="location"
+                    className="login-input modal-input p-[0px] outline-none active:outline-none"
+                  />
+                </div>
+                <div className="login-input-container w-[1/3]">
+                  <label htmlFor="interview_date" className="login-label">
+                    Interview Date
+                  </label>
+                  <input
+                    type="date"
+                    id="interview_date"
+                    name="interview_date"
+                    placeholder="2024-01-20"
+                    className="login-input modal-input"
+                  />
+                </div>
+                <div className="login-input-container w-[1/3]">
+                  <label htmlFor="amount_offered" className="login-label">
+                    Offer Amount
+                  </label>
+                  <input
+                    type="number"
+                    id="amount_offered"
+                    name="amount_offered"
+                    placeholder="85000"
+                    className="login-input modal-input"
+                  />
+                </div>
+                <div className="login-input-container w-[1/3]">
+                  <label htmlFor="rejected" className="login-label">
+                    Rejected
+                  </label>
+                  <Select
+                    defaultValue={selectedRejection}
+                    onChange={setRejectedSelected}
+                    options={rejectedOptions}
+                    id="rejected"
+                    name="rejected"
+                    className="login-input modal-input p-[0px] outline-none active:outline-none"
+                  />
+                </div>
+                <div className="login-input-container w-[1/3]">
+                  <label htmlFor="contact_name" className="login-label">
+                    Contact Name
+                  </label>
+                  <input
+                    type="text"
+                    id="contact_name"
+                    name="contact_name"
+                    placeholder="John Doe"
+                    className="login-input modal-input"
+                  />
+                </div>
+                <div className="login-input-container w-[1/3]">
+                  <label htmlFor="contact_email" className="login-label">
+                    Contact Email
                   </label>
                   <input
                     type="email"
-                    id="email"
-                    name="email"
-                    placeholder="Enter your email"
+                    id="contact_email"
+                    name="contact_email"
+                    placeholder="john.doe@example.com"
                     className="login-input modal-input"
-                    // onChange={(e) => handleChange(e)}
-                  />
-                  {/* {errors.email && (
-                  <em className="err-message">{errors.email}</em>
-                )} */}
-                </div>
-                <div className="login-input-container w-[1/3]">
-                  <label htmlFor="email" className="login-label">
-                    Email<em className="text-redText">*</em>
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="Enter your email"
-                    className="login-input modal-input"
-                    // onChange={(e) => handleChange(e)}
-                  />
-                  {/* {errors.email && (
-                  <em className="err-message">{errors.email}</em>
-                )} */}
-                </div>
-                <div className="login-input-container w-[1/3]">
-                  <label htmlFor="password" className="login-label">
-                    Password<em className="text-redText">*</em>
-                  </label>
-                  <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="Enter your password"
-                    className="login-input modal-input"
-                    // onChange={(e) => handleChange(e)}
                   />
                 </div>
                 <div className="login-input-container w-[1/3]">
-                  <label htmlFor="password" className="login-label">
-                    Password<em className="text-redText">*</em>
+                  <label htmlFor="company_phone" className="login-label">
+                    Company Phone
                   </label>
                   <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="Enter your password"
+                    type="text"
+                    id="company_phone"
+                    name="company_phone"
+                    placeholder="(555) 123-4567"
                     className="login-input modal-input"
-                    // onChange={(e) => handleChange(e)}
                   />
                 </div>
-
                 <div className="login-input-container w-[1/3]">
-                  <label htmlFor="email" className="login-label">
-                    Email<em className="text-redText">*</em>
+                  <label htmlFor="notes" className="login-label">
+                    Notes
                   </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="Enter your email"
+                  <textarea
+                    id="notes"
+                    name="notes"
+                    rows={5}
+                    placeholder="The interview went well, waiting for feedback."
                     className="login-input modal-input"
-                    // onChange={(e) => handleChange(e)}
-                  />
-                  {/* {errors.email && (
-                  <em className="err-message">{errors.email}</em>
-                )} */}
+                  ></textarea>
                 </div>
               </div>
 
@@ -267,7 +379,7 @@ const Applications = () => {
                 className="main-btn float-right mt-0"
                 // onClick={(e) => submitAction(e)}
               >
-                Log In
+                Create
               </button>
             </form>
           </Modal>
