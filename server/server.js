@@ -10,6 +10,7 @@ import passport from "passport";
 import "./passportConfig.js";
 import GoogleStrategyModule from "passport-google-oauth20";
 import { ensureAuthenticated } from "./middlewares/auth.js";
+import ApplicationsRouter from "./routes/Applications.js";
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
@@ -176,6 +177,8 @@ app.get(
     //res.redirect("http://localhost:5173/dashboard");
   }
 );
+
+app.use("/api", ApplicationsRouter);
 
 app.listen(PORT, () => {
   console.log("Server running on port: " + PORT);
