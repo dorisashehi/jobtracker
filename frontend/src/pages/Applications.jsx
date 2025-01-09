@@ -1,9 +1,24 @@
 import { AuthenticatedContext } from "../context/AuthenticatedContext";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
+import ApplicationsAPI from "../services/ApplicationsAPI";
 import Select from "react-select";
 import Modal from "react-modal";
 const Applications = () => {
   const { user, isAuthenticated } = useContext(AuthenticatedContext);
+  const [applications, setApplications] = useState([]);
+  const [crFormData, setCrFormData] = useState({});
+  const [submissionError, setSubmissionError] = useState(null);
+
+  useEffect(() => {
+    // const fetchApplications = async () => {
+    //   const results = await ApplicationsAPI.getApplByUser(user.id);
+    //   setApplications(results);
+    // };
+
+    // fetchApplications();
+    setCrFormData({ ...crFormData, user_id: user.id }); //user id of authenticated user
+  }, [user]);
+
   const [modalIsOpen, setIsOpen] = useState({
     creation: false,
     edition: false,
@@ -27,7 +42,10 @@ const Applications = () => {
     { value: "optional", label: "Optional" },
   ];
 
-  const [selectedLocation, setLocationSelected] = useState(null);
+  const setSelectedLocation = (el) => {
+    setCrFormData({ ...crFormData, ["location"]: el.value });
+    validateField("location", el.value);
+  };
 
   const rejectedOptions = [
     { value: "response", label: "From Response" },
@@ -36,7 +54,10 @@ const Applications = () => {
     { value: "other", label: "Other" },
   ];
 
-  const [selectedRejection, setRejectedSelected] = useState(null);
+  const setRejectedSelected = (el) => {
+    setCrFormData({ ...crFormData, ["rejected"]: el.value });
+    validateField("rejected", el.value);
+  };
 
   const methodOptions = [
     { value: "company_web", label: "Company Website" },
@@ -47,10 +68,120 @@ const Applications = () => {
     { value: "other", label: "Other" },
   ];
 
-  const [selectedMethod, setMethodSelected] = useState(null);
+  const setMethodSelected = (el) => {
+    setCrFormData({ ...crFormData, ["apply_method"]: el.value });
+    validateField("apply_method", el.value);
+  };
 
-  const hangeEditAction = () => {
-    console.log("Edit Action");
+  const [errors, setErrors] = useState({
+    company_name: "",
+    company_website: "",
+    apply_date: "",
+    apply_method: "",
+    apply_url: "",
+    position: "",
+    location: "",
+  });
+
+  const validateAll = (formData) => {
+    let newErrors = {};
+    let valid = true;
+
+    const reqFields = [
+      "company_name",
+      "company_website",
+      "apply_date",
+      "apply_method",
+      "apply_url",
+      "position",
+      "location",
+    ];
+
+    reqFields.forEach((field) => {
+      if (!formData[field]) {
+        newErrors[field] = "Required field.";
+        valid = false;
+      }
+    });
+
+    if (formData.contact_email) {
+      if (!/\S+@\S+\.\S+/.test(formData.contact_email)) {
+        newErrors.contact_email = "Please enter a valid email address.";
+        valid = false;
+      }
+    }
+
+    return { valid, newErrors };
+  };
+
+  const validateField = (name, value) => {
+    const newErrors = {};
+    let valid = true;
+
+    if (
+      name == "company_name" ||
+      name == "company_website" ||
+      name == "apply_date" ||
+      name == "apply_method" ||
+      name == "apply_url" ||
+      name == "position" ||
+      name == "location"
+    ) {
+      if (!value) {
+        newErrors[name] = "Required Field";
+        valid = false;
+      } else {
+        newErrors[name] = "";
+      }
+    }
+
+    setErrors({ ...errors, ...newErrors });
+    return valid;
+  };
+
+  const handleChange = (input) => {
+    const { name, value } = input;
+
+    setCrFormData({
+      ...crFormData,
+      [name]: value,
+    });
+
+    validateField(name, value);
+  };
+
+  const handleSubmitApplication = async (e) => {
+    e.preventDefault();
+    const { valid, newErrors } = validateAll(crFormData);
+    setErrors(newErrors);
+    if (valid) {
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(crFormData),
+      };
+
+      try {
+        const response = await fetch(
+          "http://localhost:3000/api/application/create",
+          options
+        );
+        const data = await response.json();
+        if (data.error) {
+          setCrFormData({
+            ...crFormData,
+            submissionError: data.error,
+          });
+        }
+      } catch (error) {
+        setCrFormData({
+          ...crFormData,
+          submissionError: error.message,
+        });
+      }
+    }
   };
   return (
     <>
@@ -257,19 +388,28 @@ const Applications = () => {
                     name="company_name"
                     placeholder="TechCorp Inc."
                     className="login-input modal-input"
+                    onChange={(e) => handleChange(e.target)}
                   />
+
+                  {errors.company_name && (
+                    <em className="err-message">{errors.company_name}</em>
+                  )}
                 </div>
                 <div className="modal-input-container">
-                  <label htmlFor="company_web" className="modal-label">
+                  <label htmlFor="company_website" className="modal-label">
                     Company Website<em className="text-redText">*</em>
                   </label>
                   <input
                     type="text"
-                    id="company_web"
-                    name="company_web"
+                    id="company_website"
+                    name="company_website"
                     placeholder="www.techcorp.com"
                     className="login-input modal-input"
+                    onChange={(e) => handleChange(e.target)}
                   />
+                  {errors.company_website && (
+                    <em className="err-message">{errors.company_website}</em>
+                  )}
                 </div>
                 <div className="modal-input-container flex items-start min-w-[300px] ">
                   <label htmlFor="favorite" className="modal-label ">
@@ -281,69 +421,88 @@ const Applications = () => {
                     id="favorite"
                     name="favorite"
                     className="login-input mr-[8px]"
+                    onChange={(e) => handleChange(e.target)}
                   />
                 </div>
                 <div className="modal-input-container w-[1/3]">
-                  <label htmlFor="application_date" className="modal-label">
+                  <label htmlFor="apply_date" className="modal-label">
                     Apply Date<em className="text-redText">*</em>
                   </label>
                   <input
                     type="date"
-                    id="application_date"
-                    name="application_date"
+                    id="apply_date"
+                    name="apply_date"
                     placeholder="2024-01-15"
                     className="login-input modal-input"
+                    onChange={(e) => handleChange(e.target)}
                   />
+                  {errors.apply_date && (
+                    <em className="err-message">{errors.apply_date}</em>
+                  )}
                 </div>
                 <div className="modal-input-container w-[1/3]">
-                  <label htmlFor="application_method" className="modal-label">
+                  <label htmlFor="apply_method" className="modal-label">
                     Apply Method<em className="text-redText">*</em>
                   </label>
                   <Select
-                    defaultValue={selectedMethod}
-                    onChange={() => setMethodSelected}
+                    defaultValue={crFormData.apply_method}
+                    onChange={setMethodSelected}
                     options={methodOptions}
-                    id="application_method"
-                    name="application_method"
+                    id="apply_method"
+                    name="apply_method"
                     className="login-input modal-input p-[0px] outline-none active:outline-none"
                   />
+                  {errors.apply_method && (
+                    <em className="err-message">{errors.apply_method}</em>
+                  )}
                 </div>
                 <div className="modal-input-container w-[1/3]">
-                  <label htmlFor="application_url" className="modal-label">
+                  <label htmlFor="apply_url" className="modal-label">
                     Apply URL<em className="text-redText">*</em>
                   </label>
                   <input
                     type="text"
-                    id="application_url"
-                    name="application_url"
+                    id="apply_url"
+                    name="apply_url"
                     placeholder="www.techcorp.com/careers"
                     className="login-input modal-input"
+                    onChange={(e) => handleChange(e.target)}
                   />
+                  {errors.apply_url && (
+                    <em className="err-message">{errors.apply_url}</em>
+                  )}
                 </div>
                 <div className="modal-input-container w-[1/3]">
-                  <label htmlFor="positon" className="modal-label">
+                  <label htmlFor="position" className="modal-label">
                     Position<em className="text-redText">*</em>
                   </label>
                   <input
                     type="text"
-                    id="positon"
-                    name="positon"
+                    id="position"
+                    name="position"
                     placeholder="Software Engineer"
                     className="login-input modal-input"
+                    onChange={(e) => handleChange(e.target)}
                   />
+                  {errors.position && (
+                    <em className="err-message">{errors.position}</em>
+                  )}
                 </div>
                 <div className="modal-input-container w-[1/3]">
                   <label htmlFor="location" className="modal-label">
                     Location<em className="text-redText">*</em>
                   </label>
                   <Select
-                    defaultValue={selectedLocation}
-                    onChange={() => setLocationSelected}
+                    defaultValue={crFormData.location}
+                    onChange={setSelectedLocation}
                     options={locationOptions}
                     id="location"
                     name="location"
                     className="login-input modal-input p-[0px] outline-none active:outline-none"
                   />
+                  {errors.location && (
+                    <em className="err-message">{errors.location}</em>
+                  )}
                 </div>
                 <div className="modal-input-container w-[1/3]">
                   <label htmlFor="interview_date" className="modal-label">
@@ -355,18 +514,20 @@ const Applications = () => {
                     name="interview_date"
                     placeholder="2024-01-20"
                     className="login-input modal-input"
+                    onChange={(e) => handleChange(e.target)}
                   />
                 </div>
                 <div className="modal-input-container w-[1/3]">
-                  <label htmlFor="amount_offered" className="modal-label">
+                  <label htmlFor="offer_amount" className="modal-label">
                     Offer Amount
                   </label>
                   <input
                     type="number"
-                    id="amount_offered"
-                    name="amount_offered"
+                    id="offer_amount"
+                    name="offer_amount"
                     placeholder="85000"
                     className="login-input modal-input"
+                    onChange={(e) => handleChange(e.target)}
                   />
                 </div>
                 <div className="modal-input-container w-[1/3]">
@@ -374,8 +535,8 @@ const Applications = () => {
                     Rejected
                   </label>
                   <Select
-                    defaultValue={selectedRejection}
-                    onChange={() => setRejectedSelected}
+                    defaultValue={crFormData.rejected}
+                    onChange={setRejectedSelected}
                     options={rejectedOptions}
                     id="rejected"
                     name="rejected"
@@ -392,6 +553,7 @@ const Applications = () => {
                     name="contact_name"
                     placeholder="John Doe"
                     className="login-input modal-input"
+                    onChange={(e) => handleChange(e.target)}
                   />
                 </div>
                 <div className="modal-input-container w-[1/3]">
@@ -404,6 +566,7 @@ const Applications = () => {
                     rows={5}
                     placeholder="The interview went well, waiting for feedback."
                     className="login-input modal-input"
+                    onChange={(e) => handleChange(e.target)}
                   ></textarea>
                 </div>
                 <div className="modal-input-container w-[1/3]">
@@ -416,18 +579,23 @@ const Applications = () => {
                     name="contact_email"
                     placeholder="john.doe@example.com"
                     className="login-input modal-input"
+                    onChange={(e) => handleChange(e.target)}
                   />
+                  {errors.contact_email && (
+                    <em className="err-message">{errors.contact_email}</em>
+                  )}
                 </div>
                 <div className="modal-input-container w-[1/3]">
-                  <label htmlFor="company_phone" className="modal-label">
+                  <label htmlFor="contact_phone" className="modal-label">
                     Company Phone
                   </label>
                   <input
                     type="text"
-                    id="company_phone"
-                    name="company_phone"
+                    id="contact_phone"
+                    name="contact_phone"
                     placeholder="(555) 123-4567"
                     className="login-input modal-input"
+                    onChange={(e) => handleChange(e.target)}
                   />
                 </div>
               </div>
@@ -435,10 +603,13 @@ const Applications = () => {
               <button
                 type="submit"
                 className="main-btn float-right mt-0 self-end"
-                // onClick={(e) => submitAction(e)}
+                onClick={(e) => handleSubmitApplication(e)}
               >
                 Create
               </button>
+              {crFormData.submissionError && (
+                <em className="err-message">{crFormData.submissionError}</em>
+              )}
             </form>
           </Modal>
 
@@ -525,8 +696,8 @@ const Applications = () => {
                     Apply Method<em className="text-redText">*</em>
                   </label>
                   <Select
-                    defaultValue={selectedMethod}
-                    onChange={() => setMethodSelected}
+                    defaultValue={crFormData.apply_method}
+                    onChange={setMethodSelected}
                     options={methodOptions}
                     id="application_method"
                     name="application_method"
@@ -546,13 +717,13 @@ const Applications = () => {
                   />
                 </div>
                 <div className="modal-input-container w-[1/3]">
-                  <label htmlFor="positon" className="modal-label">
+                  <label htmlFor="position" className="modal-label">
                     Position<em className="text-redText">*</em>
                   </label>
                   <input
                     type="text"
-                    id="positon"
-                    name="positon"
+                    id="position"
+                    name="position"
                     placeholder="Software Engineer"
                     className="login-input modal-input"
                   />
@@ -562,8 +733,8 @@ const Applications = () => {
                     Location<em className="text-redText">*</em>
                   </label>
                   <Select
-                    defaultValue={selectedLocation}
-                    onChange={() => setLocationSelected}
+                    defaultValue={crFormData.location}
+                    onChange={setSelectedLocation}
                     options={locationOptions}
                     id="location"
                     name="location"
@@ -599,8 +770,8 @@ const Applications = () => {
                     Rejected
                   </label>
                   <Select
-                    defaultValue={selectedRejection}
-                    onChange={() => setRejectedSelected}
+                    defaultValue={crFormData.rejected}
+                    onChange={setRejectedSelected}
                     options={rejectedOptions}
                     id="rejected"
                     name="rejected"

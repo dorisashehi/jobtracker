@@ -263,13 +263,13 @@ const EditApplications = () => {
                   />
                 </div>
                 <div className="login-input-container w-[1/3]">
-                  <label htmlFor="positon" className="login-label">
+                  <label htmlFor="position" className="login-label">
                     Position<em className="text-redText">*</em>
                   </label>
                   <input
                     type="text"
-                    id="positon"
-                    name="positon"
+                    id="position"
+                    name="position"
                     placeholder="Software Engineer"
                     className="login-input modal-input"
                   />

@@ -6,5 +6,5 @@ router.get(
   "/applications/:userId",
   ApplicationsController.getApplicationsByUser
 );
-
+router.post("/application/create", ApplicationsController.createApplication);
 export default router;
