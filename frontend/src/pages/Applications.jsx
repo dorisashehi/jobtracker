@@ -3,11 +3,13 @@ import { useContext, useState, useEffect } from "react";
 import ApplicationsAPI from "../services/ApplicationsAPI";
 import Select from "react-select";
 import Modal from "react-modal";
+import { useNavigate } from "react-router-dom";
+
 const Applications = () => {
   const { user, isAuthenticated } = useContext(AuthenticatedContext);
   const [applications, setApplications] = useState([]);
   const [crFormData, setCrFormData] = useState({});
-  const [submissionError, setSubmissionError] = useState(null);
+  let navigate = useNavigate();
 
   useEffect(() => {
     // const fetchApplications = async () => {
@@ -169,6 +171,10 @@ const Applications = () => {
           options
         );
         const data = await response.json();
+        console.log(data);
+        if (data.success) {
+          closeModal("creation");
+        }
         if (data.error) {
           setCrFormData({
             ...crFormData,

@@ -82,7 +82,7 @@ const createApplication = async (req, res) => {
       ]
     );
 
-    return res.status(200).json(results.rows);
+    return res.status(200).json({ success: results.rows });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
