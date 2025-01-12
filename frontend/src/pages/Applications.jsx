@@ -1,23 +1,23 @@
 import { AuthenticatedContext } from "../context/AuthenticatedContext";
 import { useContext, useState, useEffect } from "react";
+import ApplicationsTable from "./ApplicationsTable";
 import ApplicationsAPI from "../services/ApplicationsAPI";
 import Select from "react-select";
 import Modal from "react-modal";
-import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
 
 const Applications = () => {
   const { user, isAuthenticated } = useContext(AuthenticatedContext);
   const [applications, setApplications] = useState([]);
   const [crFormData, setCrFormData] = useState({});
-  let navigate = useNavigate();
 
   useEffect(() => {
-    // const fetchApplications = async () => {
-    //   const results = await ApplicationsAPI.getApplByUser(user.id);
-    //   setApplications(results);
-    // };
+    const fetchApplications = async () => {
+      const results = await ApplicationsAPI.getApplByUser(user.id);
+      setApplications(results);
+    };
 
-    // fetchApplications();
+    fetchApplications();
     setCrFormData({ ...crFormData, user_id: user.id }); //user id of authenticated user
   }, [user]);
 
@@ -171,7 +171,7 @@ const Applications = () => {
           options
         );
         const data = await response.json();
-        console.log(data);
+
         if (data.success) {
           closeModal("creation");
         }
@@ -273,82 +273,10 @@ const Applications = () => {
                 </div>
               </div>
               <div className="flex-1">
-                <table className="table-design">
-                  <thead className="uppercase border-[1.5px] border-borderColor">
-                    <tr>
-                      <th className="table-head"></th>
-                      <th className="table-head">Date</th>
-                      <th className="table-head">Name</th>
-                      <th className="table-head">Method</th>
-                      <th className="table-head">Position</th>
-                      <th className="table-head">Fit</th>
-                      <th className="table-head">Location</th>
-                      <th className="table-head">Interview</th>
-                      <th className="table-head">Offer</th>
-                      <th className="table-head">Action</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    <tr>
-                      <td className="table-item">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 -960 960 960"
-                          fill="#5f6368"
-                          className="icon-style-small"
-                        >
-                          <path d="M240-400q-33 0-56.5-23.5T160-480q0-33 23.5-56.5T240-560q33 0 56.5 23.5T320-480q0 33-23.5 56.5T240-400Zm240 0q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm240 0q-33 0-56.5-23.5T640-480q0-33 23.5-56.5T720-560q33 0 56.5 23.5T800-480q0 33-23.5 56.5T720-400Z" />
-                        </svg>
-                      </td>
-                      <td className="table-item">2025-01-01</td>
-                      <td className="table-item">John Doe</td>
-                      <td className="table-item">Online</td>
-                      <td className="table-item">Software Engineer</td>
-                      <td className="table-item">Excellent</td>
-                      <td className="table-item">New York</td>
-                      <td className="table-item">2025-01-05</td>
-                      <td className="table-item">Pending</td>
-                      <td className="table-item">
-                        <button
-                          onClick={() => openModal("view")}
-                          className="main-btn bg-lightGreen"
-                        >
-                          View
-                        </button>
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td className="table-item">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 -960 960 960"
-                          fill="#5f6368"
-                          className="icon-style-small"
-                        >
-                          <path d="M240-400q-33 0-56.5-23.5T160-480q0-33 23.5-56.5T240-560q33 0 56.5 23.5T320-480q0 33-23.5 56.5T240-400Zm240 0q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm240 0q-33 0-56.5-23.5T640-480q0-33 23.5-56.5T720-560q33 0 56.5 23.5T800-480q0 33-23.5 56.5T720-400Z" />
-                        </svg>
-                      </td>
-                      <td className="table-item">2025-01-01</td>
-                      <td className="table-item">John Doe</td>
-                      <td className="table-item">Online</td>
-                      <td className="table-item">Software Engineer</td>
-                      <td className="table-item">Excellent</td>
-                      <td className="table-item">New York</td>
-                      <td className="table-item">2025-01-05</td>
-                      <td className="table-item">Pending</td>
-                      <td className="table-item">
-                        <button
-                          onClick={() => openModal("view")}
-                          className="main-btn bg-lightGreen"
-                        >
-                          View
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                <ApplicationsTable
+                  applications={applications}
+                  openModal={openModal}
+                />
               </div>
             </>
           ) : (
