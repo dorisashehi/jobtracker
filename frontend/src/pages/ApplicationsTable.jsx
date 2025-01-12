@@ -24,11 +24,11 @@ const ApplicationsTable = ({ applications, openModal }) => {
         {Array.from(applications)?.map((application) => {
           const applyDate = format(
             new Date(application.apply_date),
-            "do MMMM Y"
+            "do MMMM y"
           );
           const interviewDate = format(
             new Date(application.interview_date),
-            "do MMMM Y"
+            "do MMMM y"
           );
           return (
             <>

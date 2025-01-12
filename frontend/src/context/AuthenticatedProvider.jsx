@@ -27,10 +27,12 @@ const AuthenticatedProvider = ({ children }) => {
       }
 
       if (data.error) {
+        setUser(null);
         setIsAuthenticated(false);
       }
     } catch (error) {
       console.log(error);
+      setUser(null);
       setIsAuthenticated(false);
     }
   };

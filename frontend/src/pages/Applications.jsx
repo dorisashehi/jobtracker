@@ -2,16 +2,22 @@ import { AuthenticatedContext } from "../context/AuthenticatedContext";
 import { useContext, useState, useEffect } from "react";
 import ApplicationsTable from "./ApplicationsTable";
 import ApplicationsAPI from "../services/ApplicationsAPI";
+import ModalHeader from "../components/ModalHeader";
+//import CreateModal from "./CreateModal";
+import Button from "../components/Button";
+import Header from "../components/Header";
+import Spiner from "../components/Spiner";
 import Select from "react-select";
 import Modal from "react-modal";
-import { format } from "date-fns";
 
 const Applications = () => {
   const { user, isAuthenticated } = useContext(AuthenticatedContext);
   const [applications, setApplications] = useState([]);
   const [crFormData, setCrFormData] = useState({});
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    console.log("heyy");
     const fetchApplications = async () => {
       const results = await ApplicationsAPI.getApplByUser(user.id);
       setApplications(results);
@@ -19,7 +25,7 @@ const Applications = () => {
 
     fetchApplications();
     setCrFormData({ ...crFormData, user_id: user.id }); //user id of authenticated user
-  }, [user]);
+  }, [user.id]);
 
   const [modalIsOpen, setIsOpen] = useState({
     creation: false,
@@ -195,32 +201,22 @@ const Applications = () => {
         <div className="content justify-center flex lg:flex-col">
           {isAuthenticated ? (
             <>
-              <div className="flex-1">
-                <div className="flex flex-col">
-                  <div className="header-w-text">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="icon-style-large"
-                      viewBox="0 -960 960 960"
-                      fill="text-black"
-                    >
-                      <path d="M240-280h240v-80H240v80Zm120-160h240v-80H360v80Zm120-160h240v-80H480v80ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z" />
-                    </svg>
-                    <h1 className="header-main">Applications</h1>
-                  </div>
-                  <p className="header-text-desc mt-2">
-                    Manage all of your job applications
-                  </p>
-                </div>
-              </div>
+              <Header
+                title="Applications"
+                desc="Manage all of your job applications"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="icon-style-large"
+                  viewBox="0 -960 960 960"
+                  fill="text-black"
+                >
+                  <path d="M240-280h240v-80H240v80Zm120-160h240v-80H360v80Zm120-160h240v-80H480v80ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z" />
+                </svg>
+              </Header>
 
               <div className="flex-1 filter-bar">
-                <button
-                  type="submit"
-                  onClick={() => openModal("creation")}
-                  className="main-btn float-right mt-0"
-                >
-                  <p>Create</p>
+                <Button title="Create" onClickAct={() => openModal("creation")}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="icon-style-small fill-[#FFFFFF]"
@@ -228,7 +224,7 @@ const Applications = () => {
                   >
                     <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
                   </svg>
-                </button>
+                </Button>
                 <div className="flex gap-5">
                   <div className="relative w-fit">
                     <div className="search-container">
@@ -256,12 +252,7 @@ const Applications = () => {
                       required
                     />
                   </div>
-                  <button
-                    type="submit"
-                    // onClick={() => openModal("creation")}
-                    className="main-btn float-right mt-0"
-                  >
-                    <p>Export</p>
+                  <Button title="Export">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 -960 960 960"
@@ -269,14 +260,18 @@ const Applications = () => {
                     >
                       <path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h200v80H160v480h640v-480H600v-80h200q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-184L280-544l56-56 104 104v-304h80v304l104-104 56 56-200 200Z" />
                     </svg>
-                  </button>
+                  </Button>
                 </div>
               </div>
               <div className="flex-1">
-                <ApplicationsTable
-                  applications={applications}
-                  openModal={openModal}
-                />
+                {loading ? (
+                  <Spiner />
+                ) : (
+                  <ApplicationsTable
+                    applications={applications}
+                    openModal={openModal}
+                  />
+                )}
               </div>
             </>
           ) : (
@@ -288,7 +283,10 @@ const Applications = () => {
             contentLabel="Create Application"
           >
             <div className="modal-container">
-              <h1 className="header-main modal-header">
+              <ModalHeader
+                title="Application Details"
+                onClose={() => closeModal("creation")}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 -960 960 960"
@@ -297,17 +295,7 @@ const Applications = () => {
                 >
                   <path d="M120-320v-80h280v80H120Zm0-160v-80h440v80H120Zm0-160v-80h440v80H120Zm520 480v-160H480v-80h160v-160h80v160h160v80H720v160h-80Z" />
                 </svg>
-                Application Details
-              </h1>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 -960 960 960"
-                className="modal-close"
-                fill="#5f6368"
-                onClick={() => closeModal("creation")}
-              >
-                <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
-              </svg>
+              </ModalHeader>
             </div>
 
             <form className="modal-form flex w-fit flex-col">
