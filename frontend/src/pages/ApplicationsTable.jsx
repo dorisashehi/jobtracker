@@ -17,7 +17,7 @@ const ApplicationsTable = ({
     e.preventDefault();
 
     const application = await ApplicationsAPI.getApplicationById(appId);
-    setApplication(application[0]);
+    setApplication(application);
     openModal("view");
   };
 

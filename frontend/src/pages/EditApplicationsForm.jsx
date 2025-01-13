@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import Select from "react-select";
 import { useState } from "react";
 import ApplicationsAPI from "../services/ApplicationsAPI";
+import { format } from "date-fns";
 
 const EditApplicationsForm = ({ closeModal, application }) => {
   const [applicationData, setApplicationData] = useState(application);
@@ -136,7 +137,7 @@ const EditApplicationsForm = ({ closeModal, application }) => {
           application.id,
           options
         );
-        const data = response[0];
+        const data = response;
 
         if (data.success) {
           closeModal("edition");
@@ -218,7 +219,7 @@ const EditApplicationsForm = ({ closeModal, application }) => {
             placeholder="2024-01-15"
             className="login-input modal-input"
             onChange={(e) => handleChange(e.target)}
-            value={applicationData.apply_date}
+            value={format(new Date(applicationData.apply_date), "yyyy-MM-dd")}
           />
           {errors.apply_date && (
             <em className="err-message">{errors.apply_date}</em>
@@ -304,7 +305,10 @@ const EditApplicationsForm = ({ closeModal, application }) => {
             name="interview_date"
             placeholder="2024-01-20"
             className="login-input modal-input"
-            value={applicationData.interview_date}
+            value={format(
+              new Date(applicationData.interview_date),
+              "yyyy-MM-dd"
+            )}
             onChange={(e) => handleChange(e.target)}
           />
         </div>

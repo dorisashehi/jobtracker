@@ -97,7 +97,7 @@ const getApplicationById = async (req, res) => {
       [appId]
     );
 
-    return res.status(200).json(results.rows);
+    return res.status(200).json(results.rows[0]);
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
@@ -172,7 +172,7 @@ const updateApplicationById = async (req, res) => {
       ]
     );
 
-    return res.status(200).json({ success: results.rows });
+    return res.status(200).json({ success: results.rows[0] });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
