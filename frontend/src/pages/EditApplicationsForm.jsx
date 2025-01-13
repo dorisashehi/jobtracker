@@ -198,7 +198,7 @@ const EditApplicationsForm = ({ closeModal, application, setApplications }) => {
             name="company_name"
             placeholder="TechCorp Inc."
             className="login-input modal-input"
-            value={applicationData.company_name}
+            value={applicationData.company_name || ""}
             onChange={(e) => handleChange(e.target)}
           />
 
@@ -217,7 +217,7 @@ const EditApplicationsForm = ({ closeModal, application, setApplications }) => {
             placeholder="www.techcorp.com"
             className="login-input modal-input"
             onChange={(e) => handleChange(e.target)}
-            value={applicationData.company_website}
+            value={applicationData.company_website || ""}
           />
           {errors.company_website && (
             <em className="err-message">{errors.company_website}</em>
@@ -234,7 +234,7 @@ const EditApplicationsForm = ({ closeModal, application, setApplications }) => {
             name="favorite"
             className="login-input mr-[8px]"
             onChange={(e) => handleChange(e.target)}
-            value={applicationData.favorite}
+            value={applicationData.favorite || false}
           />
         </div>
         <div className="modal-input-container w-[1/3]">
@@ -248,7 +248,9 @@ const EditApplicationsForm = ({ closeModal, application, setApplications }) => {
             placeholder="2024-01-15"
             className="login-input modal-input"
             onChange={(e) => handleChange(e.target)}
-            value={format(new Date(applicationData.apply_date), "yyyy-MM-dd")}
+            value={
+              format(new Date(applicationData.apply_date), "yyyy-MM-dd") || ""
+            }
           />
           {errors.apply_date && (
             <em className="err-message">{errors.apply_date}</em>
@@ -283,7 +285,7 @@ const EditApplicationsForm = ({ closeModal, application, setApplications }) => {
             placeholder="www.techcorp.com/careers"
             className="login-input modal-input"
             onChange={(e) => handleChange(e.target)}
-            value={applicationData.apply_url}
+            value={applicationData.apply_url || ""}
           />
           {errors.apply_url && (
             <em className="err-message">{errors.apply_url}</em>
@@ -300,7 +302,7 @@ const EditApplicationsForm = ({ closeModal, application, setApplications }) => {
             placeholder="Software Engineer"
             className="login-input modal-input"
             onChange={(e) => handleChange(e.target)}
-            value={applicationData.position}
+            value={applicationData.position || ""}
           />
           {errors.position && (
             <em className="err-message">{errors.position}</em>
@@ -334,10 +336,10 @@ const EditApplicationsForm = ({ closeModal, application, setApplications }) => {
             name="interview_date"
             placeholder="2024-01-20"
             className="login-input modal-input"
-            value={format(
-              new Date(applicationData.interview_date),
-              "yyyy-MM-dd"
-            )}
+            value={
+              format(new Date(applicationData.interview_date), "yyyy-MM-dd") ||
+              ""
+            }
             onChange={(e) => handleChange(e.target)}
           />
         </div>
@@ -352,7 +354,7 @@ const EditApplicationsForm = ({ closeModal, application, setApplications }) => {
             placeholder="85000"
             className="login-input modal-input"
             onChange={(e) => handleChange(e.target)}
-            value={applicationData.offer_amount}
+            value={applicationData.offer_amount || ""}
           />
         </div>
         <div className="modal-input-container w-[1/3]">
@@ -381,7 +383,7 @@ const EditApplicationsForm = ({ closeModal, application, setApplications }) => {
             placeholder="John Doe"
             className="login-input modal-input"
             onChange={(e) => handleChange(e.target)}
-            value={applicationData.contact_name}
+            value={applicationData.contact_name || ""}
           />
         </div>
         <div className="modal-input-container w-[1/3]">
@@ -395,7 +397,7 @@ const EditApplicationsForm = ({ closeModal, application, setApplications }) => {
             placeholder="The interview went well, waiting for feedback."
             className="login-input modal-input"
             onChange={(e) => handleChange(e.target)}
-            value={applicationData.notes}
+            value={applicationData.notes || ""}
           ></textarea>
         </div>
         <div className="modal-input-container w-[1/3]">
@@ -409,7 +411,7 @@ const EditApplicationsForm = ({ closeModal, application, setApplications }) => {
             placeholder="john.doe@example.com"
             className="login-input modal-input"
             onChange={(e) => handleChange(e.target)}
-            value={applicationData.contact_email}
+            value={applicationData.contact_email || ""}
           />
           {errors.contact_email && (
             <em className="err-message">{errors.contact_email}</em>
@@ -426,7 +428,7 @@ const EditApplicationsForm = ({ closeModal, application, setApplications }) => {
             placeholder="(555) 123-4567"
             className="login-input modal-input"
             onChange={(e) => handleChange(e.target)}
-            value={applicationData.contact_phone}
+            value={applicationData.contact_phone || ""}
           />
         </div>
       </div>
