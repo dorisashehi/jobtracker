@@ -177,9 +177,27 @@ const updateApplicationById = async (req, res) => {
   }
 };
 
+const deleteApplicationById = async (req, res) => {
+  //func to get application by id passed as parameter
+  console.log(req.params.appId);
+  const appId = req.params.appId;
+  try {
+    const results = await pool.query("DELETE FROM applications WHERE id = $1", [
+      appId,
+    ]);
+
+    console.log(results.rows.length);
+    if (results.rows.length === 0) {
+      return res.status(200).json({ success: "Application not found." });
+    }
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+};
 export default {
   getApplicationsByUser,
   createApplication,
   getApplicationById,
   updateApplicationById,
+  deleteApplicationById,
 };

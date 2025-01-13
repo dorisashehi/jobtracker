@@ -156,6 +156,32 @@ const EditApplicationsForm = ({ closeModal, application }) => {
       }
     }
   };
+
+  const handleDeleteApplication = async (e) => {
+    e.preventDefault();
+    console.log(application.id);
+
+    try {
+      const response = await ApplicationsAPI.deleteApplById(application.id);
+      const data = response;
+
+      if (data.success) {
+        closeModal("view");
+      }
+      if (data.error) {
+        setApplicationData({
+          ...applicationData,
+          submissionError: data.error,
+        });
+      }
+    } catch (error) {
+      setApplicationData({
+        ...applicationData,
+        submissionError: error.message,
+      });
+    }
+  };
+
   return (
     <form className="modal-form flex w-fit flex-col">
       <div className="modal-content">
@@ -402,6 +428,13 @@ const EditApplicationsForm = ({ closeModal, application }) => {
         </div>
       </div>
 
+      <button
+        type="submit"
+        className="main-btn float-right mt-0 self-end"
+        onClick={(e) => handleDeleteApplication(e)}
+      >
+        Delete
+      </button>
       <button
         type="submit"
         className="main-btn float-right mt-0 self-end"

@@ -14,4 +14,9 @@ router.post(
   ApplicationsController.updateApplicationById
 );
 
+router.get(
+  "/application/delete/:appId",
+  ApplicationsController.deleteApplicationById
+);
+
 export default router;
