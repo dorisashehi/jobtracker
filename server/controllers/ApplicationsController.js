@@ -107,7 +107,6 @@ const updateApplicationById = async (req, res) => {
   //func to create an application
   try {
     const {
-      //extract body data
       user_id,
       company_name,
       company_website,
@@ -150,7 +149,7 @@ const updateApplicationById = async (req, res) => {
 
     const results = await pool.query(
       //insert to database values passed to API
-      "UPDATE applications SET user_id = $1, company_name = $2, company_website = $3, favorite = $4, apply_date = $5,apply_method = $6, apply_url = $7, position = $8, location = $9, interview_date = $10,offer_amount = $11, rejected = $12, contact_name = $13, contact_email = $14, contact_phone = $15, notes = $16 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14, $15, $16) WHERE id = $17 RETURNING *",
+      "UPDATE applications SET user_id = $1, company_name = $2, company_website = $3, favorite = $4, apply_date = $5,apply_method = $6, apply_url = $7, position = $8, location = $9, interview_date = $10,offer_amount = $11, rejected = $12, contact_name = $13, contact_email = $14, contact_phone = $15, notes = $16 WHERE id = $17 RETURNING *",
       [
         user_id,
         company_name,

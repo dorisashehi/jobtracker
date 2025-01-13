@@ -9,9 +9,9 @@ router.get(
 router.post("/application/create", ApplicationsController.createApplication);
 
 router.get("/application/:appId", ApplicationsController.getApplicationById);
-router.get(
+router.post(
   "/application/update/:appId",
-  ApplicationsController.getApplicationById
+  ApplicationsController.updateApplicationById
 );
 
 export default router;

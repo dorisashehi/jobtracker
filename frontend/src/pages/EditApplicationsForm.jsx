@@ -140,7 +140,7 @@ const EditApplicationsForm = ({ closeModal, application }) => {
         const data = response;
 
         if (data.success) {
-          closeModal("edition");
+          closeModal("view");
         }
         if (data.error) {
           setApplicationData({

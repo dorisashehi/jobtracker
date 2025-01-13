@@ -113,7 +113,7 @@ const ApplicationsTable = ({
       <Modal
         isOpen={modalIsOpen.view}
         onRequestClose={() => closeModal("view")}
-        contentLabel="Edit Application"
+        contentLabel="Update Application"
       >
         <div className="modal-container">
           <ModalHeader
