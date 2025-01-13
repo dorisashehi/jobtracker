@@ -2,7 +2,12 @@ import PropTypes from "prop-types";
 import Select from "react-select";
 import { useState } from "react";
 
-const ApplicationsForm = ({ crFormData, setCrFormData, closeModal }) => {
+const ApplicationsForm = ({
+  crFormData,
+  setCrFormData,
+  setApplications,
+  closeModal,
+}) => {
   const locationOptions = [
     { value: "onsite", label: "On-Site" },
     { value: "remote", label: "Remote" },
@@ -137,6 +142,7 @@ const ApplicationsForm = ({ crFormData, setCrFormData, closeModal }) => {
         const data = await response.json();
 
         if (data.success) {
+          setApplications((prevState) => [...prevState, data.success]);
           closeModal("creation");
         }
         if (data.error) {
@@ -396,5 +402,6 @@ ApplicationsForm.propTypes = {
   crFormData: PropTypes.object.isRequired,
   setCrFormData: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
+  setApplications: PropTypes.func.isRequired,
 };
 export default ApplicationsForm;

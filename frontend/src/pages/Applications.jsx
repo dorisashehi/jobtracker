@@ -119,6 +119,7 @@ const Applications = () => {
                     openModal={openModal}
                     modalIsOpen={modalIsOpen}
                     closeModal={closeModal}
+                    setApplications={setApplications}
                   />
                 )}
               </div>
@@ -150,6 +151,7 @@ const Applications = () => {
               crFormData={crFormData}
               setCrFormData={setCrFormData}
               closeModal={closeModal}
+              setApplications={setApplications}
             ></ApplicationsForm>
           </Modal>
         </div>

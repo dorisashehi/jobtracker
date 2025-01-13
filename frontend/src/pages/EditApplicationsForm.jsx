@@ -3,9 +3,11 @@ import Select from "react-select";
 import { useState } from "react";
 import ApplicationsAPI from "../services/ApplicationsAPI";
 import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
 
-const EditApplicationsForm = ({ closeModal, application }) => {
+const EditApplicationsForm = ({ closeModal, application, setCrFormData }) => {
   const [applicationData, setApplicationData] = useState(application);
+  let navigate = useNavigate();
   const locationOptions = [
     { value: "onsite", label: "On-Site" },
     { value: "remote", label: "Remote" },

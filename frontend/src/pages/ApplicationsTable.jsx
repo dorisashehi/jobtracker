@@ -11,6 +11,7 @@ const ApplicationsTable = ({
   modalIsOpen,
   closeModal,
   openModal,
+  setCrFormData,
 }) => {
   const [application, setApplication] = useState({});
   const handeOpenView = async (e, appId) => {
@@ -133,6 +134,7 @@ const ApplicationsTable = ({
         <EditApplicationsForm
           closeModal={closeModal}
           application={application}
+          setCrFormData={setCrFormData}
         ></EditApplicationsForm>
       </Modal>
     </>
