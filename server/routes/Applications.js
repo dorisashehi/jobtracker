@@ -7,4 +7,11 @@ router.get(
   ApplicationsController.getApplicationsByUser
 );
 router.post("/application/create", ApplicationsController.createApplication);
+
+router.get("/application/:appId", ApplicationsController.getApplicationById);
+router.get(
+  "/application/update/:appId",
+  ApplicationsController.getApplicationById
+);
+
 export default router;
