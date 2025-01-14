@@ -29,6 +29,10 @@ const Applications = () => {
     setCrFormData({ ...crFormData, user_id: user.id }); //user id of authenticated user
   }, [user?.id]);
 
+  useEffect(() => {
+    handleSearchApplications(searchText);
+  }, [applications, searchText]);
+
   const [modalIsOpen, setIsOpen] = useState({
     creation: false,
     edition: false,
@@ -60,6 +64,22 @@ const Applications = () => {
   //   }
   //   setFilteredApplications(applications);
   // };
+
+  const handleSearchApplications = (text) => {
+    setSearchText(text);
+    console.log(text.trim());
+
+    if (text.trim() !== "") {
+      const filtered = applications.filter((application) =>
+        ["company_name", "position", "location"].some((key) =>
+          application[key]?.toLowerCase().includes(text.toLowerCase())
+        )
+      );
+      setFilteredApplications(filtered);
+    } else {
+      setFilteredApplications(applications);
+    }
+  };
 
   return (
     <>
@@ -113,9 +133,9 @@ const Applications = () => {
                     <input
                       type="search"
                       id="default-search"
-                      className="search-input-box"
+                      className="search-input"
                       value={searchText}
-                      //onChange={(e) => handleSearchApplications(e.target.value)}
+                      onChange={(e) => handleSearchApplications(e.target.value)}
                       placeholder="Search by company name, position, or location"
                     />
                   </div>
@@ -135,7 +155,7 @@ const Applications = () => {
                   <Spiner />
                 ) : (
                   <ApplicationsTable
-                    applications={applications}
+                    applications={filteredApplications}
                     openModal={openModal}
                     modalIsOpen={modalIsOpen}
                     closeModal={closeModal}

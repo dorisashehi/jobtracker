@@ -9,8 +9,9 @@ const Navigation = () => {
   const [submitActionError, setSubmitActionError] = useState({ error: "" });
   let navigate = useNavigate();
 
-  const handleLogout = async () => {
+  const handleLogout = async (e) => {
     //submit form signup
+    e.preventDefault();
     const options = {
       method: "GET",
       headers: {
@@ -23,9 +24,13 @@ const Navigation = () => {
         "http://localhost:3000/users/logout",
         options
       );
-      console.log(response.data);
-      fetchUser();
-      navigate("/login");
+
+      if (response.ok) {
+        setTimeout(() => {
+          fetchUser();
+          navigate("/login");
+        }, 600);
+      }
     } catch (error) {
       console.log(error);
       setSubmitActionError({
@@ -82,7 +87,7 @@ const Navigation = () => {
                   to="/login"
                   className=""
                   aria-current="page"
-                  onClick={() => handleLogout()}
+                  onClick={(e) => handleLogout(e)}
                 >
                   Logout
                 </Link>
