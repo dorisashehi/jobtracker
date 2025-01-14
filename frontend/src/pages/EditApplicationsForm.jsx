@@ -4,6 +4,7 @@ import { useState } from "react";
 import ApplicationsAPI from "../services/ApplicationsAPI";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../components/Spiner";
 
 const EditApplicationsForm = ({
   closeModal,
@@ -12,6 +13,8 @@ const EditApplicationsForm = ({
   applications,
 }) => {
   const [applicationData, setApplicationData] = useState(application);
+  const [loadingUpdate, setLoadingUpdate] = useState(false);
+  const [loadingDelete, setLoadingDelete] = useState(false);
   let navigate = useNavigate();
   const locationOptions = [
     { value: "onsite", label: "On-Site" },
@@ -128,6 +131,7 @@ const EditApplicationsForm = ({
 
   const handleSubmitApplication = async (e) => {
     e.preventDefault();
+    setLoadingUpdate(true);
     const { valid, newErrors } = validateAll(applicationData);
     setErrors(newErrors);
     if (valid) {
@@ -169,6 +173,8 @@ const EditApplicationsForm = ({
         setApplicationData({
           ...applicationData,
           submissionError: error.message,
+        }).finally(() => {
+          setLoadingUpdate(false);
         });
       }
     }
@@ -176,7 +182,7 @@ const EditApplicationsForm = ({
 
   const handleDeleteApplication = async (e) => {
     e.preventDefault();
-    console.log(application.id);
+    setLoadingDelete(true);
 
     try {
       const response = await ApplicationsAPI.deleteApplById(application.id);
@@ -195,6 +201,8 @@ const EditApplicationsForm = ({
       setApplicationData({
         ...applicationData,
         submissionError: error.message,
+      }).finally(() => {
+        setLoading(true);
       });
     }
   };
@@ -452,14 +460,14 @@ const EditApplicationsForm = ({
         className="main-btn float-right mt-0 self-end"
         onClick={(e) => handleDeleteApplication(e)}
       >
-        Delete
+        Delete {loadingDelete && <Spinner />}
       </button>
       <button
         type="submit"
         className="main-btn float-right mt-0 self-end"
         onClick={(e) => handleSubmitApplication(e)}
       >
-        Update
+        Update {loadingUpdate && <Spinner />}
       </button>
       {applicationData.submissionError && (
         <em className="err-message">{applicationData.submissionError}</em>
