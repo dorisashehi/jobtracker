@@ -15,11 +15,14 @@ const Applications = () => {
   const [applications, setApplications] = useState([]);
   const [crFormData, setCrFormData] = useState({});
   const [loading, setLoading] = useState(false);
+  const [searchText, setSearchText] = useState("");
+  const [filteredApplications, setFilteredApplications] = useState([]);
 
   useEffect(() => {
     const fetchApplications = async () => {
       const results = await ApplicationsAPI.getApplByUser(user.id);
       setApplications(results);
+      setFilteredApplications(results);
     };
 
     fetchApplications();
@@ -41,6 +44,22 @@ const Applications = () => {
   }
 
   Modal.setAppElement("#root");
+
+  // const handleSearchApplications = (text) => {
+  //   setSearchText(text);
+
+  //   if (searchText !== "") {
+  //     let applicationsArr = applications.filter((application) => {
+  //       return application.company_name
+  //         .toLowerCase()
+  //         .includes(text.toLowerCase());
+  //     });
+  //     console.log(applicationsArr);
+  //     setFilteredApplications(applicationsArr);
+  //     return;
+  //   }
+  //   setFilteredApplications(applications);
+  // };
 
   return (
     <>
@@ -95,8 +114,9 @@ const Applications = () => {
                       type="search"
                       id="default-search"
                       className="search-input-box"
+                      value={searchText}
+                      //onChange={(e) => handleSearchApplications(e.target.value)}
                       placeholder="Search by company name, position, or location"
-                      required
                     />
                   </div>
                   <Button title="Export">

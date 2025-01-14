@@ -5,7 +5,12 @@ import ApplicationsAPI from "../services/ApplicationsAPI";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 
-const EditApplicationsForm = ({ closeModal, application, setApplications }) => {
+const EditApplicationsForm = ({
+  closeModal,
+  application,
+  setApplications,
+  applications,
+}) => {
   const [applicationData, setApplicationData] = useState(application);
   let navigate = useNavigate();
   const locationOptions = [
@@ -142,7 +147,16 @@ const EditApplicationsForm = ({ closeModal, application, setApplications }) => {
         const data = response;
 
         if (data.success) {
-          setApplications((prevState) => [...prevState, data.success]);
+          const indx = applications.findIndex((el) => el.id === application.id); //find index of application
+          setApplications((prevState) => {
+            //update application in specified index
+            const updatedApplications = [...prevState];
+            updatedApplications[indx] = {
+              ...updatedApplications[indx],
+              ...data.success,
+            };
+            return updatedApplications;
+          });
           closeModal("view");
         }
         if (data.error) {
@@ -458,5 +472,6 @@ EditApplicationsForm.propTypes = {
   application: PropTypes.object.isRequired,
   closeModal: PropTypes.func.isRequired,
   setApplications: PropTypes.func.isRequired,
+  applications: PropTypes.array.isRequired,
 };
 export default EditApplicationsForm;

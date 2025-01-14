@@ -137,6 +137,7 @@ const ApplicationsTable = ({
           application={application}
           setCrFormData={setCrFormData}
           setApplications={setApplications}
+          applications={applications}
         ></EditApplicationsForm>
       </Modal>
     </>
