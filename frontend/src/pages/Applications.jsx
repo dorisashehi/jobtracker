@@ -14,24 +14,34 @@ const Applications = () => {
   const { user, isAuthenticated } = useContext(AuthenticatedContext);
   const [applications, setApplications] = useState([]);
   const [crFormData, setCrFormData] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
   const [filteredApplications, setFilteredApplications] = useState([]);
 
   useEffect(() => {
-    const fetchApplications = async () => {
-      const results = await ApplicationsAPI.getApplByUser(user.id);
-      setApplications(results);
-      setFilteredApplications(results);
-    };
+    if (isAuthenticated) {
+      const fetchApplications = async () => {
+        try {
+          const results = await ApplicationsAPI.getApplByUser(user.id);
+          setApplications(results);
+          setFilteredApplications(results);
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setLoading(false);
+        }
+      };
 
-    fetchApplications();
-    setCrFormData({ ...crFormData, user_id: user.id }); //user id of authenticated user
-  }, [user?.id]);
+      fetchApplications();
+      setCrFormData({ ...crFormData, user_id: user.id }); //user id of authenticated user
+    }
+  }, [isAuthenticated, user?.id]);
 
   useEffect(() => {
-    handleSearchApplications(searchText);
-  }, [applications, searchText]);
+    setTimeout(() => {
+      handleSearchApplications(searchText);
+    }, 400);
+  }, [searchText, applications]);
 
   const [modalIsOpen, setIsOpen] = useState({
     creation: false,
@@ -49,26 +59,7 @@ const Applications = () => {
 
   Modal.setAppElement("#root");
 
-  // const handleSearchApplications = (text) => {
-  //   setSearchText(text);
-
-  //   if (searchText !== "") {
-  //     let applicationsArr = applications.filter((application) => {
-  //       return application.company_name
-  //         .toLowerCase()
-  //         .includes(text.toLowerCase());
-  //     });
-  //     console.log(applicationsArr);
-  //     setFilteredApplications(applicationsArr);
-  //     return;
-  //   }
-  //   setFilteredApplications(applications);
-  // };
-
   const handleSearchApplications = (text) => {
-    setSearchText(text);
-    console.log(text.trim());
-
     if (text.trim() !== "") {
       const filtered = applications.filter((application) =>
         ["company_name", "position", "location"].some((key) =>
@@ -85,7 +76,9 @@ const Applications = () => {
     <>
       <div className="container-main justify-center bg-[#f5f7f9]">
         <div className="content justify-center flex lg:flex-col">
-          {isAuthenticated ? (
+          {loading ? (
+            <Spiner />
+          ) : (
             <>
               <Header
                 title="Applications"
@@ -135,7 +128,7 @@ const Applications = () => {
                       id="default-search"
                       className="search-input"
                       value={searchText}
-                      onChange={(e) => handleSearchApplications(e.target.value)}
+                      onChange={(e) => setSearchText(e.target.value)}
                       placeholder="Search by company name, position, or location"
                     />
                   </div>
@@ -164,8 +157,6 @@ const Applications = () => {
                 )}
               </div>
             </>
-          ) : (
-            <p>Not Authenticated</p>
           )}
           <Modal
             isOpen={modalIsOpen.creation}
