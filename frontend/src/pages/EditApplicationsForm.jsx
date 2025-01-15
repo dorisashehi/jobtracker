@@ -191,7 +191,6 @@ const EditApplicationsForm = ({
           const filteredApplications = prevState.filter(
             (h) => h.id !== application.id
           );
-          console.log("Filtered Applications:", filteredApplications);
           return filteredApplications;
         });
 

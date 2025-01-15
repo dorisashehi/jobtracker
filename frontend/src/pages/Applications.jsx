@@ -42,9 +42,11 @@ const Applications = () => {
 
   const filteredApplications = applications.filter((application) => {
     if (searchText === "") return application;
-    return application.company_name
-      .toLowerCase()
-      .includes(searchText.toLowerCase());
+    return (
+      application.company_name?.toLowerCase().includes(searchText) ||
+      application.position?.toLowerCase().includes(searchText) ||
+      application.location?.toLowerCase().includes(searchText)
+    );
   });
 
   console.log(filteredApplications);
