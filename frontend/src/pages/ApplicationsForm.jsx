@@ -89,6 +89,23 @@ const ApplicationsForm = ({
     const newErrors = {};
     let valid = true;
 
+    if (!value) {
+      newErrors[name] = "Required Field";
+      valid = false;
+    } else {
+      newErrors[name] = "";
+    }
+
+    setErrors({ ...errors, ...newErrors });
+    return valid;
+  };
+
+  const handleChange = (input) => {
+    const { name, value, checked } = input;
+    setCrFormData({
+      ...crFormData,
+      [name]: name !== "favorite" ? value : checked,
+    });
     if (
       name == "company_name" ||
       name == "company_website" ||
@@ -98,27 +115,8 @@ const ApplicationsForm = ({
       name == "position" ||
       name == "location"
     ) {
-      if (!value) {
-        newErrors[name] = "Required Field";
-        valid = false;
-      } else {
-        newErrors[name] = "";
-      }
+      validateField(name, value);
     }
-
-    setErrors({ ...errors, ...newErrors });
-    return valid;
-  };
-
-  const handleChange = (input) => {
-    const { name, value } = input;
-
-    setCrFormData({
-      ...crFormData,
-      [name]: value,
-    });
-
-    validateField(name, value);
   };
 
   const handleSubmitApplication = async (e) => {

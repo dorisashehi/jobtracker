@@ -16,7 +16,6 @@ const Applications = () => {
   const [crFormData, setCrFormData] = useState({});
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
-  //const [filteredApplications, setFilteredApplications] = useState([]);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -24,9 +23,7 @@ const Applications = () => {
         try {
           const results = await ApplicationsAPI.getApplByUser(user.id);
           if (results.length > 0) {
-            console.log(results.length);
             setApplications(results);
-            //setFilteredApplications(results);
           }
         } catch (error) {
           console.error(error);
@@ -49,11 +46,9 @@ const Applications = () => {
     );
   });
 
-  console.log(filteredApplications);
   const handleSearchText = (text) => {
     setTimeout(() => {
       setSearchText(text);
-      //handleSearchApplications(searchText);
     }, 400);
   };
 
@@ -72,17 +67,6 @@ const Applications = () => {
   }
 
   Modal.setAppElement("#root");
-
-  // const handleSearchApplications = (text) => {
-  //   if (text.trim() !== "") {
-  //     const filtered = applications.filter((application) =>
-  //       application["company_name"]?.toLowerCase().includes(text.toLowerCase())
-  //     );
-  //     setFilteredApplications(filtered);
-  //   } else {
-  //     setFilteredApplications(applications);
-  //   }
-  // };
 
   return (
     <>
@@ -144,7 +128,7 @@ const Applications = () => {
                       placeholder="Search by company name, position, or location"
                     />
                   </div>
-                  <Button title="Export">
+                  {/* <Button title="Export">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 -960 960 960"
@@ -152,7 +136,7 @@ const Applications = () => {
                     >
                       <path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h200v80H160v480h640v-480H600v-80h200q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-184L280-544l56-56 104 104v-304h80v304l104-104 56 56-200 200Z" />
                     </svg>
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
               <div className="flex-1">

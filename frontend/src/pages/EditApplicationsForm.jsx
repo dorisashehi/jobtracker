@@ -96,6 +96,25 @@ const EditApplicationsForm = ({
     const newErrors = {};
     let valid = true;
 
+    if (!value) {
+      newErrors[name] = "Required Field";
+      valid = false;
+    } else {
+      newErrors[name] = "";
+    }
+
+    setErrors({ ...errors, ...newErrors });
+    return valid;
+  };
+
+  const handleChange = (input) => {
+    const { name, value, checked } = input;
+
+    setApplicationData({
+      ...applicationData,
+      [name]: name !== "favorite" ? value : checked,
+    });
+
     if (
       name == "company_name" ||
       name == "company_website" ||
@@ -105,27 +124,8 @@ const EditApplicationsForm = ({
       name == "position" ||
       name == "location"
     ) {
-      if (!value) {
-        newErrors[name] = "Required Field";
-        valid = false;
-      } else {
-        newErrors[name] = "";
-      }
+      validateField(name, value);
     }
-
-    setErrors({ ...errors, ...newErrors });
-    return valid;
-  };
-
-  const handleChange = (input) => {
-    const { name, value } = input;
-
-    setApplicationData({
-      ...applicationData,
-      [name]: value,
-    });
-
-    validateField(name, value);
   };
 
   const handleSubmitApplication = async (e) => {
@@ -263,6 +263,7 @@ const EditApplicationsForm = ({
             className="login-input mr-[8px]"
             onChange={(e) => handleChange(e.target)}
             value={applicationData.favorite || false}
+            checked={applicationData.favorite}
           />
         </div>
         <div className="modal-input-container w-[1/3]">
