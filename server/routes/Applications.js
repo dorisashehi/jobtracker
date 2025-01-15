@@ -9,7 +9,7 @@ router.get(
 router.post("/application/create", ApplicationsController.createApplication);
 
 router.get("/application/:appId", ApplicationsController.getApplicationById);
-router.post(
+router.patch(
   "/application/update/:appId",
   ApplicationsController.updateApplicationById
 );

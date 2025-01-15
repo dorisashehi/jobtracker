@@ -3,19 +3,18 @@ import Select from "react-select";
 import { useState } from "react";
 import ApplicationsAPI from "../services/ApplicationsAPI";
 import { format } from "date-fns";
-import { useNavigate } from "react-router-dom";
 import Spinner from "../components/Spiner";
 
 const EditApplicationsForm = ({
   closeModal,
   application,
   setApplications,
-  applications,
+  filteredApplications,
 }) => {
   const [applicationData, setApplicationData] = useState(application);
   const [loadingUpdate, setLoadingUpdate] = useState(false);
   const [loadingDelete, setLoadingDelete] = useState(false);
-  let navigate = useNavigate();
+
   const locationOptions = [
     { value: "onsite", label: "On-Site" },
     { value: "remote", label: "Remote" },
@@ -136,7 +135,7 @@ const EditApplicationsForm = ({
     setErrors(newErrors);
     if (valid) {
       const options = {
-        method: "POST",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
@@ -151,15 +150,14 @@ const EditApplicationsForm = ({
         const data = response;
 
         if (data.success) {
-          const indx = applications.findIndex((el) => el.id === application.id); //find index of application
           setApplications((prevState) => {
-            //update application in specified index
-            const updatedApplications = [...prevState];
-            updatedApplications[indx] = {
-              ...updatedApplications[indx],
-              ...data.success,
-            };
-            return updatedApplications;
+            const prevAppl = [...prevState];
+            prevAppl.map((h, index) => {
+              if (h.id === application.id) {
+                prevAppl[index] = data.success;
+              }
+            });
+            return prevAppl;
           });
           closeModal("view");
         }
@@ -202,7 +200,7 @@ const EditApplicationsForm = ({
         ...applicationData,
         submissionError: error.message,
       }).finally(() => {
-        setLoading(true);
+        setLoadingDelete(false);
       });
     }
   };
@@ -480,6 +478,6 @@ EditApplicationsForm.propTypes = {
   application: PropTypes.object.isRequired,
   closeModal: PropTypes.func.isRequired,
   setApplications: PropTypes.func.isRequired,
-  applications: PropTypes.array.isRequired,
+  filteredApplications: PropTypes.array.isRequired,
 };
 export default EditApplicationsForm;

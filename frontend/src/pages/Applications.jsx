@@ -16,15 +16,18 @@ const Applications = () => {
   const [crFormData, setCrFormData] = useState({});
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
-  const [filteredApplications, setFilteredApplications] = useState([]);
+  //const [filteredApplications, setFilteredApplications] = useState([]);
 
   useEffect(() => {
     if (isAuthenticated) {
       const fetchApplications = async () => {
         try {
           const results = await ApplicationsAPI.getApplByUser(user.id);
-          setApplications(results);
-          setFilteredApplications(results);
+          if (results.length > 0) {
+            console.log(results.length);
+            setApplications(results);
+            //setFilteredApplications(results);
+          }
         } catch (error) {
           console.error(error);
         } finally {
@@ -37,11 +40,20 @@ const Applications = () => {
     }
   }, [isAuthenticated, user?.id]);
 
-  useEffect(() => {
+  const filteredApplications = applications.filter((application) => {
+    if (searchText === "") return application;
+    return application.company_name
+      .toLowerCase()
+      .includes(searchText.toLowerCase());
+  });
+
+  console.log(filteredApplications);
+  const handleSearchText = (text) => {
     setTimeout(() => {
-      handleSearchApplications(searchText);
+      setSearchText(text);
+      //handleSearchApplications(searchText);
     }, 400);
-  }, [searchText, applications]);
+  };
 
   const [modalIsOpen, setIsOpen] = useState({
     creation: false,
@@ -59,18 +71,16 @@ const Applications = () => {
 
   Modal.setAppElement("#root");
 
-  const handleSearchApplications = (text) => {
-    if (text.trim() !== "") {
-      const filtered = applications.filter((application) =>
-        ["company_name", "position", "location"].some((key) =>
-          application[key]?.toLowerCase().includes(text.toLowerCase())
-        )
-      );
-      setFilteredApplications(filtered);
-    } else {
-      setFilteredApplications(applications);
-    }
-  };
+  // const handleSearchApplications = (text) => {
+  //   if (text.trim() !== "") {
+  //     const filtered = applications.filter((application) =>
+  //       application["company_name"]?.toLowerCase().includes(text.toLowerCase())
+  //     );
+  //     setFilteredApplications(filtered);
+  //   } else {
+  //     setFilteredApplications(applications);
+  //   }
+  // };
 
   return (
     <>
@@ -128,7 +138,7 @@ const Applications = () => {
                       id="default-search"
                       className="search-input"
                       value={searchText}
-                      onChange={(e) => setSearchText(e.target.value)}
+                      onChange={(e) => handleSearchText(e.target.value)}
                       placeholder="Search by company name, position, or location"
                     />
                   </div>
@@ -144,17 +154,13 @@ const Applications = () => {
                 </div>
               </div>
               <div className="flex-1">
-                {loading ? (
-                  <Spiner />
-                ) : (
-                  <ApplicationsTable
-                    applications={filteredApplications}
-                    openModal={openModal}
-                    modalIsOpen={modalIsOpen}
-                    closeModal={closeModal}
-                    setApplications={setApplications}
-                  />
-                )}
+                <ApplicationsTable
+                  openModal={openModal}
+                  modalIsOpen={modalIsOpen}
+                  closeModal={closeModal}
+                  setApplications={setApplications}
+                  filteredApplications={filteredApplications}
+                />
               </div>
             </>
           )}

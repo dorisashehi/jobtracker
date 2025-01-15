@@ -7,12 +7,12 @@ import ModalHeader from "../components/ModalHeader";
 import Modal from "react-modal";
 
 const ApplicationsTable = ({
-  applications,
   modalIsOpen,
   closeModal,
   openModal,
   setCrFormData,
   setApplications,
+  filteredApplications,
 }) => {
   const [application, setApplication] = useState({});
   const handeOpenView = async (e, appId) => {
@@ -39,8 +39,8 @@ const ApplicationsTable = ({
         </thead>
 
         <tbody>
-          {applications && applications.length > 0 ? (
-            Array.from(applications).map((application) => {
+          {filteredApplications.length > 0 ? (
+            filteredApplications.map((application) => {
               const applyDate = format(
                 new Date(application.apply_date),
                 "do MMMM y"
@@ -137,7 +137,7 @@ const ApplicationsTable = ({
           application={application}
           setCrFormData={setCrFormData}
           setApplications={setApplications}
-          applications={applications}
+          filteredApplications={filteredApplications}
         ></EditApplicationsForm>
       </Modal>
     </>
@@ -145,12 +145,12 @@ const ApplicationsTable = ({
 };
 
 ApplicationsTable.propTypes = {
-  applications: PropTypes.array,
   openModal: PropTypes.func,
   setApplications: PropTypes.func,
   modalIsOpen: PropTypes.object,
   closeModal: PropTypes.func,
   crFormData: PropTypes.object,
   setCrFormData: PropTypes.func,
+  filteredApplications: PropTypes.array,
 };
 export default ApplicationsTable;
