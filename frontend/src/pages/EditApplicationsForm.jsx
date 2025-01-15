@@ -187,8 +187,17 @@ const EditApplicationsForm = ({
       const data = response;
 
       if (data.success) {
+        setApplications((prevState) => {
+          const filteredApplications = prevState.filter(
+            (h) => h.id !== application.id
+          );
+          console.log("Filtered Applications:", filteredApplications);
+          return filteredApplications;
+        });
+
         closeModal("view");
       }
+
       if (data.error) {
         setApplicationData({
           ...applicationData,
