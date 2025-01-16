@@ -4,6 +4,7 @@ import LogIn from "../pages/LogIn";
 import SignUp from "../pages/SignUp";
 import Dashboard from "../pages/Dashboard";
 import Applications from "../pages/Applications";
+
 const routes = [
   {
     path: "",

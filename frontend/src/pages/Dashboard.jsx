@@ -1,15 +1,12 @@
-import { AuthenticatedContext } from "../context/AuthenticatedContext";
-import { useContext } from "react";
+import PropTypes from "prop-types";
 
-const Dashboard = () => {
-  const { user, isAuthenticated } = useContext(AuthenticatedContext);
-
+const Dashboard = ({ userAuth }) => {
   return (
     <>
       <div className="container-main justify-center bg-[#f5f7f9]">
         <div className="content justify-center flex lg:flex-row">
           <div className="flex-1">
-            {isAuthenticated ? (
+            {userAuth && (
               <div className="flex-1">
                 <div className="flex flex-col">
                   <div className="header-w-text">
@@ -28,13 +25,14 @@ const Dashboard = () => {
                   </p>
                 </div>
               </div>
-            ) : (
-              <p>Not Authenticated</p>
             )}
           </div>
         </div>
       </div>
     </>
   );
+};
+Dashboard.propTypes = {
+  userAuth: PropTypes.object.isRequired,
 };
 export default Dashboard;

@@ -11,6 +11,7 @@ import "./passportConfig.js";
 import GoogleStrategyModule from "passport-google-oauth20";
 import { ensureAuthenticated } from "./middlewares/auth.js";
 import ApplicationsRouter from "./routes/Applications.js";
+import router from "./routes/Applications.js";
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
@@ -93,9 +94,7 @@ app.post("/users/login", (req, res, next) => {
       // Send success response
       return res.status(200).json({
         success: true,
-        id: user.id,
-        username: user.username,
-        email: user.email,
+        user: user,
       });
     });
   })(req, res, next);
@@ -177,6 +176,13 @@ app.get(
     //res.redirect("http://localhost:5173/dashboard");
   }
 );
+
+app.get("/login/success", (req, res) => {
+  if (req.user) {
+    console.log(req.user);
+    res.status(200).json({ success: true, user: req.user });
+  }
+});
 
 app.use("/api", ApplicationsRouter);
 

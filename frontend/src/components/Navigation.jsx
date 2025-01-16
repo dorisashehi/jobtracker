@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
-import { useContext } from "react";
-import { AuthenticatedContext } from "../context/AuthenticatedContext";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
-const Navigation = () => {
-  const { isAuthenticated, fetchUser } = useContext(AuthenticatedContext);
+const Navigation = ({ userAuth, setUserAuth }) => {
+  //const { isAuthenticated, fetchUser } = useContext(AuthenticatedContext);
   const [submitActionError, setSubmitActionError] = useState({ error: "" });
   let navigate = useNavigate();
+  useEffect(() => {
+    console.log("heyy", userAuth);
+  });
 
   const handleLogout = async (e) => {
     //submit form signup
@@ -27,8 +29,7 @@ const Navigation = () => {
 
       if (response.ok) {
         setTimeout(() => {
-          fetchUser();
-          navigate("/login");
+          setUserAuth(null);
         }, 600);
       }
     } catch (error) {
@@ -43,22 +44,18 @@ const Navigation = () => {
     <>
       <nav className="navigation-container">
         <div className="navigation-content content">
-          <div
-            className={`col-logo ${
-              isAuthenticated ? "lg:w-[10%]" : "lg:w-[20%]"
-            }`}
-          >
-            JBtracker {isAuthenticated}
+          <div className={`col-logo ${userAuth ? "lg:w-[10%]" : "lg:w-[20%]"}`}>
+            JBtracker {userAuth?.name}
           </div>
-          {isAuthenticated && (
+          {userAuth && (
             <ul
               className={`col-navigation-menu ${
-                isAuthenticated ? "lg:w-[40%] " : "lg:w-[0%]"
+                userAuth ? "lg:w-[40%] " : "lg:w-[0%]"
               }`}
             >
               <li>
                 <Link to="/dashboard" className="" aria-current="page">
-                  Dashboard
+                  Dashboard{userAuth.name}
                 </Link>
               </li>
               <li>
@@ -69,26 +66,17 @@ const Navigation = () => {
             </ul>
           )}
 
-          <ul
-            className={`col-links ${
-              isAuthenticated ? "lg:w-[50%]" : "lg:w-[80%]"
-            }`}
-          >
-            {!isAuthenticated && (
+          <ul className={`col-links ${userAuth ? "lg:w-[50%]" : "lg:w-[80%]"}`}>
+            {!userAuth && (
               <li className="">
                 <Link to="/login" className="" aria-current="page">
                   Login
                 </Link>
               </li>
             )}
-            {isAuthenticated && (
+            {userAuth && (
               <li className="">
-                <Link
-                  to="/login"
-                  className=""
-                  aria-current="page"
-                  onClick={(e) => handleLogout(e)}
-                >
+                <Link aria-current="page" onClick={(e) => handleLogout(e)}>
                   Logout
                 </Link>
               </li>
@@ -100,4 +88,8 @@ const Navigation = () => {
   );
 };
 
+Navigation.propTypes = {
+  userAuth: PropTypes.object.isRequired,
+  setUserAuth: PropTypes.func.isRequired,
+};
 export default Navigation;

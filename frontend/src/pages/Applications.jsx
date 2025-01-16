@@ -1,27 +1,27 @@
-import { AuthenticatedContext } from "../context/AuthenticatedContext";
-import { useContext, useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import ApplicationsTable from "./ApplicationsTable";
 import ApplicationsAPI from "../services/ApplicationsAPI";
 import ModalHeader from "../components/ModalHeader";
 import ApplicationsForm from "./ApplicationsForm";
 // import CreateModal from "./CreateModal";
+import { useState, useEffect } from "react";
 import Button from "../components/Button";
 import Header from "../components/Header";
 import Spiner from "../components/Spiner";
 import Modal from "react-modal";
 
-const Applications = () => {
-  const { user, isAuthenticated } = useContext(AuthenticatedContext);
+const Applications = ({ userAuth }) => {
+  //const { user, isAuthenticated } = useContext(AuthenticatedContext);
   const [applications, setApplications] = useState([]);
   const [crFormData, setCrFormData] = useState({});
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (userAuth) {
       const fetchApplications = async () => {
         try {
-          const results = await ApplicationsAPI.getApplByUser(user.id);
+          const results = await ApplicationsAPI.getApplByUser(userAuth?.id);
           if (results.length > 0) {
             setApplications(results);
           }
@@ -33,9 +33,9 @@ const Applications = () => {
       };
 
       fetchApplications();
-      setCrFormData({ ...crFormData, user_id: user.id }); //user id of authenticated user
+      setCrFormData({ ...crFormData, user_id: userAuth.id }); //user id of authenticated user
     }
-  }, [isAuthenticated, user?.id]);
+  }, [userAuth]);
 
   const filteredApplications = applications.filter((application) => {
     if (searchText === "") return application;
@@ -182,5 +182,8 @@ const Applications = () => {
       </div>
     </>
   );
+};
+Applications.propTypes = {
+  userAuth: PropTypes.object.isRequired,
 };
 export default Applications;

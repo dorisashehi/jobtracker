@@ -1,15 +1,16 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
-import { AuthenticatedContext } from "../context/AuthenticatedContext";
-import { useContext } from "react";
+// import { AuthenticatedContext } from "../context/AuthenticatedContext";
+// import { useContext } from "react";
 import Spinner from "../components/Spiner";
 
-const LogIn = () => {
+const LogIn = ({ setUserAuth }) => {
   let navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  const { fetchUser } = useContext(AuthenticatedContext);
+  //const { fetchUser } = useContext(AuthenticatedContext);
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -100,8 +101,7 @@ const LogIn = () => {
         setTimeout(() => {
           setLoading(false);
           if (data.success) {
-            fetchUser();
-            navigate("/dashboard");
+            setUserAuth(data.user);
           }
           if (data.error) {
             //error accoured during login
@@ -180,5 +180,8 @@ const LogIn = () => {
       </div>
     </div>
   );
+};
+LogIn.propTypes = {
+  setUserAuth: PropTypes.func.isRequired,
 };
 export default LogIn;
