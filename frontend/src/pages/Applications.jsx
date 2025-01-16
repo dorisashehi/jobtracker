@@ -146,6 +146,7 @@ const Applications = () => {
                   closeModal={closeModal}
                   setApplications={setApplications}
                   filteredApplications={filteredApplications}
+                  itemsPerPage={5}
                 />
               </div>
             </>

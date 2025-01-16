@@ -13,6 +13,7 @@ const ApplicationsTable = ({
   setCrFormData,
   setApplications,
   filteredApplications,
+  itemsPerPage,
 }) => {
   const [application, setApplication] = useState({});
   const handeOpenView = async (e, appId) => {
@@ -21,6 +22,21 @@ const ApplicationsTable = ({
     const application = await ApplicationsAPI.getApplicationById(appId);
     setApplication(application);
     openModal("view");
+  };
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = Math.ceil(filteredApplications.length / itemsPerPage);
+
+  // Calculate the current data slice
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentData = filteredApplications.slice(startIndex, endIndex);
+
+  // Handle page changes
+  const handlePageChange = (page) => {
+    if (page > 0 && page <= totalPages) {
+      setCurrentPage(page);
+    }
   };
 
   return (
@@ -39,8 +55,8 @@ const ApplicationsTable = ({
         </thead>
 
         <tbody>
-          {filteredApplications.length > 0 ? (
-            filteredApplications.map((application) => {
+          {currentData.length > 0 ? (
+            currentData.map((application) => {
               const applyDate = format(
                 new Date(application.apply_date),
                 "do MMMM y"
@@ -112,6 +128,35 @@ const ApplicationsTable = ({
           )}
         </tbody>
       </table>
+      {/* Pagination Controls */}
+      <div style={{ marginTop: "20px" }}>
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          &lt; Prev
+        </button>
+
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index}
+            onClick={() => handlePageChange(index + 1)}
+            style={{
+              margin: "0 5px",
+              fontWeight: currentPage === index + 1 ? "bold" : "normal",
+            }}
+          >
+            {index + 1}
+          </button>
+        ))}
+
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          Next &gt;
+        </button>
+      </div>
       <Modal
         isOpen={modalIsOpen.view}
         onRequestClose={() => closeModal("view")}
@@ -152,5 +197,6 @@ ApplicationsTable.propTypes = {
   crFormData: PropTypes.object,
   setCrFormData: PropTypes.func,
   filteredApplications: PropTypes.array,
+  itemsPerPage: PropTypes.number,
 };
 export default ApplicationsTable;
