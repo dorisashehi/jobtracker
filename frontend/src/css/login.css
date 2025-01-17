@@ -23,7 +23,7 @@
   @apply p-[20px] w-[350px];
 }
 .login-form {
-  @apply p-[0px] w-[280px] md:w-[380px] mt-4;
+  @apply p-[0px] w-[280px] md:w-[380px] mt-4 text-left;
 }
 
 .login-container {
