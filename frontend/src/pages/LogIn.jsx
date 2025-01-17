@@ -110,70 +110,95 @@ const LogIn = ({ setUserAuth }) => {
         console.log(error);
         setErrors({ ...errors, submission_error: "Login Failed" });
       }
+    } else {
+      setLoading(false);
     }
   };
   return (
-    <div className="container-main justify-center bg-[#f5f7f9]">
+    <div className="container-main justify-center flex items-center bg-[#f5f7f9]">
       <div className="content">
-        <div className="login-container items-center flex flex-col">
-          <>
-            <h1 className="general-header">Log In</h1>
-            <form className="login-form">
-              <div className="login-input-container">
-                <label htmlFor="email" className="login-label">
-                  Email<em className="text-redText">*</em>
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="Enter your email"
-                  className="login-input"
-                  onChange={(e) => handleChange(e)}
-                />
-                {errors.email && (
-                  <em className="err-message">{errors.email}</em>
-                )}
-              </div>
-              <div className="login-input-container">
-                <label htmlFor="password" className="login-label">
-                  Password<em className="text-redText">*</em>
-                </label>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  placeholder="Enter your password"
-                  className="login-input"
-                  onChange={(e) => handleChange(e)}
-                />
-                {errors.password && (
-                  <em className="err-message">{errors.password}</em>
-                )}
-              </div>
-              <div className="login-input-container">
-                <em className="text-secondaryText text-[12px]">
-                  {"Don't have an account?  "}
-                  <Link to="/signup" className="text-redText">
-                    <b>Sign up now!?</b>
-                  </Link>
-                </em>
-              </div>
-              {errors.submission_error && (
-                <em className="err-message">{errors.submission_error}</em>
-              )}
-              <button
-                type="submit"
-                className="main-btn float-right mt-0"
-                onClick={(e) => submitAction(e)}
-              >
-                Log In {loading && <Spinner />}
-              </button>
-            </form>
-          </>
+        <div className="flex justify-center flex-col text-center">
+          <div>
+            <h1 className="text-[20px] mb-[5px] text-primaryGreen font-bold">
+              JBtracker
+            </h1>
+            <div className="text-secondaryText text-[14px] mb-10">
+              Welcome back! Please log in to continue.
+            </div>
+          </div>
+          <div className="login-container items-center flex flex-col mx-auto my-auto">
+            <>
+              <h1 className="general-header">Log In</h1>
+              <form className="login-form">
+                <div className="login-input-container relative">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 -960 960 960"
+                    fill="#a7abaf"
+                    className="absolute top-[10px] left-3 icon-style-small"
+                  >
+                    <path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-280L160-640v400h640v-400L480-440Zm0-80 320-200H160l320 200ZM160-640v-80 480-400Z" />
+                  </svg>
 
-          <br />
-          {/* <a href="http://localhost:3000/auth/google">Login WIth Google</a> */}
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    className="login-input"
+                    onChange={(e) => handleChange(e)}
+                  />
+                  {errors.email && (
+                    <em className="err-message">{errors.email}</em>
+                  )}
+                </div>
+                <div className="login-input-container relative">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 -960 960 960"
+                    fill="#a7abaf"
+                    className="absolute top-[10px] left-3 icon-style-small"
+                  >
+                    <path d="M240-80q-33 0-56.5-23.5T160-160v-400q0-33 23.5-56.5T240-640h40v-80q0-83 58.5-141.5T480-920q83 0 141.5 58.5T680-720v80h40q33 0 56.5 23.5T800-560v400q0 33-23.5 56.5T720-80H240Zm0-80h480v-400H240v400Zm240-120q33 0 56.5-23.5T560-360q0-33-23.5-56.5T480-440q-33 0-56.5 23.5T400-360q0 33 23.5 56.5T480-280ZM360-640h240v-80q0-50-35-85t-85-35q-50 0-85 35t-35 85v80ZM240-160v-400 400Z" />
+                  </svg>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    className="login-input"
+                    onChange={(e) => handleChange(e)}
+                  />
+                  {errors.password && (
+                    <em className="err-message">{errors.password}</em>
+                  )}
+                </div>
+                <div className="login-input-container">
+                  <button
+                    type="submit"
+                    className="main-btn float-right mt-0 login-btn"
+                    onClick={(e) => submitAction(e)}
+                  >
+                    Log In {loading && <Spinner />}
+                  </button>
+                </div>
+                <div className="login-input-container">
+                  <p className="text-secondaryText text-[12px]">
+                    {"Don't have an account?  "}
+                    <Link to="/signup" className="text-primaryGreen">
+                      <b>Sign up now!</b>
+                    </Link>
+                  </p>
+                </div>
+                {errors.submission_error && (
+                  <em className="err-message">{errors.submission_error}</em>
+                )}
+              </form>
+            </>
+
+            <br />
+            {/* <a href="http://localhost:3000/auth/google">Login WIth Google</a> */}
+          </div>
         </div>
       </div>
     </div>

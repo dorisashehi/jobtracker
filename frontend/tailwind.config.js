@@ -8,16 +8,19 @@ export default {
   theme: {
     extend: {
       colors: {
-        primaryGreen: "#00a00d",
+        primaryGreen: "#4a9d83",
         lightGreen: "#dff8e1",
         secondary: "#caefcd",
-        borderColor: "#f0f1f2",
+        borderColor: "#e5e7e8",
         primaryText: "#0e0e0e",
         secondaryText: "#525252",
         redText: "#e4696d",
-        generalText: "#101010",
-        headerTest: "#1d1d1d",
+        generalText: "#050614",
+        headerText: "#050614",
+        mainText: "0b0712",
         secondaryButton: "#dadada",
+        primaryButton: "#0f1925",
+        whiteTxt: "#f7fbff",
       },
 
       fontFamily: {

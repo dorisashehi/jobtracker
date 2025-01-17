@@ -19,6 +19,9 @@ body {
 .content {
   @apply max-w-screen-xl mx-auto px-5;
 }
+.menu-item {
+  @apply border-[1px] border-secondaryButton text-[13px] py-[5px] px-[20px] rounded-none;
+}
 
 .full-screen {
   @apply w-full py-20 flex-grow;
@@ -29,15 +32,15 @@ body {
 }
 
 .general-header {
-  @apply text-center text-generalText font-bold text-3xl mb-3;
+  @apply text-center text-generalText font-bold text-2xl mb-3;
 }
 
 .main-btn {
-  @apply menu-item items-center mt-0 bg-primaryGreen text-[#FFFFFF] rounded-none flex flex-row justify-center capitalize max-w-fit;
+  @apply menu-item items-center mt-0 bg-primaryButton text-whiteTxt rounded-md flex flex-row justify-center capitalize max-w-fit hover:opacity-[0.9] font-[700] tracking-[0.4px];
 }
 
 .err-message {
-  @apply text-redText text-[12px] mt-2;
+  @apply text-redText text-[12px] mt-2 text-left;
 }
 
 .header-text-desc {
@@ -57,4 +60,8 @@ body {
 
 .icon-style-small {
   @apply h-[19px] w-[19px];
+}
+
+.login-btn {
+  @apply max-w-full py-[10px] px-10 rounded-md;
 }
