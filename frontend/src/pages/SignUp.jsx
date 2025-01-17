@@ -94,7 +94,7 @@ const SignIn = () => {
         body: JSON.stringify(user),
       };
       const response = await fetch(
-        "http://localhost:3000/users/signup",
+        "http://localhost:3000/auth/users/signup",
         options
       );
       const data = await response.json();

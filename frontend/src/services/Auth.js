@@ -1,6 +1,6 @@
 const getLoggedInUser = async () => {
   try {
-    const response = await fetch(`http://localhost:3000/login/success`, {
+    const response = await fetch(`http://localhost:3000/auth/login/success`, {
       credentials: "include",
     });
     const data = await response.json();

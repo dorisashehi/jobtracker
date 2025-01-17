@@ -18,7 +18,7 @@ const Navigation = ({ userAuth, setUserAuth }) => {
     };
     try {
       const response = await fetch(
-        "http://localhost:3000/users/logout",
+        "http://localhost:3000/auth/user/logout",
         options
       );
 

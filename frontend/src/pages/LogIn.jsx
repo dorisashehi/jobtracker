@@ -91,7 +91,7 @@ const LogIn = ({ setUserAuth }) => {
       };
       try {
         const response = await fetch(
-          "http://localhost:3000/users/login",
+          "http://localhost:3000/auth/users/login",
           options
         );
         const data = await response.json();
