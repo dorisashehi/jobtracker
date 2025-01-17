@@ -1,15 +1,10 @@
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 
 const Navigation = ({ userAuth, setUserAuth }) => {
   //const { isAuthenticated, fetchUser } = useContext(AuthenticatedContext);
-  const [submitActionError, setSubmitActionError] = useState({ error: "" });
-  let navigate = useNavigate();
-  useEffect(() => {
-    console.log("heyy", userAuth);
-  });
+  const [setSubmitActionError] = useState({ error: "" });
 
   const handleLogout = async (e) => {
     //submit form signup
@@ -30,7 +25,7 @@ const Navigation = ({ userAuth, setUserAuth }) => {
       if (response.ok) {
         setTimeout(() => {
           setUserAuth(null);
-        }, 600);
+        }, 300);
       }
     } catch (error) {
       console.log(error);
@@ -89,7 +84,7 @@ const Navigation = ({ userAuth, setUserAuth }) => {
 };
 
 Navigation.propTypes = {
-  userAuth: PropTypes.object.isRequired,
+  userAuth: PropTypes.object,
   setUserAuth: PropTypes.func.isRequired,
 };
 export default Navigation;

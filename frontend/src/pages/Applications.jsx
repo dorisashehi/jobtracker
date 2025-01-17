@@ -184,6 +184,6 @@ const Applications = ({ userAuth }) => {
   );
 };
 Applications.propTypes = {
-  userAuth: PropTypes.object.isRequired,
+  userAuth: PropTypes.object,
 };
 export default Applications;

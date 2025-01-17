@@ -1,13 +1,11 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import PropTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
 // import { AuthenticatedContext } from "../context/AuthenticatedContext";
 // import { useContext } from "react";
 import Spinner from "../components/Spiner";
 
 const LogIn = ({ setUserAuth }) => {
-  let navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   //const { fetchUser } = useContext(AuthenticatedContext);

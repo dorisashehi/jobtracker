@@ -6,27 +6,27 @@ import Layout from "./components/Layout";
 import Welcome from "./pages/Welcome";
 import { useRoutes, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import Auth from "./services/Auth";
+
 function App() {
   const [userAuth, setUserAuth] = useState(null);
   useEffect(() => {
+    //get current logged in user
     const getUser = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/login/success`, {
-          credentials: "include",
-        });
+        const response = await Auth.getLoggedInUser();
         if (response.ok) {
-          const json = await response.json();
-
-          setUserAuth(json.user);
+          setUserAuth(response.user);
         }
       } catch (error) {
         console.error(error);
-        setUserAuth({});
+        setUserAuth(null);
       }
     };
     getUser();
   }, []);
   const routes = useRoutes([
+    //frontend routes
     {
       path: "",
       element: <Layout userAuth={userAuth} setUserAuth={setUserAuth} />,

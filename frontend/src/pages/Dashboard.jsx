@@ -33,6 +33,6 @@ const Dashboard = ({ userAuth }) => {
   );
 };
 Dashboard.propTypes = {
-  userAuth: PropTypes.object.isRequired,
+  userAuth: PropTypes.object,
 };
 export default Dashboard;
