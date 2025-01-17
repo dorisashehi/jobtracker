@@ -208,7 +208,7 @@ const SignIn = () => {
               <div className="login-input-container">
                 <p className="text-secondaryText text-[12px]">
                   {"Already have an account?  "}
-                  <Link to="/signup" className="text-primaryGreen">
+                  <Link to="/login" className="text-primaryGreen">
                     <b>Log in now!</b>
                   </Link>
                 </p>
