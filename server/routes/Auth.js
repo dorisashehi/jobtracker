@@ -8,6 +8,7 @@ import "../passportConfig.js";
 import passport from "passport";
 import dotenv from "dotenv";
 dotenv.config();
+
 router.post("/users/signup", async (req, res) => {
   let { username, email, password } = req.body;
 
@@ -86,7 +87,11 @@ router.get("/user/logout", (req, res) => {
         .json({ message: "Something went wrong with logout." });
     }
 
-    res.status(204).send();
+    req.session.destroy((err) => {
+      res.clearCookie("connect.sid");
+
+      res.status(204).send();
+    });
   });
 });
 

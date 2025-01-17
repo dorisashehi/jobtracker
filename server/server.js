@@ -7,7 +7,6 @@ import flash from "express-flash";
 import passport from "passport";
 import "./passportConfig.js";
 import ApplicationsRouter from "./routes/Applications.js";
-//import router from "./routes/Applications.js";
 import AuthenticationRouter from "./routes/Auth.js";
 
 dotenv.config();
