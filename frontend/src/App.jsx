@@ -10,21 +10,28 @@ import Auth from "./services/Auth";
 
 function App() {
   const [userAuth, setUserAuth] = useState(null);
+  const [loading, setLoading] = useState(true); // Track loading state
+
   useEffect(() => {
-    //get current logged in user
     const getUser = async () => {
       try {
         const response = await Auth.getLoggedInUser();
-        if (response.ok) {
-          setUserAuth(response.user);
+        if (response.success) {
+          setUserAuth(response.user); // Set logged-in user
+        } else {
+          setUserAuth(null); // Set null if no user is found
         }
       } catch (error) {
-        console.error(error);
-        setUserAuth(null);
+        console.error("Error while fetching user:", error);
+        setUserAuth(null); // Set null on error
+      } finally {
+        setLoading(false); // Set loading to false after fetch
       }
     };
+
     getUser();
-  }, []);
+  }, []); // Only run once when the component mounts
+
   const routes = useRoutes([
     //frontend routes
     {
@@ -36,7 +43,7 @@ function App() {
           path: "login",
           element:
             userAuth && userAuth.id ? (
-              <Dashboard userAuth={userAuth} />
+              <Navigate to="/dashboard" />
             ) : (
               <LogIn setUserAuth={setUserAuth} />
             ),
@@ -67,6 +74,9 @@ function App() {
     },
   ]);
 
+  if (loading) {
+    return;
+  }
   return routes;
 }
 
