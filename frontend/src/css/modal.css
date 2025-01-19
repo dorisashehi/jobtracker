@@ -7,7 +7,7 @@
 }
 
 .modal-input {
-  @apply min-w-fit md:min-w-[300px];
+  @apply max-w-[300px] md:min-w-[300px];
 }
 
 .modal-container {

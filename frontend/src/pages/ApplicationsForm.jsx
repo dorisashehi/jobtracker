@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import Select from "react-select";
 import Button from "../components/Button";
 import { useState } from "react";
+import Spinner from "../components/Spiner";
 
 const ApplicationsForm = ({
   crFormData,
@@ -9,6 +10,9 @@ const ApplicationsForm = ({
   setApplications,
   closeModal,
 }) => {
+  const [loadingSave, setLoadingSave] = useState(false);
+  loadingUpdate;
+
   const locationOptions = [
     { value: "onsite", label: "On-Site" },
     { value: "remote", label: "Remote" },
@@ -122,6 +126,7 @@ const ApplicationsForm = ({
 
   const handleSubmitApplication = async (e) => {
     e.preventDefault();
+    setLoadingSave(true);
     const { valid, newErrors } = validateAll(crFormData);
     setErrors(newErrors);
     if (valid) {
@@ -155,6 +160,8 @@ const ApplicationsForm = ({
           ...crFormData,
           submissionError: error.message,
         });
+      } finally {
+        setLoadingSave(false);
       }
     }
   };
@@ -194,7 +201,7 @@ const ApplicationsForm = ({
             <em className="err-message">{errors.company_website}</em>
           )}
         </div>
-        <div className="modal-input-container flex items-start min-w-[300px] ">
+        <div className="modal-input-container flex items-start md:w-1/2 lg:w-1/2 xl:w-1/3min-w-fit ">
           <label htmlFor="favorite" className="modal-label ">
             Favorite
           </label>
@@ -223,7 +230,7 @@ const ApplicationsForm = ({
             <em className="err-message">{errors.apply_date}</em>
           )}
         </div>
-        <div className="modal-input-container min-w-[300px] ">
+        <div className="modal-input-container md:w-1/2 lg:w-1/2 xl:w-1/3">
           <label htmlFor="apply_method" className="modal-label">
             Apply Method<em className="text-redText">*</em>
           </label>
@@ -394,8 +401,11 @@ const ApplicationsForm = ({
       <Button
         title="Save"
         onClickAct={(e) => handleSubmitApplication(e)}
-        className="mt-0 self-start"
-      ></Button>
+        className="mt-0 self-end"
+      >
+        {" "}
+        {loadingSave && <Spinner />}
+      </Button>
       {crFormData.submissionError && (
         <em className="err-message">{crFormData.submissionError}</em>
       )}
