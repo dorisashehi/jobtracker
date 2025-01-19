@@ -11,7 +11,6 @@ const ApplicationsForm = ({
   closeModal,
 }) => {
   const [loadingSave, setLoadingSave] = useState(false);
-  loadingUpdate;
 
   const locationOptions = [
     { value: "onsite", label: "On-Site" },
@@ -163,6 +162,8 @@ const ApplicationsForm = ({
       } finally {
         setLoadingSave(false);
       }
+    } else {
+      setLoadingSave(false);
     }
   };
   return (
