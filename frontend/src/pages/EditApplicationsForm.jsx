@@ -4,6 +4,8 @@ import { useState } from "react";
 import ApplicationsAPI from "../services/ApplicationsAPI";
 import { format } from "date-fns";
 import Spinner from "../components/Spiner";
+import { Link } from "react-router-dom";
+import Button from "../components/Button";
 
 const EditApplicationsForm = ({
   closeModal,
@@ -461,21 +463,30 @@ const EditApplicationsForm = ({
           />
         </div>
       </div>
+      <div className="flex flex-col md:flex-row md:justify-between">
+        <Link
+          className="flex flex-row gap-1 text-[#ef4444] underline text-[13px] font-bold items-center"
+          onClick={(e) => handleDeleteApplication(e)}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="icon-style-small"
+            viewBox="0 -960 960 960"
+            fill="#ef4444"
+          >
+            <path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
+          </svg>
+          Delete
+        </Link>
+        <Button
+          title="Update"
+          onClickAct={(e) => handleSubmitApplication(e)}
+          className="float-right mt-0 self-en"
+        >
+          {loadingUpdate && <Spinner />}
+        </Button>
+      </div>
 
-      <button
-        type="submit"
-        className="main-btn float-right mt-0 self-end"
-        onClick={(e) => handleDeleteApplication(e)}
-      >
-        Delete {loadingDelete && <Spinner />}
-      </button>
-      <button
-        type="submit"
-        className="main-btn float-right mt-0 self-end"
-        onClick={(e) => handleSubmitApplication(e)}
-      >
-        Update {loadingUpdate && <Spinner />}
-      </button>
       {applicationData.submissionError && (
         <em className="err-message">{applicationData.submissionError}</em>
       )}

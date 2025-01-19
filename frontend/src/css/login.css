@@ -11,7 +11,7 @@
 
 .login-input-container,
 .modal-input-container {
-  @apply flex flex-col pb-5;
+  @apply flex flex-col pb-5 w-full md:max-w-[300px];
 }
 
 .login-container {
@@ -23,7 +23,7 @@
 }
 
 .modal-form {
-  @apply p-[20px] w-[350px];
+  @apply p-[20px] md:w-[350px];
 }
 .login-form {
   @apply p-[0px] w-[280px] md:w-[380px] mt-4 text-left;

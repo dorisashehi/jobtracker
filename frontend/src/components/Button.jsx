@@ -7,8 +7,8 @@ const Button = ({ title, onClickAct = null, children, className = null }) => {
       onClick={onClickAct}
       className={`main-btn float-right mt-0 ${className}`}
     >
-      {children}
       <p className="py-[5px] px-[5px]">{title}</p>
+      {children}
     </button>
   );
 };

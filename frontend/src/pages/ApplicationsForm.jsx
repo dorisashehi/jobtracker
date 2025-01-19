@@ -159,9 +159,9 @@ const ApplicationsForm = ({
     }
   };
   return (
-    <form className="modal-form flex w-fit flex-col">
+    <form className="modal-form flex w-full lg:w-fit flex-col">
       <div className="modal-content">
-        <div className="modal-input-container">
+        <div className="modal-input-container md:w-1/2 lg:w-1/2 xl:w-1/3">
           <label htmlFor="company_name" className="modal-label">
             Company Name<em className="text-redText">*</em>
           </label>
@@ -178,7 +178,7 @@ const ApplicationsForm = ({
             <em className="err-message">{errors.company_name}</em>
           )}
         </div>
-        <div className="modal-input-container">
+        <div className="modal-input-container md:w-1/2 lg:w-1/2 xl:w-1/3">
           <label htmlFor="company_website" className="modal-label">
             Company Website<em className="text-redText">*</em>
           </label>
@@ -207,7 +207,7 @@ const ApplicationsForm = ({
             onChange={(e) => handleChange(e.target)}
           />
         </div>
-        <div className="modal-input-container w-[1/3]">
+        <div className="modal-input-container md:w-1/2 lg:w-1/2 xl:w-1/3">
           <label htmlFor="apply_date" className="modal-label">
             Apply Date<em className="text-redText">*</em>
           </label>
@@ -223,7 +223,7 @@ const ApplicationsForm = ({
             <em className="err-message">{errors.apply_date}</em>
           )}
         </div>
-        <div className="modal-input-container w-[1/3]">
+        <div className="modal-input-container min-w-[300px] ">
           <label htmlFor="apply_method" className="modal-label">
             Apply Method<em className="text-redText">*</em>
           </label>
@@ -239,7 +239,7 @@ const ApplicationsForm = ({
             <em className="err-message">{errors.apply_method}</em>
           )}
         </div>
-        <div className="modal-input-container w-[1/3]">
+        <div className="modal-input-container md:w-1/2 lg:w-1/2 xl:w-1/3">
           <label htmlFor="apply_url" className="modal-label">
             Apply URL<em className="text-redText">*</em>
           </label>
@@ -255,7 +255,7 @@ const ApplicationsForm = ({
             <em className="err-message">{errors.apply_url}</em>
           )}
         </div>
-        <div className="modal-input-container w-[1/3]">
+        <div className="modal-input-container md:w-1/2 lg:w-1/2 xl:w-1/3">
           <label htmlFor="position" className="modal-label">
             Position<em className="text-redText">*</em>
           </label>
@@ -271,7 +271,7 @@ const ApplicationsForm = ({
             <em className="err-message">{errors.position}</em>
           )}
         </div>
-        <div className="modal-input-container w-[1/3]">
+        <div className="modal-input-container md:w-1/2 lg:w-1/2 xl:w-1/3">
           <label htmlFor="location" className="modal-label">
             Location<em className="text-redText">*</em>
           </label>
@@ -287,7 +287,7 @@ const ApplicationsForm = ({
             <em className="err-message">{errors.location}</em>
           )}
         </div>
-        <div className="modal-input-container w-[1/3]">
+        <div className="modal-input-container md:w-1/2 lg:w-1/2 xl:w-1/3">
           <label htmlFor="interview_date" className="modal-label">
             Interview Date
           </label>
@@ -300,7 +300,7 @@ const ApplicationsForm = ({
             onChange={(e) => handleChange(e.target)}
           />
         </div>
-        <div className="modal-input-container w-[1/3]">
+        <div className="modal-input-container md:w-1/2 lg:w-1/2 xl:w-1/3">
           <label htmlFor="offer_amount" className="modal-label">
             Offer Amount
           </label>
@@ -313,7 +313,7 @@ const ApplicationsForm = ({
             onChange={(e) => handleChange(e.target)}
           />
         </div>
-        <div className="modal-input-container w-[1/3]">
+        <div className="modal-input-container md:w-1/2 lg:w-1/2 xl:w-1/3">
           <label htmlFor="rejected" className="modal-label">
             Rejected
           </label>
@@ -326,7 +326,7 @@ const ApplicationsForm = ({
             className="modal-input p-[0px] outline-none active:outline-none"
           />
         </div>
-        <div className="modal-input-container w-[1/3]">
+        <div className="modal-input-container md:w-1/2 lg:w-1/2 xl:w-1/3">
           <label htmlFor="contact_name" className="modal-label">
             Contact Name
           </label>
@@ -339,7 +339,7 @@ const ApplicationsForm = ({
             onChange={(e) => handleChange(e.target)}
           />
         </div>
-        <div className="modal-input-container w-[1/3]">
+        <div className="modal-input-container md:w-1/2 lg:w-1/2 xl:w-1/3">
           <label htmlFor="notes" className="modal-label">
             Notes
           </label>
@@ -352,7 +352,7 @@ const ApplicationsForm = ({
             onChange={(e) => handleChange(e.target)}
           ></textarea>
         </div>
-        <div className="modal-input-container w-[1/3]">
+        <div className="modal-input-container md:w-1/2 lg:w-1/2 xl:w-1/3">
           <label htmlFor="contact_email" className="modal-label">
             Contact Email
           </label>
@@ -368,7 +368,7 @@ const ApplicationsForm = ({
             <em className="err-message">{errors.contact_email}</em>
           )}
         </div>
-        <div className="modal-input-container w-[1/3]">
+        <div className="modal-input-container md:w-1/2 lg:w-1/2 xl:w-1/3">
           <label htmlFor="contact_phone" className="modal-label">
             Company Phone
           </label>
@@ -394,7 +394,7 @@ const ApplicationsForm = ({
       <Button
         title="Save"
         onClickAct={(e) => handleSubmitApplication(e)}
-        className="mt-0 self-end"
+        className="mt-0 self-start"
       ></Button>
       {crFormData.submissionError && (
         <em className="err-message">{crFormData.submissionError}</em>

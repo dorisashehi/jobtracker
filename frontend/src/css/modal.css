@@ -3,11 +3,11 @@
 }
 
 .ReactModal__Content--after-open {
-  @apply w-[60%] md:w-[80%] h-[70%] md:h-[90%] !top-1/2 !left-1/2 !transform !-translate-x-1/2 !-translate-y-1/2;
+  @apply w-[85%] lg:w-[90%] xl:w-[70%] h-[79%] md:h-[70%] !top-1/2 !left-1/2 !transform !-translate-x-1/2 !-translate-y-1/2;
 }
 
 .modal-input {
-  @apply min-w-[300px];
+  @apply min-w-fit md:min-w-[300px];
 }
 
 .modal-container {
@@ -15,12 +15,12 @@
 }
 
 .modal-header {
-  @apply flex items-center gap-1;
+  @apply flex items-center gap-1 !text-[14px];
 }
 .modal-close {
   @apply icon-style-small cursor-pointer;
 }
 
 .modal-content {
-  @apply flex flex-wrap gap-10;
+  @apply flex flex-wrap gap-10 w-full;
 }
