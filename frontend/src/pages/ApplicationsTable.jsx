@@ -42,14 +42,14 @@ const ApplicationsTable = ({
   return (
     <>
       <table className="table-design">
-        <thead className="uppercase border-[1.5px] border-borderColor">
+        <thead className="uppercase border-[1.5px] border-borderColor bg-[#f0f2f5]">
           <tr>
             <th className="table-head">Date</th>
             <th className="table-head">Name</th>
-            <th className="table-head">Favorite</th>
-            <th className="table-head">Position</th>
-            <th className="table-head">Location</th>
-            <th className="table-head">Rejected</th>
+            <th className="table-head hidden md:table-cell">Favorite</th>
+            <th className="table-head hidden md:table-cell">Position</th>
+            <th className="table-head hidden md:table-cell">Location</th>
+            <th className="table-head hidden md:table-cell">Rejected</th>
             <th className="table-head">Action</th>
           </tr>
         </thead>
@@ -63,7 +63,7 @@ const ApplicationsTable = ({
               );
               return (
                 <>
-                  <tr key={application.id}>
+                  <tr key={application.id} className="table-row">
                     {/* <td className="table-item">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -76,8 +76,10 @@ const ApplicationsTable = ({
                     </svg>
                   </td> */}
                     <td className="table-item">{applyDate}</td>
-                    <td className="table-item">{application.company_name}</td>
-                    <td className="table-item">
+                    <td className="table-item text-primaryText font-semibold">
+                      {application.company_name}
+                    </td>
+                    <td className="table-item hidden md:table-cell">
                       {!application.favorite ? (
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -90,7 +92,7 @@ const ApplicationsTable = ({
                         </svg>
                       ) : (
                         <svg
-                          fill="#e4696d"
+                          fill="#ef4444"
                           width="24px"
                           height="24px"
                           viewBox="0 0 24 24"
@@ -103,14 +105,20 @@ const ApplicationsTable = ({
                         </svg>
                       )}
                     </td>
-                    <td className="table-item">{application.position}</td>
-                    <td className="table-item">{application.location}</td>
+                    <td className="table-item hidden md:table-cell">
+                      {application.position}
+                    </td>
+                    <td className="table-item hidden md:table-cell">
+                      {application.location}
+                    </td>
 
-                    <td className="table-item">{application.rejected}</td>
+                    <td className="table-item hidden md:table-cell">
+                      {application.rejected}
+                    </td>
                     <td className="table-item">
                       <button
                         onClick={(e) => handeOpenView(e, application.id)}
-                        className="main-btn bg-lightGreen"
+                        className="bg-transparent text-[#16a350] font-semibold"
                       >
                         View
                       </button>
@@ -129,10 +137,11 @@ const ApplicationsTable = ({
         </tbody>
       </table>
       {/* Pagination Controls */}
-      <div style={{ marginTop: "20px" }}>
+      <div style={{ marginTop: "20px" }} className="text-end">
         <button
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
+          className="pagination-button"
         >
           &lt; Prev
         </button>
@@ -141,9 +150,10 @@ const ApplicationsTable = ({
           <button
             key={index}
             onClick={() => handlePageChange(index + 1)}
+            className="pagination-button "
             style={{
               margin: "0 5px",
-              fontWeight: currentPage === index + 1 ? "bold" : "normal",
+              fontWeight: currentPage === index + 1 ? "semibold" : "normal",
             }}
           >
             {index + 1}
@@ -153,6 +163,7 @@ const ApplicationsTable = ({
         <button
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
+          className="pagination-button"
         >
           Next &gt;
         </button>

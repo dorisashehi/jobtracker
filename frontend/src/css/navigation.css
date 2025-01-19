@@ -3,7 +3,7 @@
 }
 
 .navigation-content {
-  @apply p-3 flex flex-wrap;
+  @apply p-3 flex flex-wrap items-center;
 }
 
 .navigation-content .col-logo {

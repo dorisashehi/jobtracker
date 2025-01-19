@@ -1,7 +1,10 @@
-.login-input {
-  @apply border-[2px] border-borderColor py-[11px] px-10 outline-none text-[12px] rounded-md placeholder-[#7c848a] text-mainText;
+.login-input,
+.modal-input {
+  @apply border-[2px] border-borderColor py-[11px] px-5 outline-none text-[12px] rounded-md placeholder-[#7c848a] text-mainText;
 }
-
+.login-input {
+  @apply px-9;
+}
 .login-label {
   @apply pb-2;
 }
@@ -16,7 +19,7 @@
 }
 .login-label,
 .modal-label {
-  @apply font-medium text-[14px];
+  @apply font-medium text-[12px] mb-1;
 }
 
 .modal-form {

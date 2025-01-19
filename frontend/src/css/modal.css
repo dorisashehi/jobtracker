@@ -1,13 +1,11 @@
 .ReactModal__Overlay--after-open {
   @apply z-50 bg-[#0b0b0bbf] !important;
 }
-/* .ReactModal__Content--after-open {
-    @apply w-[80%] top-[50%] right-[auto] left-[50%] translate-y-[-50%] translate-x-[-50%] bottom-[auto] !impo mr-[-50%];
-  } */
+
 .ReactModal__Content--after-open {
-  @apply w-[80%];
+  @apply w-[60%] md:w-[80%] h-[70%] md:h-[90%] !top-1/2 !left-1/2 !transform !-translate-x-1/2 !-translate-y-1/2;
 }
-/* top-[50%] right-[auto] left-[50%] translate-y-[-50%] translate-x-[-50%]; */
+
 .modal-input {
   @apply min-w-[300px];
 }

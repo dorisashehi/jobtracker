@@ -1,10 +1,13 @@
 .table-item {
-  @apply pl-6 pr-6 py-3 font-[500] text-[14px]  text-secondaryText capitalize;
+  @apply pl-3 pr-3 md:pl-6 md:pr-6 py-5 text-[13px]  text-[#707280] capitalize font-medium;
 }
 .table-head {
-  @apply pl-6 pr-6 py-4 font-[500] text-[14px]  text-black capitalize;
+  @apply pl-3 pr-3 md:pl-6 md:pr-6 py-4 text-[14px]  text-[#6d7481] capitalize font-semibold;
 }
 
 .table-design {
   @apply text-left cursor-pointer border-[1.5px] border-borderColor w-full;
+}
+.table-row {
+  @apply border-b-[1px] border-borderColor;
 }

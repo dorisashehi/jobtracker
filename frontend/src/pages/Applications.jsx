@@ -71,7 +71,7 @@ const Applications = ({ userAuth }) => {
   return (
     <>
       <div className="container-main justify-center bg-[#f5f7f9]">
-        <div className="content justify-center flex lg:flex-col">
+        <div className="content justify-center flex flex-col">
           {loading ? (
             <Spiner />
           ) : (
@@ -81,16 +81,17 @@ const Applications = ({ userAuth }) => {
                 desc="Manage all of your job applications"
               >
                 <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="icon-style-large"
-                  viewBox="0 -960 960 960"
-                  fill="text-black"
+                  className="icon-style-large text-green-600"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
                 >
-                  <path d="M240-280h240v-80H240v80Zm120-160h240v-80H360v80Zm120-160h240v-80H480v80ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z" />
+                  <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                 </svg>
               </Header>
 
-              <div className="flex-1 filter-bar">
+              <div className="flex-1 filter-bar flex-col md:flex-row items-start md:items-center">
                 <Button title="Create" onClickAct={() => openModal("creation")}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -100,7 +101,7 @@ const Applications = ({ userAuth }) => {
                     <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
                   </svg>
                 </Button>
-                <div className="flex gap-5">
+                <div className="flex gap-5 mt-5">
                   <div className="relative w-fit">
                     <div className="search-container">
                       <svg
@@ -125,7 +126,7 @@ const Applications = ({ userAuth }) => {
                       className="search-input"
                       value={searchText}
                       onChange={(e) => handleSearchText(e.target.value)}
-                      placeholder="Search by company name, position, or location"
+                      placeholder="Company Name, Position, or Location"
                     />
                   </div>
                   {/* <Button title="Export">
@@ -140,14 +141,16 @@ const Applications = ({ userAuth }) => {
                 </div>
               </div>
               <div className="flex-1">
-                <ApplicationsTable
-                  openModal={openModal}
-                  modalIsOpen={modalIsOpen}
-                  closeModal={closeModal}
-                  setApplications={setApplications}
-                  filteredApplications={filteredApplications}
-                  itemsPerPage={5}
-                />
+                {
+                  <ApplicationsTable
+                    openModal={openModal}
+                    modalIsOpen={modalIsOpen}
+                    closeModal={closeModal}
+                    setApplications={setApplications}
+                    filteredApplications={filteredApplications}
+                    itemsPerPage={5}
+                  />
+                }
               </div>
             </>
           )}

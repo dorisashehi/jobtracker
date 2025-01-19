@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import Select from "react-select";
+import Button from "../components/Button";
 import { useState } from "react";
 
 const ApplicationsForm = ({
@@ -169,7 +170,7 @@ const ApplicationsForm = ({
             id="company_name"
             name="company_name"
             placeholder="TechCorp Inc."
-            className="login-input modal-input"
+            className="modal-input"
             onChange={(e) => handleChange(e.target)}
           />
 
@@ -186,7 +187,7 @@ const ApplicationsForm = ({
             id="company_website"
             name="company_website"
             placeholder="www.techcorp.com"
-            className="login-input modal-input"
+            className="modal-input"
             onChange={(e) => handleChange(e.target)}
           />
           {errors.company_website && (
@@ -202,7 +203,7 @@ const ApplicationsForm = ({
             type="checkbox"
             id="favorite"
             name="favorite"
-            className="login-input mr-[8px]"
+            className="modal-input mr-[8px]"
             onChange={(e) => handleChange(e.target)}
           />
         </div>
@@ -215,7 +216,7 @@ const ApplicationsForm = ({
             id="apply_date"
             name="apply_date"
             placeholder="2024-01-15"
-            className="login-input modal-input"
+            className="modal-input"
             onChange={(e) => handleChange(e.target)}
           />
           {errors.apply_date && (
@@ -232,7 +233,7 @@ const ApplicationsForm = ({
             options={methodOptions}
             id="apply_method"
             name="apply_method"
-            className="login-input modal-input p-[0px] outline-none active:outline-none"
+            className="modal-input p-[0px] outline-none active:outline-none"
           />
           {errors.apply_method && (
             <em className="err-message">{errors.apply_method}</em>
@@ -247,7 +248,7 @@ const ApplicationsForm = ({
             id="apply_url"
             name="apply_url"
             placeholder="www.techcorp.com/careers"
-            className="login-input modal-input"
+            className="modal-input"
             onChange={(e) => handleChange(e.target)}
           />
           {errors.apply_url && (
@@ -263,7 +264,7 @@ const ApplicationsForm = ({
             id="position"
             name="position"
             placeholder="Software Engineer"
-            className="login-input modal-input"
+            className="modal-input"
             onChange={(e) => handleChange(e.target)}
           />
           {errors.position && (
@@ -280,7 +281,7 @@ const ApplicationsForm = ({
             options={locationOptions}
             id="location"
             name="location"
-            className="login-input modal-input p-[0px] outline-none active:outline-none"
+            className="modal-input p-[0px] outline-none active:outline-none"
           />
           {errors.location && (
             <em className="err-message">{errors.location}</em>
@@ -295,7 +296,7 @@ const ApplicationsForm = ({
             id="interview_date"
             name="interview_date"
             placeholder="2024-01-20"
-            className="login-input modal-input"
+            className="modal-input"
             onChange={(e) => handleChange(e.target)}
           />
         </div>
@@ -308,7 +309,7 @@ const ApplicationsForm = ({
             id="offer_amount"
             name="offer_amount"
             placeholder="85000"
-            className="login-input modal-input"
+            className="modal-input"
             onChange={(e) => handleChange(e.target)}
           />
         </div>
@@ -322,7 +323,7 @@ const ApplicationsForm = ({
             options={rejectedOptions}
             id="rejected"
             name="rejected"
-            className="login-input modal-input p-[0px] outline-none active:outline-none"
+            className="modal-input p-[0px] outline-none active:outline-none"
           />
         </div>
         <div className="modal-input-container w-[1/3]">
@@ -334,7 +335,7 @@ const ApplicationsForm = ({
             id="contact_name"
             name="contact_name"
             placeholder="John Doe"
-            className="login-input modal-input"
+            className="modal-input"
             onChange={(e) => handleChange(e.target)}
           />
         </div>
@@ -347,7 +348,7 @@ const ApplicationsForm = ({
             name="notes"
             rows={5}
             placeholder="The interview went well, waiting for feedback."
-            className="login-input modal-input"
+            className="modal-input"
             onChange={(e) => handleChange(e.target)}
           ></textarea>
         </div>
@@ -360,7 +361,7 @@ const ApplicationsForm = ({
             id="contact_email"
             name="contact_email"
             placeholder="john.doe@example.com"
-            className="login-input modal-input"
+            className="modal-input"
             onChange={(e) => handleChange(e.target)}
           />
           {errors.contact_email && (
@@ -376,19 +377,25 @@ const ApplicationsForm = ({
             id="contact_phone"
             name="contact_phone"
             placeholder="(555) 123-4567"
-            className="login-input modal-input"
+            className="modal-input"
             onChange={(e) => handleChange(e.target)}
           />
         </div>
       </div>
 
-      <button
+      {/* <button
         type="submit"
         className="main-btn float-right mt-0 self-end"
         onClick={(e) => handleSubmitApplication(e)}
       >
         Create
-      </button>
+      </button> */}
+
+      <Button
+        title="Save"
+        onClickAct={(e) => handleSubmitApplication(e)}
+        className="mt-0 self-end"
+      ></Button>
       {crFormData.submissionError && (
         <em className="err-message">{crFormData.submissionError}</em>
       )}

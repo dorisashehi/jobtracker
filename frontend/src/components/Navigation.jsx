@@ -74,12 +74,20 @@ const Navigation = ({ userAuth, setUserAuth }) => {
               }`}
             >
               <li>
-                <Link to="/dashboard" className="" aria-current="page">
+                <Link
+                  to="/dashboard"
+                  className="font-semibold text-[#374151] hover:opacity-[0.8] text-[14px]"
+                  aria-current="page"
+                >
                   Dashboard{userAuth.name}
                 </Link>
               </li>
               <li>
-                <Link to="/applications" className="" aria-current="page">
+                <Link
+                  to="/applications"
+                  className="font-semibold text-[#374151] hover:opacity-[0.8] text-[14px]"
+                  aria-current="page"
+                >
                   Applications
                 </Link>
               </li>
@@ -91,7 +99,7 @@ const Navigation = ({ userAuth, setUserAuth }) => {
               <li className="">
                 <Link
                   to="/login"
-                  className="flex items-center g-[4px] font-medium text-[#374151] hover:opacity-[0.8]"
+                  className="flex items-center g-[4px] font-semibold text-[#374151] hover:opacity-[0.8] text-[14px]"
                   aria-current="page"
                 >
                   <svg
@@ -111,7 +119,7 @@ const Navigation = ({ userAuth, setUserAuth }) => {
                 <Link
                   aria-current="page"
                   onClick={(e) => handleLogout(e)}
-                  className="flex items-center g-[6px] font-medium text-[#374151] hover:opacity-[0.8]"
+                  className="flex items-center g-[6px] font-semibold  text-[#374151] hover:opacity-[0.8]"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

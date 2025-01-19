@@ -20,7 +20,7 @@ body {
   @apply max-w-screen-xl mx-auto px-5;
 }
 .menu-item {
-  @apply border-[1px] border-secondaryButton text-[13px] py-[5px] px-[20px] rounded-none;
+  @apply border-[1px] border-secondaryButton text-[13px] py-[5px] px-[20px];
 }
 
 .full-screen {
@@ -36,7 +36,7 @@ body {
 }
 
 .main-btn {
-  @apply menu-item items-center mt-0 bg-primaryButton text-whiteTxt rounded-md flex flex-row justify-center capitalize max-w-fit hover:opacity-[0.9] font-[700] tracking-[0.4px];
+  @apply menu-item items-center border-[2px] py-[10px] px-[10px] mt-0 bg-primaryButton text-whiteTxt rounded-md flex flex-row justify-center capitalize max-w-fit hover:opacity-[0.9] font-[700] tracking-[0.4px];
 }
 
 .err-message {
@@ -64,4 +64,8 @@ body {
 
 .login-btn {
   @apply max-w-full py-[10px] px-10 rounded-md;
+}
+
+.pagination-button {
+  @apply inline-flex items-center px-2 py-1 text-[#707280] hover:opacity-[0.9] text-[14px] font-[500] cursor-pointer;
 }
