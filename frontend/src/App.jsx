@@ -16,6 +16,7 @@ function App() {
     const getUser = async () => {
       try {
         const response = await Auth.getLoggedInUser();
+        console.log(response);
         if (response.success) {
           setUserAuth(response.user); // Set logged-in user
         } else {
@@ -74,9 +75,9 @@ function App() {
     },
   ]);
 
-  if (loading) {
-    return;
-  }
+  // if (loading) {
+  //   return;
+  // }
   return routes;
 }
 

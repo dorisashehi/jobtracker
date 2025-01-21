@@ -3,6 +3,10 @@ import Select from "react-select";
 import Button from "../components/Button";
 import { useState } from "react";
 import Spinner from "../components/Spiner";
+import InputField from "../components/InputField";
+import SelectField from "../components/SelectField";
+import Options from "../data/selectOptions";
+import TextareaField from "../components/TextareaField";
 
 const ApplicationsForm = ({
   crFormData,
@@ -12,38 +16,15 @@ const ApplicationsForm = ({
 }) => {
   const [loadingSave, setLoadingSave] = useState(false);
 
-  const locationOptions = [
-    { value: "onsite", label: "On-Site" },
-    { value: "remote", label: "Remote" },
-    { value: "hybrid", label: "Hybrid" },
-    { value: "optional", label: "Optional" },
-  ];
-
   const setSelectedLocation = (el) => {
     setCrFormData({ ...crFormData, ["location"]: el.value });
     validateField("location", el.value);
   };
 
-  const rejectedOptions = [
-    { value: "response", label: "From Response" },
-    { value: "interview", label: "After Interview" },
-    { value: "offer", label: "After Offer" },
-    { value: "other", label: "Other" },
-  ];
-
   const setRejectedSelected = (el) => {
     setCrFormData({ ...crFormData, ["rejected"]: el.value });
     validateField("rejected", el.value);
   };
-
-  const methodOptions = [
-    { value: "company_web", label: "Company Website" },
-    { value: "job_board", label: "Job Board" },
-    { value: "recruiter", label: "Recruiter" },
-    { value: "referal", label: "Referal" },
-    { value: "email", label: "Email" },
-    { value: "other", label: "Other" },
-  ];
 
   const setMethodSelected = (el) => {
     setCrFormData({ ...crFormData, ["apply_method"]: el.value });
@@ -169,242 +150,165 @@ const ApplicationsForm = ({
   return (
     <form className="modal-form flex w-full lg:w-fit flex-col">
       <div className="modal-content">
-        <div className="modal-input-container md:w-1/2 lg:w-1/2 xl:w-1/3">
-          <label htmlFor="company_name" className="modal-label">
-            Company Name<em className="text-redText">*</em>
-          </label>
-          <input
-            type="text"
-            id="company_name"
-            name="company_name"
-            placeholder="TechCorp Inc."
-            className="modal-input"
-            onChange={(e) => handleChange(e.target)}
-          />
+        <InputField
+          label="Company Name"
+          required={true}
+          handleChange={handleChange}
+          errors={errors}
+          fieldName={"company_name"}
+          inputType={"text"}
+          inputPlaceholder={"TechCorp Inc."}
+        />
 
-          {errors.company_name && (
-            <em className="err-message">{errors.company_name}</em>
-          )}
-        </div>
-        <div className="modal-input-container md:w-1/2 lg:w-1/2 xl:w-1/3">
-          <label htmlFor="company_website" className="modal-label">
-            Company Website<em className="text-redText">*</em>
-          </label>
-          <input
-            type="text"
-            id="company_website"
-            name="company_website"
-            placeholder="www.techcorp.com"
-            className="modal-input"
-            onChange={(e) => handleChange(e.target)}
-          />
-          {errors.company_website && (
-            <em className="err-message">{errors.company_website}</em>
-          )}
-        </div>
-        <div className="modal-input-container flex items-start md:w-1/2 lg:w-1/2 xl:w-1/3min-w-fit ">
-          <label htmlFor="favorite" className="modal-label ">
-            Favorite
-          </label>
+        <InputField
+          label="Company Website"
+          required={true}
+          handleChange={handleChange}
+          errors={errors}
+          fieldName={"company_website"}
+          inputType={"text"}
+          inputPlaceholder={"www.techcorp.com"}
+        />
 
-          <input
-            type="checkbox"
-            id="favorite"
-            name="favorite"
-            className="modal-input mr-[8px]"
-            onChange={(e) => handleChange(e.target)}
-          />
-        </div>
-        <div className="modal-input-container md:w-1/2 lg:w-1/2 xl:w-1/3">
-          <label htmlFor="apply_date" className="modal-label">
-            Apply Date<em className="text-redText">*</em>
-          </label>
-          <input
-            type="date"
-            id="apply_date"
-            name="apply_date"
-            placeholder="2024-01-15"
-            className="modal-input"
-            onChange={(e) => handleChange(e.target)}
-          />
-          {errors.apply_date && (
-            <em className="err-message">{errors.apply_date}</em>
-          )}
-        </div>
-        <div className="modal-input-container md:w-1/2 lg:w-1/2 xl:w-1/3">
-          <label htmlFor="apply_method" className="modal-label">
-            Apply Method<em className="text-redText">*</em>
-          </label>
-          <Select
-            defaultValue={crFormData.apply_method}
-            onChange={setMethodSelected}
-            options={methodOptions}
-            id="apply_method"
-            name="apply_method"
-            className="modal-input p-[0px] outline-none active:outline-none"
-          />
-          {errors.apply_method && (
-            <em className="err-message">{errors.apply_method}</em>
-          )}
-        </div>
-        <div className="modal-input-container md:w-1/2 lg:w-1/2 xl:w-1/3">
-          <label htmlFor="apply_url" className="modal-label">
-            Apply URL<em className="text-redText">*</em>
-          </label>
-          <input
-            type="text"
-            id="apply_url"
-            name="apply_url"
-            placeholder="www.techcorp.com/careers"
-            className="modal-input"
-            onChange={(e) => handleChange(e.target)}
-          />
-          {errors.apply_url && (
-            <em className="err-message">{errors.apply_url}</em>
-          )}
-        </div>
-        <div className="modal-input-container md:w-1/2 lg:w-1/2 xl:w-1/3">
-          <label htmlFor="position" className="modal-label">
-            Position<em className="text-redText">*</em>
-          </label>
-          <input
-            type="text"
-            id="position"
-            name="position"
-            placeholder="Software Engineer"
-            className="modal-input"
-            onChange={(e) => handleChange(e.target)}
-          />
-          {errors.position && (
-            <em className="err-message">{errors.position}</em>
-          )}
-        </div>
-        <div className="modal-input-container md:w-1/2 lg:w-1/2 xl:w-1/3">
-          <label htmlFor="location" className="modal-label">
-            Location<em className="text-redText">*</em>
-          </label>
-          <Select
-            defaultValue={crFormData.location}
-            onChange={setSelectedLocation}
-            options={locationOptions}
-            id="location"
-            name="location"
-            className="modal-input p-[0px] outline-none active:outline-none"
-          />
-          {errors.location && (
-            <em className="err-message">{errors.location}</em>
-          )}
-        </div>
-        <div className="modal-input-container md:w-1/2 lg:w-1/2 xl:w-1/3">
-          <label htmlFor="interview_date" className="modal-label">
-            Interview Date
-          </label>
-          <input
-            type="date"
-            id="interview_date"
-            name="interview_date"
-            placeholder="2024-01-20"
-            className="modal-input"
-            onChange={(e) => handleChange(e.target)}
-          />
-        </div>
-        <div className="modal-input-container md:w-1/2 lg:w-1/2 xl:w-1/3">
-          <label htmlFor="offer_amount" className="modal-label">
-            Offer Amount
-          </label>
-          <input
-            type="number"
-            id="offer_amount"
-            name="offer_amount"
-            placeholder="85000"
-            className="modal-input"
-            onChange={(e) => handleChange(e.target)}
-          />
-        </div>
-        <div className="modal-input-container md:w-1/2 lg:w-1/2 xl:w-1/3">
-          <label htmlFor="rejected" className="modal-label">
-            Rejected
-          </label>
-          <Select
-            defaultValue={crFormData.rejected}
-            onChange={setRejectedSelected}
-            options={rejectedOptions}
-            id="rejected"
-            name="rejected"
-            className="modal-input p-[0px] outline-none active:outline-none"
-          />
-        </div>
-        <div className="modal-input-container md:w-1/2 lg:w-1/2 xl:w-1/3">
-          <label htmlFor="contact_name" className="modal-label">
-            Contact Name
-          </label>
-          <input
-            type="text"
-            id="contact_name"
-            name="contact_name"
-            placeholder="John Doe"
-            className="modal-input"
-            onChange={(e) => handleChange(e.target)}
-          />
-        </div>
-        <div className="modal-input-container md:w-1/2 lg:w-1/2 xl:w-1/3">
-          <label htmlFor="notes" className="modal-label">
-            Notes
-          </label>
-          <textarea
-            id="notes"
-            name="notes"
-            rows={5}
-            placeholder="The interview went well, waiting for feedback."
-            className="modal-input"
-            onChange={(e) => handleChange(e.target)}
-          ></textarea>
-        </div>
-        <div className="modal-input-container md:w-1/2 lg:w-1/2 xl:w-1/3">
-          <label htmlFor="contact_email" className="modal-label">
-            Contact Email
-          </label>
-          <input
-            type="email"
-            id="contact_email"
-            name="contact_email"
-            placeholder="john.doe@example.com"
-            className="modal-input"
-            onChange={(e) => handleChange(e.target)}
-          />
-          {errors.contact_email && (
-            <em className="err-message">{errors.contact_email}</em>
-          )}
-        </div>
-        <div className="modal-input-container md:w-1/2 lg:w-1/2 xl:w-1/3">
-          <label htmlFor="contact_phone" className="modal-label">
-            Company Phone
-          </label>
-          <input
-            type="text"
-            id="contact_phone"
-            name="contact_phone"
-            placeholder="(555) 123-4567"
-            className="modal-input"
-            onChange={(e) => handleChange(e.target)}
-          />
-        </div>
+        <InputField
+          label="Favorite"
+          handleChange={handleChange}
+          errors={errors}
+          fieldName={"favorite"}
+          inputType={"checkbox"}
+          inputPlaceholder={"www.techcorp.com"}
+          className={"mr-[8px]"}
+        />
+
+        <InputField
+          label="Apply Date"
+          required={true}
+          handleChange={handleChange}
+          errors={errors}
+          fieldName={"apply_date"}
+          inputType={"date"}
+          inputPlaceholder={"2024-01-15"}
+        />
+
+        <SelectField
+          label="Apply Method"
+          fieldName="apply_method"
+          required={true}
+          crFormData={crFormData.apply_method}
+          errors={errors}
+          options={Options.methodOptions}
+          setCrFormData={setCrFormData}
+          onChangeAction={setMethodSelected}
+        />
+
+        <InputField
+          label="Apply URL"
+          required={true}
+          handleChange={handleChange}
+          errors={errors}
+          fieldName={"apply_url"}
+          inputType={"text"}
+          inputPlaceholder={"www.techcorp.com/careers"}
+        />
+
+        <InputField
+          label="Position"
+          required={true}
+          handleChange={handleChange}
+          errors={errors}
+          fieldName={"position"}
+          inputType={"text"}
+          inputPlaceholder={"Software Engineer"}
+        />
+
+        <SelectField
+          label="Location"
+          fieldName="location"
+          required={true}
+          crFormData={crFormData.location}
+          errors={errors}
+          options={Options.locationOptions}
+          setCrFormData={setCrFormData}
+          onChangeAction={setSelectedLocation}
+        />
+
+        <InputField
+          label="Interview Date"
+          handleChange={handleChange}
+          errors={errors}
+          fieldName={"interview_date"}
+          inputType={"date"}
+          inputPlaceholder={"2024-01-20"}
+        />
+
+        <InputField
+          label="Offer Amount"
+          required={true}
+          handleChange={handleChange}
+          errors={errors}
+          fieldName={"offer_amount"}
+          inputType={"number"}
+          inputPlaceholder={"85000"}
+        />
+
+        <SelectField
+          label="Rejected"
+          fieldName="rejected"
+          crFormData={crFormData.rejected}
+          errors={errors}
+          options={Options.rejectedOptions}
+          setCrFormData={setCrFormData}
+          onChangeAction={setRejectedSelected}
+        />
+
+        <InputField
+          label="Offer Amount"
+          handleChange={handleChange}
+          errors={errors}
+          fieldName={"offer_amount"}
+          inputType={"number"}
+          inputPlaceholder={"85000"}
+        />
+
+        <InputField
+          label="Contact Name"
+          handleChange={handleChange}
+          errors={errors}
+          fieldName={"contact_name"}
+          inputType={"text"}
+          inputPlaceholder={"John Doe"}
+        />
+        <TextareaField
+          label="Notes"
+          fieldName="notes"
+          onChangeAction={handleChange}
+          placeholder="The interview went well, waiting for feedback."
+        />
+
+        <InputField
+          label="Contact Email"
+          handleChange={handleChange}
+          errors={errors}
+          fieldName={"contact_email"}
+          inputType={"email"}
+          inputPlaceholder={"john.doe@example.com"}
+        />
+
+        <InputField
+          label=" Company Phone"
+          handleChange={handleChange}
+          errors={errors}
+          fieldName={"contact_phone"}
+          inputType={"text"}
+          inputPlaceholder={"(555) 123-4567"}
+        />
       </div>
-
-      {/* <button
-        type="submit"
-        className="main-btn float-right mt-0 self-end"
-        onClick={(e) => handleSubmitApplication(e)}
-      >
-        Create
-      </button> */}
 
       <Button
         title="Save"
         onClickAct={(e) => handleSubmitApplication(e)}
         className="mt-0 self-end"
       >
-        {" "}
         {loadingSave && <Spinner />}
       </Button>
       {crFormData.submissionError && (
