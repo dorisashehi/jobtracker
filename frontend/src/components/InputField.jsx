@@ -8,6 +8,7 @@ const InputField = ({
   fieldName,
   inputPlaceholder,
   className = "",
+  inputType = "text",
   value,
 }) => {
   return (
@@ -18,7 +19,7 @@ const InputField = ({
           {required && <em className="text-redText">*</em>}
         </label>
         <input
-          type="text"
+          type={inputType}
           id={fieldName}
           name={fieldName}
           placeholder={inputPlaceholder}
@@ -44,6 +45,7 @@ InputField.propTypes = {
   inputPlaceholder: PropTypes.string.isRequired,
   className: PropTypes.string,
   value: PropTypes.string,
+  inputType: PropTypes.string,
 };
 
 export default InputField;

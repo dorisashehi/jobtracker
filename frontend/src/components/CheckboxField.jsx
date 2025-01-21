@@ -6,7 +6,6 @@ const CheckboxField = ({
   handleChange,
   errors,
   fieldName,
-  inputPlaceholder,
   className = "",
   value,
 }) => {
@@ -21,7 +20,6 @@ const CheckboxField = ({
           type="checkbox"
           id={fieldName}
           name={fieldName}
-          placeholder={inputPlaceholder}
           className={`modal-input ${className}`}
           onChange={(e) => handleChange(e.target)}
           checked={value}
@@ -41,7 +39,6 @@ CheckboxField.propTypes = {
   handleChange: PropTypes.func.isRequired,
   errors: PropTypes.object,
   fieldName: PropTypes.string.isRequired,
-  inputPlaceholder: PropTypes.string.isRequired,
   className: PropTypes.string,
   value: PropTypes.bool,
 };

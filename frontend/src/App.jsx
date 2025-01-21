@@ -7,6 +7,7 @@ import Welcome from "./pages/Welcome";
 import { useRoutes, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Auth from "./services/Auth";
+import Spinner from "./components/Spiner";
 
 function App() {
   const [userAuth, setUserAuth] = useState(null);
@@ -75,10 +76,11 @@ function App() {
     },
   ]);
 
-  // if (loading) {
-  //   return;
-  // }
-  return routes;
+  if (loading) {
+    <Spinner />;
+  } else {
+    return routes;
+  }
 }
 
 export default App;

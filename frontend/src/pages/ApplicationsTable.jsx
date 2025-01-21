@@ -195,7 +195,6 @@ const ApplicationsTable = ({
           setCrFormData={setCrFormData}
           crFormData={crFormData}
           setApplications={setApplications}
-          filteredApplications={filteredApplications}
         ></EditApplicationsForm>
       </Modal>
     </>

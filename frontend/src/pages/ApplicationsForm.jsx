@@ -27,22 +27,10 @@ const ApplicationsForm = ({
     location: "",
   });
 
-  const setSelectedLocation = (el) => {
-    setCrFormData({ ...crFormData, ["location"]: el.value });
-    const { newErrors } = Validation.validateField("location", el.value);
+  const handleSelectedAction = (el, name) => {
+    setCrFormData({ ...crFormData, [name]: el.value });
+    const { newErrors } = Validation.validateField(name, el.value);
 
-    setErrors({ ...errors, ...newErrors });
-  };
-
-  const setRejectedSelected = (el) => {
-    setCrFormData({ ...crFormData, ["rejected"]: el.value });
-    const { newErrors } = Validation.validateField("rejected", el.value);
-    setErrors({ ...errors, ...newErrors });
-  };
-
-  const setMethodSelected = (el) => {
-    setCrFormData({ ...crFormData, ["apply_method"]: el.value });
-    const { newErrors } = Validation.validateField("apply_method", el.value);
     setErrors({ ...errors, ...newErrors });
   };
 
@@ -161,11 +149,12 @@ const ApplicationsForm = ({
           label="Apply Method"
           fieldName="apply_method"
           required={true}
-          defaultValue={crFormData.apply_method}
           errors={errors}
           options={Options.methodOptions}
           setCrFormData={setCrFormData}
-          onChangeAction={setMethodSelected}
+          onChangeAction={(option) =>
+            handleSelectedAction(option, "apply_method")
+          }
         />
 
         <InputField
@@ -190,11 +179,10 @@ const ApplicationsForm = ({
           label="Location"
           fieldName="location"
           required={true}
-          defaultValue={crFormData.location}
           errors={errors}
           options={Options.locationOptions}
           setCrFormData={setCrFormData}
-          onChangeAction={setSelectedLocation}
+          onChangeAction={(option) => handleSelectedAction(option, "location")}
         />
 
         <InputField
@@ -218,11 +206,10 @@ const ApplicationsForm = ({
         <SelectField
           label="Rejected"
           fieldName="rejected"
-          defaultValue={crFormData.rejected}
           errors={errors}
           options={Options.rejectedOptions}
           setCrFormData={setCrFormData}
-          onChangeAction={setRejectedSelected}
+          onChangeAction={(option) => handleSelectedAction(option, "rejected")}
         />
 
         <InputField

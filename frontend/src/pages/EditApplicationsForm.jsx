@@ -19,28 +19,16 @@ const EditApplicationsForm = ({
   setApplications,
   crFormData,
   setCrFormData,
-  filteredApplications,
 }) => {
   const [applicationData, setApplicationData] = useState(application);
   const [loadingUpdate, setLoadingUpdate] = useState(false);
   const [loadingDelete, setLoadingDelete] = useState(false);
 
-  const setSelectedLocation = (el) => {
-    setApplicationData({ ...applicationData, ["location"]: el.value });
-    const { newErrors } = Validation.validateField("location", el.value);
+  const handleSelectedAction = (el, name) => {
+    console.log(name, el);
+    setCrFormData({ ...crFormData, [name]: el.value });
+    const { newErrors } = Validation.validateField(name, el.value);
 
-    setErrors({ ...errors, ...newErrors });
-  };
-
-  const setRejectedSelected = (el) => {
-    applicationData({ ...applicationData, ["rejected"]: el.value });
-    const { newErrors } = Validation.validateField("rejected", el.value);
-    setErrors({ ...errors, ...newErrors });
-  };
-
-  const setMethodSelected = (el) => {
-    setApplicationData({ ...applicationData, ["apply_method"]: el.value });
-    const { newErrors } = Validation.validateField("apply_method", el.value);
     setErrors({ ...errors, ...newErrors });
   };
 
@@ -82,7 +70,7 @@ const EditApplicationsForm = ({
     setLoadingUpdate(true);
     const { valid, newErrors } = Validation.validateAll(applicationData);
     setErrors(newErrors);
-    console.log(JSON.stringify(applicationData));
+
     if (valid) {
       const options = {
         method: "PATCH",
@@ -218,7 +206,9 @@ const EditApplicationsForm = ({
           defaultValue={Options.methodOptions.find(
             (el) => el.value === applicationData.apply_method
           )}
-          onChangeAction={setMethodSelected}
+          onChangeAction={(option) =>
+            handleSelectedAction(option, "apply_method")
+          }
         />
 
         <InputField
@@ -248,7 +238,7 @@ const EditApplicationsForm = ({
           errors={errors}
           options={Options.locationOptions}
           setCrFormData={setCrFormData}
-          onChangeAction={setSelectedLocation}
+          onChangeAction={(option) => handleSelectedAction(option, "location")}
           defaultValue={
             Options.locationOptions.find(
               (el) => el.value === applicationData?.location
@@ -285,7 +275,7 @@ const EditApplicationsForm = ({
           errors={errors}
           options={Options.rejectedOptions}
           setCrFormData={setCrFormData}
-          onChangeAction={setRejectedSelected}
+          onChangeAction={(option) => handleSelectedAction(option, "rejected")}
           defaultValue={
             Options.rejectedOptions.find(
               (el) => el.value === applicationData?.rejected
@@ -363,7 +353,6 @@ EditApplicationsForm.propTypes = {
   application: PropTypes.object.isRequired,
   closeModal: PropTypes.func.isRequired,
   setApplications: PropTypes.func.isRequired,
-  filteredApplications: PropTypes.array.isRequired,
   crFormData: PropTypes.object,
   setCrFormData: PropTypes.func,
 };
