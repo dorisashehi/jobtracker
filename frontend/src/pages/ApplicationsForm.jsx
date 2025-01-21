@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import Select from "react-select";
 import Button from "../components/Button";
 import { useState } from "react";
 import Spinner from "../components/Spiner";
@@ -7,6 +6,7 @@ import InputField from "../components/InputField";
 import SelectField from "../components/SelectField";
 import Options from "../data/selectOptions";
 import TextareaField from "../components/TextareaField";
+import Validation from "../utilities/Validation";
 
 const ApplicationsForm = ({
   crFormData,
@@ -18,17 +18,21 @@ const ApplicationsForm = ({
 
   const setSelectedLocation = (el) => {
     setCrFormData({ ...crFormData, ["location"]: el.value });
-    validateField("location", el.value);
+    const { newErrors } = Validation.validateField("location", el.value);
+
+    setErrors({ ...errors, ...newErrors });
   };
 
   const setRejectedSelected = (el) => {
     setCrFormData({ ...crFormData, ["rejected"]: el.value });
-    validateField("rejected", el.value);
+    const { newErrors } = Validation.validateField("rejected", el.value);
+    setErrors({ ...errors, ...newErrors });
   };
 
   const setMethodSelected = (el) => {
     setCrFormData({ ...crFormData, ["apply_method"]: el.value });
-    validateField("apply_method", el.value);
+    const { newErrors } = Validation.validateField("apply_method", el.value);
+    setErrors({ ...errors, ...newErrors });
   };
   const [errors, setErrors] = useState({
     company_name: "",
@@ -39,51 +43,51 @@ const ApplicationsForm = ({
     position: "",
     location: "",
   });
-  const validateAll = (formData) => {
-    let newErrors = {};
-    let valid = true;
+  // const validateAll = (formData) => {
+  //   let newErrors = {};
+  //   let valid = true;
 
-    const reqFields = [
-      "company_name",
-      "company_website",
-      "apply_date",
-      "apply_method",
-      "apply_url",
-      "position",
-      "location",
-    ];
+  //   const reqFields = [
+  //     "company_name",
+  //     "company_website",
+  //     "apply_date",
+  //     "apply_method",
+  //     "apply_url",
+  //     "position",
+  //     "location",
+  //   ];
 
-    reqFields.forEach((field) => {
-      if (!formData[field]) {
-        newErrors[field] = "Required field.";
-        valid = false;
-      }
-    });
+  //   reqFields.forEach((field) => {
+  //     if (!formData[field]) {
+  //       newErrors[field] = "Required field.";
+  //       valid = false;
+  //     }
+  //   });
 
-    if (formData.contact_email) {
-      if (!/\S+@\S+\.\S+/.test(formData.contact_email)) {
-        newErrors.contact_email = "Please enter a valid email address.";
-        valid = false;
-      }
-    }
+  //   if (formData.contact_email) {
+  //     if (!/\S+@\S+\.\S+/.test(formData.contact_email)) {
+  //       newErrors.contact_email = "Please enter a valid email address.";
+  //       valid = false;
+  //     }
+  //   }
 
-    return { valid, newErrors };
-  };
+  //   return { valid, newErrors };
+  // };
 
-  const validateField = (name, value) => {
-    const newErrors = {};
-    let valid = true;
+  // const validateField = (name, value) => {
+  //   const newErrors = {};
+  //   let valid = true;
 
-    if (!value) {
-      newErrors[name] = "Required Field";
-      valid = false;
-    } else {
-      newErrors[name] = "";
-    }
+  //   if (!value) {
+  //     newErrors[name] = "Required Field";
+  //     valid = false;
+  //   } else {
+  //     newErrors[name] = "";
+  //   }
 
-    setErrors({ ...errors, ...newErrors });
-    return valid;
-  };
+  //   setErrors({ ...errors, ...newErrors });
+  //   return valid;
+  // };
 
   const handleChange = (input) => {
     const { name, value, checked } = input;
@@ -100,14 +104,16 @@ const ApplicationsForm = ({
       name == "position" ||
       name == "location"
     ) {
-      validateField(name, value);
+      const { newErrors } = Validation.validateField(name, value);
+
+      setErrors({ ...errors, ...newErrors });
     }
   };
 
   const handleSubmitApplication = async (e) => {
     e.preventDefault();
     setLoadingSave(true);
-    const { valid, newErrors } = validateAll(crFormData);
+    const { valid, newErrors } = Validation.validateAll(crFormData);
     setErrors(newErrors);
     if (valid) {
       const options = {
@@ -243,7 +249,6 @@ const ApplicationsForm = ({
 
         <InputField
           label="Offer Amount"
-          required={true}
           handleChange={handleChange}
           errors={errors}
           fieldName={"offer_amount"}
@@ -295,7 +300,7 @@ const ApplicationsForm = ({
         />
 
         <InputField
-          label=" Company Phone"
+          label="Company Phone"
           handleChange={handleChange}
           errors={errors}
           fieldName={"contact_phone"}
@@ -319,7 +324,7 @@ const ApplicationsForm = ({
 };
 
 ApplicationsForm.propTypes = {
-  crFormData: PropTypes.object.isRequired,
+  crFormData: PropTypes.object,
   setCrFormData: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   setApplications: PropTypes.func.isRequired,
