@@ -21,6 +21,8 @@ export default {
         secondaryButton: "#dadada",
         primaryButton: "#0f1925",
         whiteTxt: "#f7fbff",
+        grayColor: "#707280",
+        lightGray: "#6d7481",
       },
 
       fontFamily: {
