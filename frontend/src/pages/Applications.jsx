@@ -64,6 +64,7 @@ const Applications = ({ userAuth }) => {
 
   function closeModal(modalName) {
     setIsOpen({ ...modalIsOpen, [modalName]: false });
+    setCrFormData({});
   }
 
   Modal.setAppElement("#root");

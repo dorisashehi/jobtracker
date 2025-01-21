@@ -16,6 +16,16 @@ const ApplicationsForm = ({
 }) => {
   const [loadingSave, setLoadingSave] = useState(false);
 
+  const [errors, setErrors] = useState({
+    company_name: "",
+    company_website: "",
+    apply_date: "",
+    apply_method: "",
+    apply_url: "",
+    position: "",
+    location: "",
+  });
+
   const setSelectedLocation = (el) => {
     setCrFormData({ ...crFormData, ["location"]: el.value });
     const { newErrors } = Validation.validateField("location", el.value);
@@ -34,60 +44,6 @@ const ApplicationsForm = ({
     const { newErrors } = Validation.validateField("apply_method", el.value);
     setErrors({ ...errors, ...newErrors });
   };
-  const [errors, setErrors] = useState({
-    company_name: "",
-    company_website: "",
-    apply_date: "",
-    apply_method: "",
-    apply_url: "",
-    position: "",
-    location: "",
-  });
-  // const validateAll = (formData) => {
-  //   let newErrors = {};
-  //   let valid = true;
-
-  //   const reqFields = [
-  //     "company_name",
-  //     "company_website",
-  //     "apply_date",
-  //     "apply_method",
-  //     "apply_url",
-  //     "position",
-  //     "location",
-  //   ];
-
-  //   reqFields.forEach((field) => {
-  //     if (!formData[field]) {
-  //       newErrors[field] = "Required field.";
-  //       valid = false;
-  //     }
-  //   });
-
-  //   if (formData.contact_email) {
-  //     if (!/\S+@\S+\.\S+/.test(formData.contact_email)) {
-  //       newErrors.contact_email = "Please enter a valid email address.";
-  //       valid = false;
-  //     }
-  //   }
-
-  //   return { valid, newErrors };
-  // };
-
-  // const validateField = (name, value) => {
-  //   const newErrors = {};
-  //   let valid = true;
-
-  //   if (!value) {
-  //     newErrors[name] = "Required Field";
-  //     valid = false;
-  //   } else {
-  //     newErrors[name] = "";
-  //   }
-
-  //   setErrors({ ...errors, ...newErrors });
-  //   return valid;
-  // };
 
   const handleChange = (input) => {
     const { name, value, checked } = input;
@@ -134,12 +90,10 @@ const ApplicationsForm = ({
         if (data.success) {
           setApplications((prevState) => [...prevState, data.success]);
           closeModal("creation");
+          setCrFormData({});
         }
         if (data.error) {
-          setCrFormData({
-            ...crFormData,
-            submissionError: data.error,
-          });
+          throw new Error(data.error);
         }
       } catch (error) {
         setCrFormData({
