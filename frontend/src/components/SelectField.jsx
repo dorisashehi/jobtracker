@@ -5,7 +5,7 @@ const SelectField = ({
   label,
   fieldName,
   required = false,
-  crFormData,
+  defaultValue,
   options,
   onChangeAction,
   errors,
@@ -17,7 +17,7 @@ const SelectField = ({
           {label} {required && <em className="text-redText">*</em>}
         </label>
         <Select
-          defaultValue={crFormData}
+          defaultValue={defaultValue}
           onChange={onChangeAction}
           options={options}
           id={fieldName}
@@ -32,7 +32,7 @@ const SelectField = ({
   );
 };
 SelectField.propTypes = {
-  crFormData: PropTypes.string,
+  defaultValue: PropTypes.object,
   fieldName: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   required: PropTypes.bool,

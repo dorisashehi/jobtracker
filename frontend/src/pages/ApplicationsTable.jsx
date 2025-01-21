@@ -8,12 +8,13 @@ import Modal from "react-modal";
 
 const ApplicationsTable = ({
   modalIsOpen,
-  closeModal,
   openModal,
-  setCrFormData,
+  closeModal,
   setApplications,
   filteredApplications,
   itemsPerPage,
+  crFormData,
+  setCrFormData,
 }) => {
   const [application, setApplication] = useState({});
   const handeOpenView = async (e, appId) => {
@@ -192,6 +193,7 @@ const ApplicationsTable = ({
           closeModal={closeModal}
           application={application}
           setCrFormData={setCrFormData}
+          crFormData={crFormData}
           setApplications={setApplications}
           filteredApplications={filteredApplications}
         ></EditApplicationsForm>

@@ -6,54 +6,44 @@ import { format } from "date-fns";
 import Spinner from "../components/Spiner";
 import { Link } from "react-router-dom";
 import Button from "../components/Button";
+import InputField from "../components/InputField";
+import SelectField from "../components/SelectField";
+import TextareaField from "../components/TextareaField";
+import Options from "../data/selectOptions";
+import Validation from "../utilities/Validation";
+import CheckboxField from "../components/CheckboxField";
 
 const EditApplicationsForm = ({
   closeModal,
   application,
   setApplications,
+  crFormData,
+  setCrFormData,
   filteredApplications,
 }) => {
   const [applicationData, setApplicationData] = useState(application);
   const [loadingUpdate, setLoadingUpdate] = useState(false);
   const [loadingDelete, setLoadingDelete] = useState(false);
 
-  const locationOptions = [
-    { value: "onsite", label: "On-Site" },
-    { value: "remote", label: "Remote" },
-    { value: "hybrid", label: "Hybrid" },
-    { value: "optional", label: "Optional" },
-  ];
-
   const setSelectedLocation = (el) => {
     setApplicationData({ ...applicationData, ["location"]: el.value });
-    validateField("location", el.value);
-  };
+    const { newErrors } = Validation.validateField("location", el.value);
 
-  const rejectedOptions = [
-    { value: "response", label: "From Response" },
-    { value: "interview", label: "After Interview" },
-    { value: "offer", label: "After Offer" },
-    { value: "other", label: "Other" },
-  ];
+    setErrors({ ...errors, ...newErrors });
+  };
 
   const setRejectedSelected = (el) => {
     applicationData({ ...applicationData, ["rejected"]: el.value });
-    validateField("rejected", el.value);
+    const { newErrors } = Validation.validateField("rejected", el.value);
+    setErrors({ ...errors, ...newErrors });
   };
-
-  const methodOptions = [
-    { value: "company_web", label: "Company Website" },
-    { value: "job_board", label: "Job Board" },
-    { value: "recruiter", label: "Recruiter" },
-    { value: "referal", label: "Referal" },
-    { value: "email", label: "Email" },
-    { value: "other", label: "Other" },
-  ];
 
   const setMethodSelected = (el) => {
     setApplicationData({ ...applicationData, ["apply_method"]: el.value });
-    validateField("apply_method", el.value);
+    const { newErrors } = Validation.validateField("apply_method", el.value);
+    setErrors({ ...errors, ...newErrors });
   };
+
   const [errors, setErrors] = useState({
     company_name: "",
     company_website: "",
@@ -63,51 +53,6 @@ const EditApplicationsForm = ({
     position: "",
     location: "",
   });
-  const validateAll = (formData) => {
-    let newErrors = {};
-    let valid = true;
-
-    const reqFields = [
-      "company_name",
-      "company_website",
-      "apply_date",
-      "apply_method",
-      "apply_url",
-      "position",
-      "location",
-    ];
-
-    reqFields.forEach((field) => {
-      if (!formData[field]) {
-        newErrors[field] = "Required field.";
-        valid = false;
-      }
-    });
-
-    if (formData.contact_email) {
-      if (!/\S+@\S+\.\S+/.test(formData.contact_email)) {
-        newErrors.contact_email = "Please enter a valid email address.";
-        valid = false;
-      }
-    }
-
-    return { valid, newErrors };
-  };
-
-  const validateField = (name, value) => {
-    const newErrors = {};
-    let valid = true;
-
-    if (!value) {
-      newErrors[name] = "Required Field";
-      valid = false;
-    } else {
-      newErrors[name] = "";
-    }
-
-    setErrors({ ...errors, ...newErrors });
-    return valid;
-  };
 
   const handleChange = (input) => {
     const { name, value, checked } = input;
@@ -126,15 +71,18 @@ const EditApplicationsForm = ({
       name == "position" ||
       name == "location"
     ) {
-      validateField(name, value);
+      const { newErrors } = Validation.validateField(name, value);
+
+      setErrors({ ...errors, ...newErrors });
     }
   };
 
   const handleSubmitApplication = async (e) => {
     e.preventDefault();
     setLoadingUpdate(true);
-    const { valid, newErrors } = validateAll(applicationData);
+    const { valid, newErrors } = Validation.validateAll(applicationData);
     setErrors(newErrors);
+    console.log(JSON.stringify(applicationData));
     if (valid) {
       const options = {
         method: "PATCH",
@@ -152,6 +100,7 @@ const EditApplicationsForm = ({
         const data = response;
 
         if (data.success) {
+          console.log(data.success);
           setApplications((prevState) => {
             const prevAppl = [...prevState];
             prevAppl.map((h, index) => {
@@ -164,19 +113,18 @@ const EditApplicationsForm = ({
           closeModal("view");
         }
         if (data.error) {
-          setApplicationData({
-            ...applicationData,
-            submissionError: data.error,
-          });
+          throw new Error(data.error);
         }
       } catch (error) {
         setApplicationData({
           ...applicationData,
           submissionError: error.message,
-        }).finally(() => {
-          setLoadingUpdate(false);
         });
+      } finally {
+        setLoadingUpdate(false);
       }
+    } else {
+      setLoadingUpdate(false);
     }
   };
 
@@ -218,250 +166,167 @@ const EditApplicationsForm = ({
   return (
     <form className="modal-form flex w-fit flex-col">
       <div className="modal-content">
-        <div className="modal-input-container">
-          <label htmlFor="company_name" className="modal-label">
-            Company Name<em className="text-redText">*</em>
-          </label>
-          <input
-            type="text"
-            id="company_name"
-            name="company_name"
-            placeholder="TechCorp Inc."
-            className="login-input modal-input"
-            value={applicationData.company_name || ""}
-            onChange={(e) => handleChange(e.target)}
-          />
+        <InputField
+          label="Company Name"
+          required={true}
+          handleChange={handleChange}
+          errors={errors}
+          fieldName={"company_name"}
+          value={applicationData?.company_name || ""}
+          inputPlaceholder={"TechCorp Inc."}
+        />
 
-          {errors.company_name && (
-            <em className="err-message">{errors.company_name}</em>
-          )}
-        </div>
-        <div className="modal-input-container">
-          <label htmlFor="company_website" className="modal-label">
-            Company Website<em className="text-redText">*</em>
-          </label>
-          <input
-            type="text"
-            id="company_website"
-            name="company_website"
-            placeholder="www.techcorp.com"
-            className="login-input modal-input"
-            onChange={(e) => handleChange(e.target)}
-            value={applicationData.company_website || ""}
-          />
-          {errors.company_website && (
-            <em className="err-message">{errors.company_website}</em>
-          )}
-        </div>
-        <div className="modal-input-container flex items-start min-w-[300px] ">
-          <label htmlFor="favorite" className="modal-label ">
-            Favorite
-          </label>
+        <InputField
+          label="Company Website"
+          required={true}
+          handleChange={handleChange}
+          errors={errors}
+          fieldName={"company_website"}
+          value={applicationData?.company_website || ""}
+          inputPlaceholder={"www.techcorp.com"}
+        />
 
-          <input
-            type="checkbox"
-            id="favorite"
-            name="favorite"
-            className="login-input mr-[8px]"
-            onChange={(e) => handleChange(e.target)}
-            value={applicationData.favorite || false}
-            checked={applicationData.favorite}
-          />
-        </div>
-        <div className="modal-input-container w-[1/3]">
-          <label htmlFor="apply_date" className="modal-label">
-            Apply Date<em className="text-redText">*</em>
-          </label>
-          <input
-            type="date"
-            id="apply_date"
-            name="apply_date"
-            placeholder="2024-01-15"
-            className="login-input modal-input"
-            onChange={(e) => handleChange(e.target)}
-            value={
-              format(new Date(applicationData.apply_date), "yyyy-MM-dd") || ""
-            }
-          />
-          {errors.apply_date && (
-            <em className="err-message">{errors.apply_date}</em>
+        <CheckboxField
+          label="Favorite"
+          handleChange={handleChange}
+          errors={errors}
+          fieldName={"favorite"}
+          value={applicationData.favorite}
+          className={"mr-[8px]"}
+        />
+
+        <InputField
+          label="Apply Date"
+          required={true}
+          handleChange={handleChange}
+          errors={errors}
+          fieldName={"apply_date"}
+          inputType={"date"}
+          value={
+            format(new Date(applicationData?.apply_date), "yyyy-MM-dd") || ""
+          }
+          inputPlaceholder={"2024-01-15"}
+        />
+
+        <SelectField
+          label="Apply Method"
+          fieldName="apply_method"
+          required={true}
+          errors={errors}
+          options={Options.methodOptions}
+          setCrFormData={setCrFormData}
+          defaultValue={Options.methodOptions.find(
+            (el) => el.value === applicationData.apply_method
           )}
-        </div>
-        <div className="modal-input-container w-[1/3]">
-          <label htmlFor="apply_method" className="modal-label">
-            Apply Method<em className="text-redText">*</em>
-          </label>
-          <Select
-            defaultValue={methodOptions.find(
-              (el) => el.value === applicationData.apply_method
-            )}
-            onChange={setMethodSelected}
-            options={methodOptions}
-            id="apply_method"
-            name="apply_method"
-            className="login-input modal-input p-[0px] outline-none active:outline-none"
-          />
-          {errors.apply_method && (
-            <em className="err-message">{errors.apply_method}</em>
-          )}
-        </div>
-        <div className="modal-input-container w-[1/3]">
-          <label htmlFor="apply_url" className="modal-label">
-            Apply URL<em className="text-redText">*</em>
-          </label>
-          <input
-            type="text"
-            id="apply_url"
-            name="apply_url"
-            placeholder="www.techcorp.com/careers"
-            className="login-input modal-input"
-            onChange={(e) => handleChange(e.target)}
-            value={applicationData.apply_url || ""}
-          />
-          {errors.apply_url && (
-            <em className="err-message">{errors.apply_url}</em>
-          )}
-        </div>
-        <div className="modal-input-container w-[1/3]">
-          <label htmlFor="position" className="modal-label">
-            Position<em className="text-redText">*</em>
-          </label>
-          <input
-            type="text"
-            id="position"
-            name="position"
-            placeholder="Software Engineer"
-            className="login-input modal-input"
-            onChange={(e) => handleChange(e.target)}
-            value={applicationData.position || ""}
-          />
-          {errors.position && (
-            <em className="err-message">{errors.position}</em>
-          )}
-        </div>
-        <div className="modal-input-container w-[1/3]">
-          <label htmlFor="location" className="modal-label">
-            Location<em className="text-redText">*</em>
-          </label>
-          <Select
-            defaultValue={locationOptions.find(
-              (el) => el.value === applicationData.location
-            )}
-            onChange={setSelectedLocation}
-            options={locationOptions}
-            id="location"
-            name="location"
-            className="login-input modal-input p-[0px] outline-none active:outline-none"
-          />
-          {errors.location && (
-            <em className="err-message">{errors.location}</em>
-          )}
-        </div>
-        <div className="modal-input-container w-[1/3]">
-          <label htmlFor="interview_date" className="modal-label">
-            Interview Date
-          </label>
-          <input
-            type="date"
-            id="interview_date"
-            name="interview_date"
-            placeholder="2024-01-20"
-            className="login-input modal-input"
-            value={
-              format(new Date(applicationData.interview_date), "yyyy-MM-dd") ||
-              ""
-            }
-            onChange={(e) => handleChange(e.target)}
-          />
-        </div>
-        <div className="modal-input-container w-[1/3]">
-          <label htmlFor="offer_amount" className="modal-label">
-            Offer Amount
-          </label>
-          <input
-            type="number"
-            id="offer_amount"
-            name="offer_amount"
-            placeholder="85000"
-            className="login-input modal-input"
-            onChange={(e) => handleChange(e.target)}
-            value={applicationData.offer_amount || ""}
-          />
-        </div>
-        <div className="modal-input-container w-[1/3]">
-          <label htmlFor="rejected" className="modal-label">
-            Rejected
-          </label>
-          <Select
-            defaultValue={rejectedOptions.find(
-              (el) => el.value === applicationData.rejected
-            )}
-            onChange={setRejectedSelected}
-            options={rejectedOptions}
-            id="rejected"
-            name="rejected"
-            className="login-input modal-input p-[0px] outline-none active:outline-none"
-          />
-        </div>
-        <div className="modal-input-container w-[1/3]">
-          <label htmlFor="contact_name" className="modal-label">
-            Contact Name
-          </label>
-          <input
-            type="text"
-            id="contact_name"
-            name="contact_name"
-            placeholder="John Doe"
-            className="login-input modal-input"
-            onChange={(e) => handleChange(e.target)}
-            value={applicationData.contact_name || ""}
-          />
-        </div>
-        <div className="modal-input-container w-[1/3]">
-          <label htmlFor="notes" className="modal-label">
-            Notes
-          </label>
-          <textarea
-            id="notes"
-            name="notes"
-            rows={5}
-            placeholder="The interview went well, waiting for feedback."
-            className="login-input modal-input"
-            onChange={(e) => handleChange(e.target)}
-            value={applicationData.notes || ""}
-          ></textarea>
-        </div>
-        <div className="modal-input-container w-[1/3]">
-          <label htmlFor="contact_email" className="modal-label">
-            Contact Email
-          </label>
-          <input
-            type="email"
-            id="contact_email"
-            name="contact_email"
-            placeholder="john.doe@example.com"
-            className="login-input modal-input"
-            onChange={(e) => handleChange(e.target)}
-            value={applicationData.contact_email || ""}
-          />
-          {errors.contact_email && (
-            <em className="err-message">{errors.contact_email}</em>
-          )}
-        </div>
-        <div className="modal-input-container w-[1/3]">
-          <label htmlFor="contact_phone" className="modal-label">
-            Company Phone
-          </label>
-          <input
-            type="text"
-            id="contact_phone"
-            name="contact_phone"
-            placeholder="(555) 123-4567"
-            className="login-input modal-input"
-            onChange={(e) => handleChange(e.target)}
-            value={applicationData.contact_phone || ""}
-          />
-        </div>
+          onChangeAction={setMethodSelected}
+        />
+
+        <InputField
+          label="Apply URL"
+          required={true}
+          handleChange={handleChange}
+          errors={errors}
+          fieldName={"apply_url"}
+          value={applicationData?.apply_url || ""}
+          inputPlaceholder={"www.techcorp.com/careers"}
+        />
+
+        <InputField
+          label="Position"
+          required={true}
+          handleChange={handleChange}
+          errors={errors}
+          fieldName={"position"}
+          inputPlaceholder={"Software Engineer"}
+          value={applicationData?.position || ""}
+        />
+
+        <SelectField
+          label="Location"
+          fieldName="location"
+          required={true}
+          errors={errors}
+          options={Options.locationOptions}
+          setCrFormData={setCrFormData}
+          onChangeAction={setSelectedLocation}
+          defaultValue={
+            Options.locationOptions.find(
+              (el) => el.value === applicationData?.location
+            ) || crFormData.location
+          }
+        />
+
+        <InputField
+          label="Interview Date"
+          handleChange={handleChange}
+          errors={errors}
+          fieldName={"interview_date"}
+          inputType={"date"}
+          inputPlaceholder={"2024-01-20"}
+          value={
+            format(new Date(applicationData?.interview_date), "yyyy-MM-dd") ||
+            ""
+          }
+        />
+
+        <InputField
+          label="Offer Amount"
+          handleChange={handleChange}
+          errors={errors}
+          fieldName={"offer_amount"}
+          inputType={"number"}
+          inputPlaceholder={"85000"}
+          value={applicationData?.offer_amount || ""}
+        />
+
+        <SelectField
+          label="Rejected"
+          fieldName="rejected"
+          errors={errors}
+          options={Options.rejectedOptions}
+          setCrFormData={setCrFormData}
+          onChangeAction={setRejectedSelected}
+          defaultValue={
+            Options.rejectedOptions.find(
+              (el) => el.value === applicationData?.rejected
+            ) || crFormData.rejected
+          }
+        />
+
+        <InputField
+          label="Contact Name"
+          handleChange={handleChange}
+          errors={errors}
+          fieldName={"contact_name"}
+          inputPlaceholder={"John Doe"}
+          value={applicationData.contact_name || ""}
+        />
+        <TextareaField
+          label="Notes"
+          fieldName="notes"
+          onChangeAction={handleChange}
+          placeholder="The interview went well, waiting for feedback."
+          value={applicationData?.notes || ""}
+        />
+
+        <InputField
+          label="Contact Email"
+          handleChange={handleChange}
+          errors={errors}
+          fieldName={"contact_email"}
+          inputType={"email"}
+          inputPlaceholder={"john.doe@example.com"}
+          value={applicationData?.contact_email || ""}
+        />
+
+        <InputField
+          label="Company Phone"
+          handleChange={handleChange}
+          errors={errors}
+          fieldName={"contact_phone"}
+          inputPlaceholder={"(555) 123-4567"}
+          value={applicationData?.contact_phone || ""}
+        />
       </div>
       <div className="flex flex-col md:flex-row md:justify-between">
         <Link
@@ -499,5 +364,7 @@ EditApplicationsForm.propTypes = {
   closeModal: PropTypes.func.isRequired,
   setApplications: PropTypes.func.isRequired,
   filteredApplications: PropTypes.array.isRequired,
+  crFormData: PropTypes.object,
+  setCrFormData: PropTypes.func,
 };
 export default EditApplicationsForm;

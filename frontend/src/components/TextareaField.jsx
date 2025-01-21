@@ -5,6 +5,7 @@ const TextareaField = ({
   required = false,
   onChangeAction,
   placeholder,
+  value,
 }) => {
   return (
     <div className="modal-input-container md:w-1/2 lg:w-1/2 xl:w-1/3">
@@ -19,6 +20,7 @@ const TextareaField = ({
         placeholder={placeholder}
         className="modal-input"
         onChange={(e) => onChangeAction(e.target)}
+        value={value}
       ></textarea>
     </div>
   );
@@ -30,6 +32,7 @@ TextareaField.propTypes = {
   required: PropTypes.bool,
   onChangeAction: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
+  value: PropTypes.string,
 };
 
 export default TextareaField;

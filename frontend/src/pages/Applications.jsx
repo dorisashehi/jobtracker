@@ -150,6 +150,8 @@ const Applications = ({ userAuth }) => {
                     setApplications={setApplications}
                     filteredApplications={filteredApplications}
                     itemsPerPage={5}
+                    crFormData={crFormData}
+                    setCrFormData={setCrFormData}
                   />
                 }
               </div>

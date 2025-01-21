@@ -7,6 +7,7 @@ import SelectField from "../components/SelectField";
 import Options from "../data/selectOptions";
 import TextareaField from "../components/TextareaField";
 import Validation from "../utilities/Validation";
+import CheckboxField from "../components/CheckboxField";
 
 const ApplicationsForm = ({
   crFormData,
@@ -116,7 +117,6 @@ const ApplicationsForm = ({
           handleChange={handleChange}
           errors={errors}
           fieldName={"company_name"}
-          inputType={"text"}
           inputPlaceholder={"TechCorp Inc."}
         />
 
@@ -126,17 +126,24 @@ const ApplicationsForm = ({
           handleChange={handleChange}
           errors={errors}
           fieldName={"company_website"}
-          inputType={"text"}
           inputPlaceholder={"www.techcorp.com"}
         />
 
-        <InputField
+        {/* <InputField
           label="Favorite"
           handleChange={handleChange}
           errors={errors}
           fieldName={"favorite"}
           inputType={"checkbox"}
           inputPlaceholder={"www.techcorp.com"}
+          className={"mr-[8px]"}
+        /> */}
+
+        <CheckboxField
+          label="Favorite"
+          handleChange={handleChange}
+          errors={errors}
+          fieldName={"favorite"}
           className={"mr-[8px]"}
         />
 
@@ -154,7 +161,7 @@ const ApplicationsForm = ({
           label="Apply Method"
           fieldName="apply_method"
           required={true}
-          crFormData={crFormData.apply_method}
+          defaultValue={crFormData.apply_method}
           errors={errors}
           options={Options.methodOptions}
           setCrFormData={setCrFormData}
@@ -167,7 +174,6 @@ const ApplicationsForm = ({
           handleChange={handleChange}
           errors={errors}
           fieldName={"apply_url"}
-          inputType={"text"}
           inputPlaceholder={"www.techcorp.com/careers"}
         />
 
@@ -177,7 +183,6 @@ const ApplicationsForm = ({
           handleChange={handleChange}
           errors={errors}
           fieldName={"position"}
-          inputType={"text"}
           inputPlaceholder={"Software Engineer"}
         />
 
@@ -185,7 +190,7 @@ const ApplicationsForm = ({
           label="Location"
           fieldName="location"
           required={true}
-          crFormData={crFormData.location}
+          defaultValue={crFormData.location}
           errors={errors}
           options={Options.locationOptions}
           setCrFormData={setCrFormData}
@@ -213,7 +218,7 @@ const ApplicationsForm = ({
         <SelectField
           label="Rejected"
           fieldName="rejected"
-          crFormData={crFormData.rejected}
+          defaultValue={crFormData.rejected}
           errors={errors}
           options={Options.rejectedOptions}
           setCrFormData={setCrFormData}
@@ -221,20 +226,10 @@ const ApplicationsForm = ({
         />
 
         <InputField
-          label="Offer Amount"
-          handleChange={handleChange}
-          errors={errors}
-          fieldName={"offer_amount"}
-          inputType={"number"}
-          inputPlaceholder={"85000"}
-        />
-
-        <InputField
           label="Contact Name"
           handleChange={handleChange}
           errors={errors}
           fieldName={"contact_name"}
-          inputType={"text"}
           inputPlaceholder={"John Doe"}
         />
         <TextareaField
@@ -258,7 +253,6 @@ const ApplicationsForm = ({
           handleChange={handleChange}
           errors={errors}
           fieldName={"contact_phone"}
-          inputType={"text"}
           inputPlaceholder={"(555) 123-4567"}
         />
       </div>

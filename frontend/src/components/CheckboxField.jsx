@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const InputField = ({
+const CheckboxField = ({
   label,
   required = false,
   handleChange,
@@ -18,13 +18,13 @@ const InputField = ({
           {required && <em className="text-redText">*</em>}
         </label>
         <input
-          type="text"
+          type="checkbox"
           id={fieldName}
           name={fieldName}
           placeholder={inputPlaceholder}
           className={`modal-input ${className}`}
-          value={value}
           onChange={(e) => handleChange(e.target)}
+          checked={value}
         />
 
         {errors?.[fieldName] && (
@@ -35,7 +35,7 @@ const InputField = ({
   );
 };
 
-InputField.propTypes = {
+CheckboxField.propTypes = {
   label: PropTypes.string.isRequired,
   required: PropTypes.bool,
   handleChange: PropTypes.func.isRequired,
@@ -43,7 +43,7 @@ InputField.propTypes = {
   fieldName: PropTypes.string.isRequired,
   inputPlaceholder: PropTypes.string.isRequired,
   className: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.bool,
 };
 
-export default InputField;
+export default CheckboxField;
