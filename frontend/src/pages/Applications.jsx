@@ -1,43 +1,43 @@
 import PropTypes from "prop-types";
 import ApplicationsTable from "./ApplicationsTable";
-import ApplicationsAPI from "../services/ApplicationsAPI";
+// import ApplicationsAPI from "../services/ApplicationsAPI";
 import ModalHeader from "../components/ModalHeader";
 import ApplicationsForm from "./ApplicationsForm";
 // import CreateModal from "./CreateModal";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Button from "../components/Button";
 import Header from "../components/Header";
 import Spiner from "../components/Spiner";
 import Modal from "react-modal";
 
-const Applications = ({ userAuth }) => {
+const Applications = ({ applications, setApplications }) => {
   //const { user, isAuthenticated } = useContext(AuthenticatedContext);
-  const [applications, setApplications] = useState([]);
+  // const [applications, setApplications] = useState([]);
   const [crFormData, setCrFormData] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
 
-  useEffect(() => {
-    if (userAuth) {
-      const fetchApplications = async () => {
-        try {
-          const results = await ApplicationsAPI.getApplByUser(userAuth?.id);
-          if (results.length > 0) {
-            setApplications(results);
-          }
-        } catch (error) {
-          console.error(error);
-        } finally {
-          setLoading(false);
-        }
-      };
+  // useEffect(() => {
+  //   if (userAuth) {
+  //     const fetchApplications = async () => {
+  //       try {
+  //         const results = await ApplicationsAPI.getApplByUser(userAuth?.id);
+  //         if (results.length > 0) {
+  //           setApplications(results);
+  //         }
+  //       } catch (error) {
+  //         console.error(error);
+  //       } finally {
+  //         setLoading(false);
+  //       }
+  //     };
 
-      fetchApplications();
-      setCrFormData({ ...crFormData, user_id: userAuth.id }); //user id of authenticated user
-    }
-  }, [userAuth]);
+  //     fetchApplications();
+  //     setCrFormData({ ...crFormData, user_id: userAuth.id }); //user id of authenticated user
+  //   }
+  // }, [userAuth]);
 
-  const filteredApplications = applications.filter((application) => {
+  const filteredApplications = applications?.filter((application) => {
     if (searchText === "") return application;
     return (
       application.company_name?.toLowerCase().includes(searchText) ||
@@ -46,6 +46,7 @@ const Applications = ({ userAuth }) => {
     );
   });
 
+  //console.log(filteredApplications);
   const handleSearchText = (text) => {
     setTimeout(() => {
       setSearchText(text);
@@ -190,6 +191,7 @@ const Applications = ({ userAuth }) => {
   );
 };
 Applications.propTypes = {
-  userAuth: PropTypes.object,
+  applications: PropTypes.array,
+  setApplications: PropTypes.func,
 };
 export default Applications;

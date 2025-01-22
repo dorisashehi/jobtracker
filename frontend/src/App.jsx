@@ -8,18 +8,20 @@ import { useRoutes, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Auth from "./services/Auth";
 import Spinner from "./components/Spiner";
+import ApplicationsAPI from "./services/ApplicationsAPI";
 
 function App() {
   const [userAuth, setUserAuth] = useState(null);
   const [loading, setLoading] = useState(true); // Track loading state
+  const [applications, setApplications] = useState([]);
 
   useEffect(() => {
     const getUser = async () => {
       try {
         const response = await Auth.getLoggedInUser();
-        console.log(response);
         if (response.success) {
           setUserAuth(response.user); // Set logged-in user
+          return response.user.id;
         } else {
           setUserAuth(null); // Set null if no user is found
         }
@@ -31,7 +33,20 @@ function App() {
       }
     };
 
-    getUser();
+    const fetchApplications = async (userId) => {
+      try {
+        const results = await ApplicationsAPI.getApplByUser(userId);
+        if (results.length > 0) {
+          setApplications(results);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getUser().then((userId) => fetchApplications(userId));
   }, []); // Only run once when the component mounts
 
   const routes = useRoutes([
@@ -58,7 +73,7 @@ function App() {
           path: "dashboard",
           element:
             userAuth && Object.keys(userAuth).length > 0 ? (
-              <Dashboard userAuth={userAuth} />
+              <Dashboard userAuth={userAuth} applications={applications} />
             ) : (
               <Navigate to="/login" />
             ),
@@ -67,7 +82,11 @@ function App() {
           path: "applications",
           element:
             userAuth && Object.keys(userAuth).length > 0 ? (
-              <Applications userAuth={userAuth} />
+              <Applications
+                userAuth={userAuth}
+                applications={applications}
+                setApplications={setApplications}
+              />
             ) : (
               <Navigate to="/login" />
             ),
@@ -76,11 +95,9 @@ function App() {
     },
   ]);
 
-  if (loading) {
-    <Spinner />;
-  } else {
-    return routes;
-  }
+  <Spinner />;
+
+  return routes;
 }
 
 export default App;
