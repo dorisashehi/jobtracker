@@ -30,7 +30,7 @@ const Dashboard = ({ userAuth }) => {
             )}
           </div>
 
-          <div className="flex-1 flex flex-col md:flex-row mt-16">
+          <div className="flex-1 flex flex-col md:flex-row md:justify-between mt-16">
             <div className="card">
               <div className="card-head">
                 <h5 className="card-header">Total Applications</h5>
@@ -54,7 +54,7 @@ const Dashboard = ({ userAuth }) => {
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 -960 960 960"
-                  fill="#707280"
+                  fill="#10B981"
                   className="icon-style-small"
                 >
                   <path d="M280-240q-100 0-170-70T40-480q0-100 70-170t170-70h400q100 0 170 70t70 170q0 100-70 170t-170 70H280Zm0-80h400q66 0 113-47t47-113q0-66-47-113t-113-47H280q-66 0-113 47t-47 113q0 66 47 113t113 47Zm400-40q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35ZM480-480Z" />
@@ -71,7 +71,7 @@ const Dashboard = ({ userAuth }) => {
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 -960 960 960"
-                  fill="#707280"
+                  fill="#ef4444"
                   className="icon-style-small"
                 >
                   <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
@@ -88,7 +88,7 @@ const Dashboard = ({ userAuth }) => {
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 -960 960 960"
-                  fill="#707280"
+                  fill="#5c97f8"
                   className="icon-style-small"
                 >
                   <path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880h320q33 0 56.5 23.5T880-800v320q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227v-320H480q-134 0-227 93t-93 227q0 134 93 227t227 93ZM280-360h280v-80l120 80v-240l-120 80v-80H280v240Zm200-120Z" />
