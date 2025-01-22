@@ -25,10 +25,8 @@ const EditApplicationsForm = ({
   const [loadingDelete, setLoadingDelete] = useState(false);
 
   const handleSelectedAction = (el, name) => {
-    console.log(name, el);
-    setCrFormData({ ...crFormData, [name]: el.value });
+    setApplicationData({ ...applicationData, [name]: el.value });
     const { newErrors } = Validation.validateField(name, el.value);
-
     setErrors({ ...errors, ...newErrors });
   };
 
@@ -191,7 +189,9 @@ const EditApplicationsForm = ({
           fieldName={"apply_date"}
           inputType={"date"}
           value={
-            format(new Date(applicationData?.apply_date), "yyyy-MM-dd") || ""
+            applicationData?.apply_date
+              ? format(new Date(applicationData?.apply_date), "yyyy-MM-dd")
+              : ""
           }
           inputPlaceholder={"2024-01-15"}
         />
@@ -240,9 +240,11 @@ const EditApplicationsForm = ({
           setCrFormData={setCrFormData}
           onChangeAction={(option) => handleSelectedAction(option, "location")}
           defaultValue={
-            Options.locationOptions.find(
-              (el) => el.value === applicationData?.location
-            ) || crFormData.location
+            applicationData?.location
+              ? Options.locationOptions.find(
+                  (el) => el.value === applicationData?.location
+                )
+              : crFormData.location
           }
         />
 
@@ -252,10 +254,10 @@ const EditApplicationsForm = ({
           errors={errors}
           fieldName={"interview_date"}
           inputType={"date"}
-          inputPlaceholder={"2024-01-20"}
           value={
-            format(new Date(applicationData?.interview_date), "yyyy-MM-dd") ||
-            ""
+            applicationData?.interview_date
+              ? format(new Date(applicationData?.interview_date), "yyyy-MM-dd")
+              : ""
           }
         />
 

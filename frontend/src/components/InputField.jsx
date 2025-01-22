@@ -15,7 +15,7 @@ const InputField = ({
     <>
       <div className="modal-input-container md:w-1/2 lg:w-1/2 xl:w-1/3">
         <label htmlFor={fieldName} className="modal-label">
-          {label} {value}
+          {label}
           {required && <em className="text-redText">*</em>}
         </label>
         <input

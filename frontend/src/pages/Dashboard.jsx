@@ -3,9 +3,16 @@ import Card from "../components/Card";
 
 const Dashboard = ({ userAuth, applications }) => {
   const totalApplications = applications.length;
-  const activeApplications = applications.filter(
-    (app) => app.rejected === null
-  ).length;
+  console.log(applications);
+  const activeApplications = applications.filter((app) => {
+    return app.rejected === null;
+  }).length;
+  const rejectedApplications = applications.filter((app) => {
+    return app.rejected !== null;
+  }).length;
+  const interviewedApplications = applications.filter((app) => {
+    return app.interview_date !== null;
+  }).length;
   return (
     <>
       <div className="container-main justify-center bg-[#f5f7f9]">
@@ -64,7 +71,11 @@ const Dashboard = ({ userAuth, applications }) => {
                 <path d="M280-240q-100 0-170-70T40-480q0-100 70-170t170-70h400q100 0 170 70t70 170q0 100-70 170t-170 70H280Zm0-80h400q66 0 113-47t47-113q0-66-47-113t-113-47H280q-66 0-113 47t-47 113q0 66 47 113t113 47Zm400-40q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35ZM480-480Z" />
               </svg>
             </Card>
-            <Card title="Rejected" total="42" desc="applications rejected">
+            <Card
+              title="Rejected"
+              total={rejectedApplications || 0}
+              desc="applications rejected"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 -960 960 960"
@@ -77,7 +88,7 @@ const Dashboard = ({ userAuth, applications }) => {
 
             <Card
               title="Interviewed"
-              total="42"
+              total={interviewedApplications || 0}
               desc="applications interviewed"
             >
               <svg
