@@ -4,8 +4,9 @@ import PropTypes from "prop-types";
 // import { AuthenticatedContext } from "../context/AuthenticatedContext";
 // import { useContext } from "react";
 import Spinner from "../components/Spiner";
+import ApplicationsAPI from "../services/ApplicationsAPI";
 
-const LogIn = ({ setUserAuth }) => {
+const LogIn = ({ setUserAuth, setApplications }) => {
   const [loading, setLoading] = useState(false);
 
   //const { fetchUser } = useContext(AuthenticatedContext);
@@ -96,19 +97,26 @@ const LogIn = ({ setUserAuth }) => {
         );
         const data = await response.json();
         //const result = await response.json();
-        setTimeout(() => {
-          setLoading(false);
-          if (data.success) {
-            setUserAuth(data.user);
+        //setTimeout(async () => {
+        if (data.success) {
+          setUserAuth(data.user);
+          const results = await ApplicationsAPI.getApplByUser(data.user.id);
+          if (results.length > 0) {
+            console.log(results);
+            setApplications(results);
+            setLoading(false);
           }
-          if (data.error) {
-            //error accoured during login
-            setErrors({ ...errors, submission_error: data.error });
-          }
-        }, 500);
+        }
+        if (data.error) {
+          //error accoured during login
+          setErrors({ ...errors, submission_error: data.error });
+        }
+        //}, 500);
       } catch (error) {
         console.log(error);
         setErrors({ ...errors, submission_error: "Login Failed" });
+      } finally {
+        setLoading(false);
       }
     } else {
       setLoading(false);
@@ -206,5 +214,6 @@ const LogIn = ({ setUserAuth }) => {
 };
 LogIn.propTypes = {
   setUserAuth: PropTypes.func.isRequired,
+  setApplications: PropTypes.func.isRequired,
 };
 export default LogIn;

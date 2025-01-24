@@ -3,7 +3,7 @@ import Card from "../components/Card";
 
 const Dashboard = ({ userAuth, applications }) => {
   const totalApplications = applications.length;
-  console.log(applications);
+
   const activeApplications = applications.filter((app) => {
     return app.rejected === null;
   }).length;
@@ -100,6 +100,42 @@ const Dashboard = ({ userAuth, applications }) => {
                 <path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880h320q33 0 56.5 23.5T880-800v320q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227v-320H480q-134 0-227 93t-93 227q0 134 93 227t227 93ZM280-360h280v-80l120 80v-240l-120 80v-80H280v240Zm200-120Z" />
               </svg>
             </Card>
+          </div>
+
+          <div className="flex-1 flex flex-col md:flex-row md:justify-between mt-16">
+            <div className="w-[100%] border-[1px] border-borderColor flex flex-col p-[20px] rounded-md bg-[#ffffff]">
+              <h5 className="!text-start card-header !mb-7">
+                Recent Applicatons
+              </h5>
+              <div className="flex flex-row justify-between mb-5">
+                <div className="flex flex-col">
+                  <p className="card-content">Tech Corp</p>
+                  <p className="card-desc">Senior deleloper</p>
+                </div>
+                <div className="flex flex-row items-center gap-5">
+                  <div className="text-grayColor font-medium text-[12px] bg-[#dcfce7] rounded-xl py-[3px] px-[10px]">
+                    Interview
+                  </div>
+                  <div className="text-grayColor font-medium text-[12px] ">
+                    12/03/2025
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-col">
+                  <p className="card-content">Tech Corp</p>
+                  <p className="card-desc">Senior deleloper</p>
+                </div>
+                <div className="flex flex-row items-center gap-5">
+                  <div className="text-grayColor font-medium text-[12px] bg-[#dcfce7] rounded-xl py-[3px] px-[10px]">
+                    Interview
+                  </div>
+                  <div className="text-grayColor font-medium text-[12px] ">
+                    12/03/2025
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -7,12 +7,10 @@ import Welcome from "./pages/Welcome";
 import { useRoutes, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Auth from "./services/Auth";
-import Spinner from "./components/Spiner";
 import ApplicationsAPI from "./services/ApplicationsAPI";
 
 function App() {
   const [userAuth, setUserAuth] = useState(null);
-  const [loading, setLoading] = useState(true); // Track loading state
   const [applications, setApplications] = useState([]);
 
   useEffect(() => {
@@ -21,32 +19,34 @@ function App() {
         const response = await Auth.getLoggedInUser();
         if (response.success) {
           setUserAuth(response.user); // Set logged-in user
-          return response.user.id;
+          const results = await ApplicationsAPI.getApplByUser(response.user.id);
+          if (results.length > 0) {
+            setApplications(results);
+          }
         } else {
           setUserAuth(null); // Set null if no user is found
         }
       } catch (error) {
         console.error("Error while fetching user:", error);
         setUserAuth(null); // Set null on error
-      } finally {
-        setLoading(false); // Set loading to false after fetch
       }
     };
 
-    const fetchApplications = async (userId) => {
-      try {
-        const results = await ApplicationsAPI.getApplByUser(userId);
-        if (results.length > 0) {
-          setApplications(results);
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    // const fetchApplications = async (userId) => {
+    //   try {
+    //     const results = await ApplicationsAPI.getApplByUser(userId);
+    //     if (results.length > 0) {
+    //       setApplications(results);
+    //     }
+    //   } catch (error) {
+    //     console.error(error);
+    //   } finally {
+    //     setLoading(false);
+    //   }
+    // };
 
-    getUser().then((userId) => fetchApplications(userId));
+    getUser();
+    //.then((userId) => fetchApplications(userId));
   }, []); // Only run once when the component mounts
 
   const routes = useRoutes([
@@ -62,7 +62,10 @@ function App() {
             userAuth && userAuth.id ? (
               <Navigate to="/dashboard" />
             ) : (
-              <LogIn setUserAuth={setUserAuth} />
+              <LogIn
+                setUserAuth={setUserAuth}
+                setApplications={setApplications}
+              />
             ),
         },
         {
@@ -95,7 +98,9 @@ function App() {
     },
   ]);
 
-  <Spinner />;
+  // if (userAuth !== null) {
+  //   return <Spinner />;
+  // }
 
   return routes;
 }
