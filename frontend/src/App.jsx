@@ -5,49 +5,43 @@ import Applications from "./pages/Applications";
 import Layout from "./components/Layout";
 import Welcome from "./pages/Welcome";
 import { useRoutes, Navigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import Auth from "./services/Auth";
-import ApplicationsAPI from "./services/ApplicationsAPI";
+import { useState } from "react";
+// import Auth from "./services/Auth";
+// import ApplicationsAPI from "./services/ApplicationsAPI";
+import Spinner from "./components/Spiner";
 
 function App() {
   const [userAuth, setUserAuth] = useState(null);
   const [applications, setApplications] = useState([]);
+  //const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const response = await Auth.getLoggedInUser();
-        if (response.success) {
-          setUserAuth(response.user); // Set logged-in user
-          const results = await ApplicationsAPI.getApplByUser(response.user.id);
-          if (results.length > 0) {
-            setApplications(results);
-          }
-        } else {
-          setUserAuth(null); // Set null if no user is found
-        }
-      } catch (error) {
-        console.error("Error while fetching user:", error);
-        setUserAuth(null); // Set null on error
-      }
-    };
+  // useEffect(() => {
+  //   const getUser = async () => {
+  //     setIsLoading(true);
+  //     console.log("tr");
+  //     try {
+  //       const response = await Auth.getLoggedInUser();
+  //       console.log(response);
+  //       //const data = await response.json();
+  //       if (response.success) {
+  //         setUserAuth(response.user); // Set logged-in user
+  //         const results = await ApplicationsAPI.getApplByUser(data.user.id);
+  //         if (results.length > 0) {
+  //           setApplications(results);
+  //         }
+  //       } else {
+  //         setUserAuth(null); // Set null if no user is found
+  //       }
+  //     } catch (error) {
+  //       console.error("Error while fetching user:", error);
+  //       setUserAuth(null); // Set null on error
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
 
-    // const fetchApplications = async (userId) => {
-    //   try {
-    //     const results = await ApplicationsAPI.getApplByUser(userId);
-    //     if (results.length > 0) {
-    //       setApplications(results);
-    //     }
-    //   } catch (error) {
-    //     console.error(error);
-    //   } finally {
-    //     setLoading(false);
-    //   }
-    // };
-
-    getUser();
-    //.then((userId) => fetchApplications(userId));
-  }, []); // Only run once when the component mounts
+  //   getUser();
+  // }, []); // Only run once when the component mounts
 
   const routes = useRoutes([
     //frontend routes

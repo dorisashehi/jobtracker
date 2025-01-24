@@ -38,6 +38,7 @@ const createApplication = async (req, res) => {
       notes,
     } = req.body;
 
+    console.log(req.body);
     if (
       //check for requied fields values
       !user_id ||

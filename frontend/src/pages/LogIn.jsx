@@ -98,11 +98,11 @@ const LogIn = ({ setUserAuth, setApplications }) => {
         const data = await response.json();
         //const result = await response.json();
         //setTimeout(async () => {
+
         if (data.success) {
           setUserAuth(data.user);
           const results = await ApplicationsAPI.getApplByUser(data.user.id);
           if (results.length > 0) {
-            console.log(results);
             setApplications(results);
             setLoading(false);
           }

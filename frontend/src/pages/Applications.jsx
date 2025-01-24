@@ -10,32 +10,16 @@ import Header from "../components/Header";
 import Spiner from "../components/Spiner";
 import Modal from "react-modal";
 
-const Applications = ({ applications, setApplications }) => {
+const Applications = ({ userAuth, applications, setApplications }) => {
   //const { user, isAuthenticated } = useContext(AuthenticatedContext);
   // const [applications, setApplications] = useState([]);
   const [crFormData, setCrFormData] = useState({});
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
 
-  // useEffect(() => {
-  //   if (userAuth) {
-  //     const fetchApplications = async () => {
-  //       try {
-  //         const results = await ApplicationsAPI.getApplByUser(userAuth?.id);
-  //         if (results.length > 0) {
-  //           setApplications(results);
-  //         }
-  //       } catch (error) {
-  //         console.error(error);
-  //       } finally {
-  //         setLoading(false);
-  //       }
-  //     };
-
-  //     fetchApplications();
-  //     setCrFormData({ ...crFormData, user_id: userAuth.id }); //user id of authenticated user
-  //   }
-  // }, [userAuth]);
+  useEffect(() => {
+    setCrFormData({ ...crFormData, user_id: userAuth.id }); //user id of authenticated user
+  }, [userAuth]);
 
   const filteredApplications = applications?.filter((application) => {
     if (searchText === "") return application;
@@ -193,5 +177,6 @@ const Applications = ({ applications, setApplications }) => {
 Applications.propTypes = {
   applications: PropTypes.array,
   setApplications: PropTypes.func,
+  userAuth: PropTypes.object,
 };
 export default Applications;
