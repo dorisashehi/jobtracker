@@ -1,7 +1,30 @@
 import PropTypes from "prop-types";
 import Card from "../components/Card";
+import { useEffect, useState } from "react";
+import ApplicationsAPI from "../services/ApplicationsAPI";
 
-const Dashboard = ({ userAuth, applications }) => {
+const Dashboard = ({ userAuth }) => {
+  const [applications, setApplications] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (userAuth) {
+      const fetchApplications = async () => {
+        try {
+          const results = await ApplicationsAPI.getApplByUser(userAuth?.id);
+          if (results.length > 0) {
+            setApplications(results);
+          }
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchApplications();
+    }
+  }, [userAuth]);
   const totalApplications = applications.length;
 
   const activeApplications = applications.filter((app) => {

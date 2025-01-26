@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import Spinner from "../components/Spiner";
 import ApplicationsAPI from "../services/ApplicationsAPI";
 
-const LogIn = ({ setUserAuth, setApplications }) => {
+const LogIn = ({ setUserAuth }) => {
   const [loading, setLoading] = useState(false);
 
   //const { fetchUser } = useContext(AuthenticatedContext);
@@ -103,7 +103,7 @@ const LogIn = ({ setUserAuth, setApplications }) => {
           setUserAuth(data.user);
           const results = await ApplicationsAPI.getApplByUser(data.user.id);
           if (results.length > 0) {
-            setApplications(results);
+            //setApplications(results);
             setLoading(false);
           }
         }
@@ -214,6 +214,6 @@ const LogIn = ({ setUserAuth, setApplications }) => {
 };
 LogIn.propTypes = {
   setUserAuth: PropTypes.func.isRequired,
-  setApplications: PropTypes.func.isRequired,
+  //setApplications: PropTypes.func.isRequired,
 };
 export default LogIn;

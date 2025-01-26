@@ -1,10 +1,11 @@
 import PropTypes from "prop-types";
 import { format } from "date-fns";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ApplicationsAPI from "../services/ApplicationsAPI";
 import EditApplicationsForm from "./EditApplicationsForm";
 import ModalHeader from "../components/ModalHeader";
 import Modal from "react-modal";
+import Spiner from "../components/Spiner";
 
 const ApplicationsTable = ({
   modalIsOpen,
@@ -17,6 +18,13 @@ const ApplicationsTable = ({
   setCrFormData,
 }) => {
   const [application, setApplication] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
+  }, [filteredApplications]);
   const handeOpenView = async (e, appId) => {
     e.preventDefault();
 
@@ -56,7 +64,9 @@ const ApplicationsTable = ({
         </thead>
 
         <tbody>
-          {currentData.length > 0 ? (
+          {loading ? (
+            <Spiner />
+          ) : currentData.length > 0 ? (
             currentData.map((application) => {
               const applyDate = format(
                 new Date(application.apply_date),
