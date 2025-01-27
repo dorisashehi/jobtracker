@@ -41,31 +41,33 @@ const Navigation = ({ userAuth, setUserAuth }) => {
         <div className="navigation-content content">
           <div className={`col-logo ${userAuth ? "lg:w-[10%]" : "lg:w-[20%]"}`}>
             {/* JBtracker {userAuth?.name} */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 200 50"
-              className="h-8"
-            >
-              <circle cx="25" cy="25" r="20" fill="#4a9d83" />
-              <path
-                d="M15 25 L22 32 L35 19"
-                stroke="white"
-                strokeWidth="4"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <text
-                x="55"
-                y="35"
-                fontFamily="Arial"
-                fontSize="24"
-                fontWeight="bold"
+            <Link to="/">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 200 50"
+                className="h-8"
               >
-                <tspan fill="#10B981">JB</tspan>
-                <tspan fill="#374151">tracker</tspan>
-              </text>
-            </svg>
+                <circle cx="25" cy="25" r="20" fill="#4a9d83" />
+                <path
+                  d="M15 25 L22 32 L35 19"
+                  stroke="white"
+                  strokeWidth="4"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <text
+                  x="55"
+                  y="35"
+                  fontFamily="Arial"
+                  fontSize="24"
+                  fontWeight="bold"
+                >
+                  <tspan fill="#10B981">JB</tspan>
+                  <tspan fill="#374151">tracker</tspan>
+                </text>
+              </svg>
+            </Link>
           </div>
           {userAuth && (
             <ul

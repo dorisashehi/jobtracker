@@ -2,14 +2,10 @@ import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard";
 import Applications from "./pages/Applications";
-import Layout from "./components/Layout";
-import Welcome from "./pages/Welcome";
-import { useRoutes } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Auth from "./services/Auth";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
-// import ApplicationsAPI from "./services/ApplicationsAPI";
 import Spiner from "./components/Spiner";
 import {
   BrowserRouter as Router,
@@ -20,7 +16,6 @@ import {
 
 function App() {
   const [userAuth, setUserAuth] = useState(null);
-  //const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true); // Tracks whether authentication is being fetched
 
   useEffect(() => {

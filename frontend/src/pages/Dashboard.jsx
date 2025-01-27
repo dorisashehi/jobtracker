@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import Card from "../components/Card";
 import { useEffect, useState } from "react";
 import ApplicationsAPI from "../services/ApplicationsAPI";
+import { format } from "date-fns";
 
 const Dashboard = ({ userAuth }) => {
   const [applications, setApplications] = useState([]);
@@ -130,34 +131,31 @@ const Dashboard = ({ userAuth }) => {
               <h5 className="!text-start card-header !mb-7">
                 Recent Applicatons
               </h5>
-              <div className="flex flex-row justify-between mb-5">
-                <div className="flex flex-col">
-                  <p className="card-content">Tech Corp</p>
-                  <p className="card-desc">Senior deleloper</p>
-                </div>
-                <div className="flex flex-row items-center gap-5">
-                  <div className="text-grayColor font-medium text-[12px] bg-[#dcfce7] rounded-xl py-[3px] px-[10px]">
-                    Interview
+              {applications.length === 0 ? (
+                applications.map((app, index) => (
+                  <div
+                    className="flex flex-row justify-between mb-5"
+                    key={index}
+                  >
+                    <div className="flex flex-col">
+                      <p className="card-content">{app.company_name}</p>
+                      <p className="card-desc">{app.position}</p>
+                    </div>
+                    <div className="flex flex-row items-center gap-5">
+                      <div className="text-grayColor font-medium text-[12px] bg-[#dcfce7] rounded-xl py-[3px] px-[10px]">
+                        {app.rejected ? "Rejected" : "Active"}
+                      </div>
+                      <div className="text-grayColor font-medium text-[12px] ">
+                        {format(new Date(app.created_on), "do MMMM y")}
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-grayColor font-medium text-[12px] ">
-                    12/03/2025
-                  </div>
+                ))
+              ) : (
+                <div className="text-secondaryText text-[14px] text-left">
+                  No applications found
                 </div>
-              </div>
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-col">
-                  <p className="card-content">Tech Corp</p>
-                  <p className="card-desc">Senior deleloper</p>
-                </div>
-                <div className="flex flex-row items-center gap-5">
-                  <div className="text-grayColor font-medium text-[12px] bg-[#dcfce7] rounded-xl py-[3px] px-[10px]">
-                    Interview
-                  </div>
-                  <div className="text-grayColor font-medium text-[12px] ">
-                    12/03/2025
-                  </div>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
