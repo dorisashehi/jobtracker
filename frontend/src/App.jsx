@@ -7,6 +7,8 @@ import Welcome from "./pages/Welcome";
 import { useRoutes } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Auth from "./services/Auth";
+import Navigation from "./components/Navigation";
+import Footer from "./components/Footer";
 // import ApplicationsAPI from "./services/ApplicationsAPI";
 import Spiner from "./components/Spiner";
 import {
@@ -33,14 +35,26 @@ function App() {
       } catch (error) {
         console.error("Error while fetching user:", error);
         setUserAuth(null); // Set null on error
+      } finally {
+        setLoading(false);
       }
     };
 
+    if (userAuth == null) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 800);
+    }
     getUser();
   }, []);
 
+  if (loading) {
+    return <Spiner />;
+  }
+
   return (
     <Router>
+      <Navigation userAuth={userAuth} setUserAuth={setUserAuth} />
       <Routes>
         <Route
           path="/"
@@ -85,11 +99,18 @@ function App() {
 
         <Route
           path="/applications"
-          element={<Applications userAuth={userAuth} />}
+          element={
+            userAuth ? (
+              <Applications userAuth={userAuth} />
+            ) : (
+              <Navigate to="/login" setUserAuth={setUserAuth} />
+            )
+          }
         />
 
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
+      <Footer />
     </Router>
   );
 }
