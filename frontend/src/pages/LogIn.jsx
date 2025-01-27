@@ -187,7 +187,7 @@ const LogIn = ({ setUserAuth }) => {
                     className="main-btn float-right mt-0 login-btn"
                     onClick={(e) => submitAction(e)}
                   >
-                    Log In {loading && <Spinner />}
+                    Log In {loading && <Spinner style="w-fit ml-1" />}
                   </button>
                 </div>
                 <div className="login-input-container">

@@ -340,7 +340,7 @@ const EditApplicationsForm = ({
           onClickAct={(e) => handleSubmitApplication(e)}
           className="float-right mt-0 self-en"
         >
-          {loadingUpdate && <Spinner />}
+          {loadingUpdate && <Spinner style="w-fit ml-1" />}
         </Button>
       </div>
 

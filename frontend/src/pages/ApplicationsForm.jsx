@@ -249,7 +249,7 @@ const ApplicationsForm = ({
         onClickAct={(e) => handleSubmitApplication(e)}
         className="mt-0 self-end"
       >
-        {loadingSave && <Spinner />}
+        {loadingSave && <Spinner style="w-fit ml-1" />}
       </Button>
       {crFormData.submissionError && (
         <em className="err-message">{crFormData.submissionError}</em>

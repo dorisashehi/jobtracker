@@ -1,11 +1,27 @@
 import Loading from "../assets/images/spinner.gif";
+import PropTypes from "prop-types";
 
-const Spinner = () => {
+const Spiner = ({ fullScreen = false, size = "16px", style }) => {
   return (
-    <div className="w-fit ml-1">
-      <img src={Loading} className="m-auto w-[16px]" />
+    <div
+      className={`${
+        fullScreen ? "fixed inset-0 bg-white bg-opacity-75 flex" : style
+      }`}
+    >
+      <img
+        src={Loading}
+        alt="Loading..."
+        style={{ width: size, height: size }}
+        className={"m-auto"}
+      />
     </div>
   );
 };
 
-export default Spinner;
+Spiner.propTypes = {
+  fullScreen: PropTypes.bool,
+  style: PropTypes.string,
+  size: PropTypes.number,
+};
+
+export default Spiner;

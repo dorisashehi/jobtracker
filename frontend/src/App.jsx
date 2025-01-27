@@ -43,13 +43,13 @@ function App() {
     if (userAuth == null) {
       setTimeout(() => {
         setLoading(false);
-      }, 800);
+      }, 500);
     }
     getUser();
   }, []);
 
   if (loading) {
-    return <Spiner />;
+    return <Spiner fullScreen size="48px" />;
   }
 
   return (

@@ -49,7 +49,7 @@ const Applications = ({ userAuth }) => {
   const handleSearchText = (text) => {
     setTimeout(() => {
       setSearchText(text);
-    }, 400);
+    }, 200);
   };
 
   const [modalIsOpen, setIsOpen] = useState({

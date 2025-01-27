@@ -65,7 +65,11 @@ const ApplicationsTable = ({
 
         <tbody>
           {loading ? (
-            <Spiner />
+            <tr>
+              <td colSpan="13" className="text-center h-[100px]">
+                <Spiner style="w-full" />
+              </td>
+            </tr>
           ) : currentData.length > 0 ? (
             currentData.map((application) => {
               const applyDate = format(
