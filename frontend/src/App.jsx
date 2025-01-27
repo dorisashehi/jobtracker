@@ -50,61 +50,65 @@ function App() {
   return (
     <Router>
       <Navigation userAuth={userAuth} setUserAuth={setUserAuth} />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            !userAuth ? (
-              <Navigate to="/login" setUserAuth={setUserAuth} />
-            ) : (
-              <Navigate to="/dashboard" userAuth={userAuth} />
-            )
-          }
-        />
-        <Route
-          path="/login"
-          element={
-            !userAuth ? (
-              <LogIn setUserAuth={setUserAuth} />
-            ) : (
-              <Navigate to="/dashboard" userAuth={userAuth} />
-            )
-          }
-        />
-        <Route
-          path="/signup"
-          element={
-            !userAuth ? (
-              <SignUp userAuth={userAuth} />
-            ) : (
-              <Navigate to="/login" setUserAuth={setUserAuth} />
-            )
-          }
-        />
-        <Route
-          path="/dashboard"
-          element={
-            userAuth ? (
-              <Dashboard userAuth={userAuth} />
-            ) : (
-              <Navigate to="/login" setUserAuth={setUserAuth} />
-            )
-          }
-        />
+      <div className="container-main justify-center bg-[#f5f7f9]">
+        <div className="content justify-center flex flex-col">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                !userAuth ? (
+                  <Navigate to="/login" setUserAuth={setUserAuth} />
+                ) : (
+                  <Navigate to="/dashboard" userAuth={userAuth} />
+                )
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                !userAuth ? (
+                  <LogIn setUserAuth={setUserAuth} />
+                ) : (
+                  <Navigate to="/dashboard" userAuth={userAuth} />
+                )
+              }
+            />
+            <Route
+              path="/signup"
+              element={
+                !userAuth ? (
+                  <SignUp userAuth={userAuth} />
+                ) : (
+                  <Navigate to="/login" setUserAuth={setUserAuth} />
+                )
+              }
+            />
+            <Route
+              path="/dashboard"
+              element={
+                userAuth ? (
+                  <Dashboard userAuth={userAuth} />
+                ) : (
+                  <Navigate to="/login" setUserAuth={setUserAuth} />
+                )
+              }
+            />
 
-        <Route
-          path="/applications"
-          element={
-            userAuth ? (
-              <Applications userAuth={userAuth} />
-            ) : (
-              <Navigate to="/login" setUserAuth={setUserAuth} />
-            )
-          }
-        />
+            <Route
+              path="/applications"
+              element={
+                userAuth ? (
+                  <Applications userAuth={userAuth} />
+                ) : (
+                  <Navigate to="/login" setUserAuth={setUserAuth} />
+                )
+              }
+            />
 
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </div>
+      </div>
       <Footer />
     </Router>
   );
