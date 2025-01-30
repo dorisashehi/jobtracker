@@ -3,7 +3,7 @@
 }
 
 .navigation-content {
-  @apply p-3 flex flex-wrap items-center;
+  @apply p-3 flex flex-wrap items-center justify-between;
 }
 
 .navigation-content .col-logo {
@@ -19,4 +19,20 @@
 }
 .menu-item {
   @apply border-[1px] border-secondaryButton text-[13px] py-[5px] px-[20px] rounded-none;
+}
+
+.submenu-links {
+  @apply py-[5px];
+}
+
+.hamburger-menu {
+  @apply flex flex-col p-4 md:p-0 mt-4 font-medium border bg-[#f5f7f9] md:flex-row md:mt-0 md:border-0 md:bg-white md:gap-5;
+}
+
+.submenu-menu-item {
+  @apply font-semibold text-[#374151] hover:opacity-[0.8] text-[14px];
+}
+
+.hamburger-menu-button {
+  @apply inline-flex items-center p-1 w-8 h-8 justify-center text-sm border-[2px] border-borderColor  text-secondaryText rounded-md md:hidden;
 }

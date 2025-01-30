@@ -5,6 +5,10 @@ import PropTypes from "prop-types";
 const Navigation = ({ userAuth, setUserAuth }) => {
   //const { isAuthenticated, fetchUser } = useContext(AuthenticatedContext);
   const [setSubmitActionError] = useState({ error: "" });
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const toggleNavbarSticky = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
 
   const handleLogout = async (e) => {
     //submit form signup
@@ -37,10 +41,9 @@ const Navigation = ({ userAuth, setUserAuth }) => {
 
   return (
     <>
-      <nav className="navigation-container">
+      <nav className="navigation-container ">
         <div className="navigation-content content">
           <div className={`col-logo ${userAuth ? "lg:w-[10%]" : "lg:w-[20%]"}`}>
-            {/* JBtracker {userAuth?.name} */}
             <Link to="/">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -69,73 +72,102 @@ const Navigation = ({ userAuth, setUserAuth }) => {
               </svg>
             </Link>
           </div>
-          {userAuth && (
+          <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
             <ul
-              className={`col-navigation-menu ${
-                userAuth ? "lg:w-[40%] " : "lg:w-[0%]"
-              }`}
+              className={`col-links ${userAuth ? "lg:w-[50%]" : "lg:w-[80%]"}`}
             >
-              <li>
+              {!userAuth && (
+                <li className="">
+                  <Link
+                    to="/login"
+                    className="flex items-center g-[4px] font-semibold text-[#374151] hover:opacity-[0.8] text-[14px]"
+                    aria-current="page"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 -960 960 960"
+                      fill="#374151"
+                      className="icon-style-small"
+                    >
+                      <path d="M480-120v-80h280v-560H480v-80h280q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H480Zm-80-160-55-58 102-102H120v-80h327L345-622l55-58 200 200-200 200Z" />
+                    </svg>
+                    Login
+                  </Link>
+                </li>
+              )}
+              {userAuth && (
+                <li className="">
+                  <Link
+                    aria-current="page"
+                    onClick={(e) => handleLogout(e)}
+                    className="flex items-center g-[6px] font-semibold  text-[#374151] hover:opacity-[0.8]"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 -960 960 960"
+                      fill="#374151"
+                      className="icon-style-small"
+                    >
+                      <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
+                    </svg>
+                    Logout
+                  </Link>
+                </li>
+              )}
+            </ul>
+            <button
+              data-collapse-toggle="navbar-sticky"
+              type="button"
+              className="hamburger-menu-button"
+              aria-controls="navbar-sticky"
+              aria-expanded="false"
+              onClick={() => toggleNavbarSticky()}
+            >
+              <span className="sr-only">Open main menu</span>
+              <svg
+                className="w-3 h-3"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="#525252"
+                viewBox="0 0 17 14"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M1 1h15M1 7h15M1 13h15"
+                />
+              </svg>
+            </button>
+          </div>
+          <div
+            className={`items-center justify-between md:w-[70%] lg:w-[80%] ${
+              mobileMenuOpen ? "hidden" : ""
+            } w-full md:flex md:order-1`}
+            id="navbar-sticky"
+          >
+            <ul className="hamburger-menu">
+              <li className="submenu-links">
                 <Link
                   to="/dashboard"
-                  className="font-semibold text-[#374151] hover:opacity-[0.8] text-[14px]"
+                  className="submenu-menu-item"
                   aria-current="page"
                 >
                   Dashboard{userAuth.name}
                 </Link>
               </li>
-              <li>
+              <li className="submenu-links">
                 <Link
                   to="/applications"
-                  className="font-semibold text-[#374151] hover:opacity-[0.8] text-[14px]"
+                  className="submenu-menu-item"
                   aria-current="page"
                 >
                   Applications
                 </Link>
               </li>
             </ul>
-          )}
-
-          <ul className={`col-links ${userAuth ? "lg:w-[50%]" : "lg:w-[80%]"}`}>
-            {!userAuth && (
-              <li className="">
-                <Link
-                  to="/login"
-                  className="flex items-center g-[4px] font-semibold text-[#374151] hover:opacity-[0.8] text-[14px]"
-                  aria-current="page"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 -960 960 960"
-                    fill="#374151"
-                    className="icon-style-small"
-                  >
-                    <path d="M480-120v-80h280v-560H480v-80h280q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H480Zm-80-160-55-58 102-102H120v-80h327L345-622l55-58 200 200-200 200Z" />
-                  </svg>
-                  Login
-                </Link>
-              </li>
-            )}
-            {userAuth && (
-              <li className="">
-                <Link
-                  aria-current="page"
-                  onClick={(e) => handleLogout(e)}
-                  className="flex items-center g-[6px] font-semibold  text-[#374151] hover:opacity-[0.8]"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 -960 960 960"
-                    fill="#374151"
-                    className="icon-style-small"
-                  >
-                    <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
-                  </svg>
-                  Logout
-                </Link>
-              </li>
-            )}
-          </ul>
+          </div>
         </div>
       </nav>
     </>
