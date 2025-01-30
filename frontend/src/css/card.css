@@ -1,0 +1,19 @@
+.card {
+  @apply w-[100%] md:w-[23%] border-[1px] border-borderColor flex flex-col p-[20px] rounded-md min-h-[160px] bg-[#ffffff] justify-between mb-5 md:mb-0;
+}
+
+.card-header {
+  @apply text-grayColor font-semibold text-[12px] lg:text-[14px] text-center mb-1;
+}
+
+.card-head {
+  @apply flex flex-col items-center mb-5 lg:mb-0;
+}
+
+.card-desc {
+  @apply header-text-desc;
+}
+
+.card-content {
+  @apply text-black font-semibold text-[14px] lg:text-[16px];
+}

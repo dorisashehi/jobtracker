@@ -86,7 +86,6 @@ const EditApplicationsForm = ({
         const data = response;
 
         if (data.success) {
-          console.log(data.success);
           setApplications((prevState) => {
             const prevAppl = [...prevState];
             prevAppl.map((h, index) => {
@@ -150,7 +149,7 @@ const EditApplicationsForm = ({
   };
 
   return (
-    <form className="modal-form flex w-fit flex-col">
+    <form className="modal-form flex w-full lg:w-fit flex-col">
       <div className="modal-content">
         <InputField
           label="Company Name"
@@ -322,7 +321,7 @@ const EditApplicationsForm = ({
       </div>
       <div className="flex flex-col md:flex-row md:justify-between">
         <Link
-          className="flex flex-row gap-1 text-[#ef4444] underline text-[13px] font-bold items-center"
+          className="delete-link"
           onClick={(e) => handleDeleteApplication(e)}
         >
           <svg

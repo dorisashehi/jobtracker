@@ -5,6 +5,7 @@
 @import "./css/table.css";
 @import "./css/filter.css";
 @import "./css/modal.css";
+@import "./css/card.css";
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
@@ -70,22 +71,6 @@ body {
   @apply inline-flex items-center px-2 py-1 text-[#707280] hover:opacity-[0.9] text-[14px] font-[500] cursor-pointer;
 }
 
-.card {
-  @apply w-[100%] md:w-[23%] border-[1px] border-borderColor flex flex-col p-[20px] rounded-md min-h-[160px] bg-[#ffffff] justify-between mb-5 md:mb-0;
-}
-
-.card-header {
-  @apply text-grayColor font-semibold text-[12px] lg:text-[14px] text-center mb-1;
-}
-
-.card-head {
-  @apply flex flex-col items-center mb-5 lg:mb-0;
-}
-
-.card-desc {
-  @apply header-text-desc;
-}
-
-.card-content {
-  @apply text-black font-semibold text-[14px] lg:text-[16px];
+.delete-link {
+  @apply flex flex-row gap-1 text-[#ef4444] underline text-[13px] font-bold items-center mb-5 md:mb-0;
 }
