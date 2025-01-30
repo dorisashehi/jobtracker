@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import PropTypes from "prop-types";
+import Auth from "../services/Auth";
 
 const Navigation = ({ userAuth, setUserAuth }) => {
-  //const { isAuthenticated, fetchUser } = useContext(AuthenticatedContext);
   const [setSubmitActionError] = useState({ error: "" });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const toggleNavbarSticky = () => {
@@ -21,10 +21,7 @@ const Navigation = ({ userAuth, setUserAuth }) => {
       credentials: "include", //to pass the session cookie too
     };
     try {
-      const response = await fetch(
-        "http://localhost:3000/auth/user/logout",
-        options
-      );
+      const response = await Auth.setUserLoggedOut(options);
 
       if (response.ok) {
         setTimeout(() => {
@@ -43,7 +40,7 @@ const Navigation = ({ userAuth, setUserAuth }) => {
     <>
       <nav className="navigation-container ">
         <div className="navigation-content content">
-          <div className={`col-logo ${userAuth ? "lg:w-[10%]" : "lg:w-[20%]"}`}>
+          <div className="col-logo lg:w-[10%]">
             <Link to="/">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -154,7 +151,7 @@ const Navigation = ({ userAuth, setUserAuth }) => {
                   className="submenu-menu-item"
                   aria-current="page"
                 >
-                  Dashboard{userAuth.name}
+                  Dashboard{userAuth?.name}
                 </Link>
               </li>
               <li className="submenu-links">

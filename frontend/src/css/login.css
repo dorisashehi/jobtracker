@@ -11,9 +11,11 @@
 
 .login-input-container,
 .modal-input-container {
-  @apply flex flex-col pb-5 w-full md:max-w-[300px];
+  @apply flex flex-col pb-5 w-full;
 }
-
+.modal-input-container {
+  @apply md:max-w-[300px];
+}
 .login-container {
   @apply border-[2px] border-borderColor rounded-md;
 }

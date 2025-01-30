@@ -11,6 +11,18 @@ const getLoggedInUser = async () => {
   }
 };
 
+const setUserLoggedOut = async (options) => {
+  try {
+    const response = await fetch(
+      "http://localhost:3000/auth/user/logout",
+      options
+    );
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
 export default {
   getLoggedInUser,
+  setUserLoggedOut,
 };
