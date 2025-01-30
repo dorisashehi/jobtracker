@@ -8,6 +8,7 @@ import Options from "../data/selectOptions";
 import TextareaField from "../components/TextareaField";
 import Validation from "../utilities/Validation";
 import CheckboxField from "../components/CheckboxField";
+import ApplicationsAPI from "../services/ApplicationsAPI";
 
 const ApplicationsForm = ({
   crFormData,
@@ -70,19 +71,15 @@ const ApplicationsForm = ({
       };
 
       try {
-        const response = await fetch(
-          "http://localhost:3000/api/application/create",
-          options
-        );
-        const data = await response.json();
+        const response = await ApplicationsAPI.createApplication(options);
 
-        if (data.success) {
-          setApplications((prevState) => [...prevState, data.success]);
+        if (response.success) {
+          setApplications((prevState) => [...prevState, response.success]);
           closeModal("creation");
           setCrFormData({});
         }
-        if (data.error) {
-          throw new Error(data.error);
+        if (response.error) {
+          throw new Error(response.error);
         }
       } catch (error) {
         setCrFormData({

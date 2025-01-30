@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import PropTypes from "prop-types";
-// import { AuthenticatedContext } from "../context/AuthenticatedContext";
-// import { useContext } from "react";
+import Auth from "../services/Auth";
 import Spinner from "../components/Spiner";
 import ApplicationsAPI from "../services/ApplicationsAPI";
 
@@ -91,13 +90,7 @@ const LogIn = ({ setUserAuth }) => {
         credentials: "include",
       };
       try {
-        const response = await fetch(
-          "http://localhost:3000/auth/users/login",
-          options
-        );
-        const data = await response.json();
-        //const result = await response.json();
-        //setTimeout(async () => {
+        const data = await Auth.setUserLoggIn(options);
 
         if (data.success) {
           setUserAuth(data.user);

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../components/Spiner";
+import Auth from "../services/Auth";
 
 const SignIn = () => {
   const [loading, setLoading] = useState(false);
@@ -95,11 +96,7 @@ const SignIn = () => {
         },
         body: JSON.stringify(user),
       };
-      const response = await fetch(
-        "http://localhost:3000/auth/users/signup",
-        options
-      );
-      const data = await response.json();
+      const data = await Auth.signUpUser(options);
 
       setTimeout(() => {
         setLoading(false);

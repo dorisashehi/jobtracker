@@ -31,8 +31,6 @@ const Applications = ({ userAuth }) => {
     };
     fetchApplications();
 
-    console.log("userAuth", userAuth);
-
     setCrFormData({ ...crFormData, user_id: userAuth?.id }); //user id of authenticated user
   }, [userAuth]);
 
