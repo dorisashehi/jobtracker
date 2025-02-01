@@ -145,24 +145,28 @@ const Navigation = ({ userAuth, setUserAuth }) => {
             id="navbar-sticky"
           >
             <ul className="hamburger-menu">
-              <li className="submenu-links">
-                <Link
-                  to="/dashboard"
-                  className="submenu-menu-item"
-                  aria-current="page"
-                >
-                  Dashboard{userAuth?.name}
-                </Link>
-              </li>
-              <li className="submenu-links">
-                <Link
-                  to="/applications"
-                  className="submenu-menu-item"
-                  aria-current="page"
-                >
-                  Applications
-                </Link>
-              </li>
+              {userAuth && (
+                <>
+                  <li className="submenu-links">
+                    <Link
+                      to="/dashboard"
+                      className="submenu-menu-item"
+                      aria-current="page"
+                    >
+                      Dashboard{userAuth?.name}
+                    </Link>
+                  </li>
+                  <li className="submenu-links">
+                    <Link
+                      to="/applications"
+                      className="submenu-menu-item"
+                      aria-current="page"
+                    >
+                      Applications
+                    </Link>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>
