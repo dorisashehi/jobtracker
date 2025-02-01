@@ -140,7 +140,7 @@ const Navigation = ({ userAuth, setUserAuth }) => {
           </div>
           <div
             className={`items-center justify-between md:w-[70%] lg:w-[80%] ${
-              mobileMenuOpen ? "hidden" : ""
+              !mobileMenuOpen ? "hidden" : ""
             } w-full md:flex md:order-1`}
             id="navbar-sticky"
           >

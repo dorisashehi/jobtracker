@@ -1,6 +1,6 @@
 const getLoggedInUser = async () => {
   try {
-    const response = await fetch(`http://localhost:3000/auth/login/success`, {
+    const response = await fetch(`/auth/login/success`, {
       credentials: "include",
     });
     console.log("res", response);
@@ -13,10 +13,7 @@ const getLoggedInUser = async () => {
 
 const setUserLoggedOut = async (options) => {
   try {
-    const response = await fetch(
-      "http://localhost:3000/auth/user/logout",
-      options
-    );
+    const response = await fetch("/auth/user/logout", options);
     return response;
   } catch (error) {
     return error;
@@ -25,10 +22,7 @@ const setUserLoggedOut = async (options) => {
 
 const setUserLoggIn = async (options) => {
   try {
-    const response = await fetch(
-      "http://localhost:3000/auth/users/login",
-      options
-    );
+    const response = await fetch("/auth/users/login", options);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -38,10 +32,7 @@ const setUserLoggIn = async (options) => {
 
 const signUpUser = async (options) => {
   try {
-    const response = await fetch(
-      "http://localhost:3000/auth/users/signup",
-      options
-    );
+    const response = await fetch("/auth/users/signup", options);
     const data = await response.json();
     return data;
   } catch (error) {

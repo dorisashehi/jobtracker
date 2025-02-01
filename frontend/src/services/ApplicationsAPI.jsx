@@ -1,8 +1,6 @@
 const getApplByUser = async (userId) => {
   try {
-    const data = await fetch(
-      `http://localhost:3000/api/applications/${userId}`
-    );
+    const data = await fetch(`/api/applications/${userId}`);
     const results = await data.json();
     return results;
   } catch (error) {
@@ -12,7 +10,7 @@ const getApplByUser = async (userId) => {
 
 const getApplicationById = async (appId) => {
   try {
-    const data = await fetch(`http://localhost:3000/api/application/${appId}`);
+    const data = await fetch(`/api/application/${appId}`);
     const results = await data.json();
     return results;
   } catch (error) {
@@ -22,10 +20,7 @@ const getApplicationById = async (appId) => {
 
 const updateApplById = async (appId, options) => {
   try {
-    const response = await fetch(
-      `http://localhost:3000/api/application/update/${appId}`,
-      options
-    );
+    const response = await fetch(`/api/application/update/${appId}`, options);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -35,9 +30,7 @@ const updateApplById = async (appId, options) => {
 
 const deleteApplById = async (appId) => {
   try {
-    const response = await fetch(
-      `http://localhost:3000/api/application/delete/${appId}`
-    );
+    const response = await fetch(`/api/application/delete/${appId}`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -47,10 +40,7 @@ const deleteApplById = async (appId) => {
 
 const createApplication = async (options) => {
   try {
-    const response = await fetch(
-      "http://localhost:3000/api/application/create",
-      options
-    );
+    const response = await fetch("/api/application/create", options);
     const data = await response.json();
     return data;
   } catch (error) {
