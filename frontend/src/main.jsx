@@ -6,9 +6,12 @@ import "./index.css";
 import App from "./App";
 //import routes from "./routes/routes";
 //const router = createBrowserRouter(routes);
+import ApplicationsProvider from "./context/ApplicationsProvider";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <App />
+    <ApplicationsProvider>
+      <App />
+    </ApplicationsProvider>
   </React.StrictMode>
 );

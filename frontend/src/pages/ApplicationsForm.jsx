@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import Button from "../components/Button";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Spinner from "../components/Spiner";
 import InputField from "../components/InputField";
 import SelectField from "../components/SelectField";
@@ -9,14 +9,12 @@ import TextareaField from "../components/TextareaField";
 import Validation from "../utilities/Validation";
 import CheckboxField from "../components/CheckboxField";
 import ApplicationsAPI from "../services/ApplicationsAPI";
+import { ApplicationsContext } from "../context/ApplicationsContext";
 
-const ApplicationsForm = ({
-  crFormData,
-  setCrFormData,
-  setApplications,
-  closeModal,
-}) => {
+const ApplicationsForm = ({ crFormData, setCrFormData, closeModal }) => {
   const [loadingSave, setLoadingSave] = useState(false);
+
+  const { setApplications } = useContext(ApplicationsContext);
 
   const [errors, setErrors] = useState({
     company_name: "",
@@ -259,6 +257,5 @@ ApplicationsForm.propTypes = {
   crFormData: PropTypes.object,
   setCrFormData: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
-  setApplications: PropTypes.func.isRequired,
 };
 export default ApplicationsForm;

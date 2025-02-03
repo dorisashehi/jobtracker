@@ -1,4 +1,4 @@
-import { ApplicationsContext } from "./AuthenticatedContext";
+import { ApplicationsContext } from "./ApplicationsContext";
 import { useState } from "react";
 import ApplicationsAPI from "../services/ApplicationsAPI";
 import propTypes from "prop-types";

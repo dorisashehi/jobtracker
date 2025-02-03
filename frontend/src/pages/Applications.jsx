@@ -1,35 +1,23 @@
 import PropTypes from "prop-types";
 import ApplicationsTable from "./ApplicationsTable";
-import ApplicationsAPI from "../services/ApplicationsAPI";
 import ModalHeader from "../components/ModalHeader";
 import ApplicationsForm from "./ApplicationsForm";
+import { ApplicationsContext } from "../context/ApplicationsContext";
 // import CreateModal from "./CreateModal";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Button from "../components/Button";
 import Header from "../components/Header";
 import Modal from "react-modal";
 
 const Applications = ({ userAuth }) => {
-  //const { user, isAuthenticated } = useContext(AuthenticatedContext);
-  // const [applications, setApplications] = useState([]);
-  const [applications, setApplications] = useState([]);
+  const { fetchApplications, applications } = useContext(ApplicationsContext);
 
   const [crFormData, setCrFormData] = useState({});
 
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
-    const fetchApplications = async () => {
-      try {
-        const results = await ApplicationsAPI.getApplByUser(userAuth?.id);
-        if (results.length > 0) {
-          setApplications(results);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchApplications();
+    fetchApplications(userAuth?.id);
 
     setCrFormData({ ...crFormData, user_id: userAuth?.id }); //user id of authenticated user
   }, [userAuth]);
@@ -137,7 +125,6 @@ const Applications = ({ userAuth }) => {
               openModal={openModal}
               modalIsOpen={modalIsOpen}
               closeModal={closeModal}
-              setApplications={setApplications}
               filteredApplications={filteredApplications}
               itemsPerPage={5}
               crFormData={crFormData}
@@ -171,15 +158,12 @@ const Applications = ({ userAuth }) => {
           crFormData={crFormData}
           setCrFormData={setCrFormData}
           closeModal={closeModal}
-          setApplications={setApplications}
         ></ApplicationsForm>
       </Modal>
     </>
   );
 };
 Applications.propTypes = {
-  applications: PropTypes.array,
-  setApplications: PropTypes.func,
   userAuth: PropTypes.object,
 };
 export default Applications;

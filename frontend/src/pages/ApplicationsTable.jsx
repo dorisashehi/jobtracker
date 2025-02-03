@@ -1,17 +1,17 @@
 import PropTypes from "prop-types";
 import { format } from "date-fns";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import ApplicationsAPI from "../services/ApplicationsAPI";
 import EditApplicationsForm from "./EditApplicationsForm";
 import ModalHeader from "../components/ModalHeader";
 import Modal from "react-modal";
 import Spiner from "../components/Spiner";
+import { ApplicationsContext } from "../context/ApplicationsContext";
 
 const ApplicationsTable = ({
   modalIsOpen,
   openModal,
   closeModal,
-  setApplications,
   filteredApplications,
   itemsPerPage,
   crFormData,
@@ -19,6 +19,7 @@ const ApplicationsTable = ({
 }) => {
   const [application, setApplication] = useState({});
   const [loading, setLoading] = useState(true);
+  const { setApplications } = useContext(ApplicationsContext);
 
   useEffect(() => {
     setTimeout(() => {
@@ -217,7 +218,6 @@ const ApplicationsTable = ({
 
 ApplicationsTable.propTypes = {
   openModal: PropTypes.func,
-  setApplications: PropTypes.func,
   modalIsOpen: PropTypes.object,
   closeModal: PropTypes.func,
   crFormData: PropTypes.object,

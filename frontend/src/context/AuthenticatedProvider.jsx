@@ -1,48 +1,31 @@
 import { AuthenticatedContext } from "./AuthenticatedContext";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import propTypes from "prop-types";
+import Auth from "../services/Auth";
 
 const AuthenticatedProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState({});
+  const [loading, setLoading] = useState(true); // Tracks whether authentication is being fetched
+  const [userAuth, setUserAuth] = useState(null);
 
-  const fetchUser = async () => {
-    const options = {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-      },
-      credentials: "include",
-    };
+  const getUser = async () => {
     try {
-      const response = await fetch(
-        "http://localhost:3000/users/authuser",
-        options
-      );
-      const data = await response.json();
-
-      if (data.id) {
-        setUser(data);
-        setIsAuthenticated(true);
-      }
-
-      if (data.error) {
-        setUser(null);
-        setIsAuthenticated(false);
+      const response = await Auth.getLoggedInUser();
+      if (response.success) {
+        setUserAuth(response.user); // Set logged-in user
+      } else {
+        setUserAuth(null); // Set null if no user is found
       }
     } catch (error) {
-      console.log(error);
-      setUser(null);
-      setIsAuthenticated(false);
+      console.error("Error while fetching user:", error);
+      setUserAuth(null); // Set null on error
+    } finally {
+      setLoading(false);
     }
   };
 
-  useEffect(() => {
-    fetchUser();
-  }, []);
   return (
     <AuthenticatedContext.Provider
-      value={{ isAuthenticated, user, fetchUser, setIsAuthenticated, setUser }}
+      value={{ userAuth, loading, setUserAuth, getUser }}
     >
       {children}
     </AuthenticatedContext.Provider>
