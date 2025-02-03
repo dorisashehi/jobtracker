@@ -17,7 +17,9 @@ const Applications = ({ userAuth }) => {
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
-    fetchApplications(userAuth?.id);
+    if (userAuth) {
+      fetchApplications(userAuth?.id);
+    }
 
     setCrFormData({ ...crFormData, user_id: userAuth?.id }); //user id of authenticated user
   }, [userAuth]);

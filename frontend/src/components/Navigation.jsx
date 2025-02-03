@@ -1,11 +1,14 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import Auth from "../services/Auth";
+import { ApplicationsContext } from "../context/ApplicationsContext";
 
 const Navigation = ({ userAuth, setUserAuth }) => {
   const [setSubmitActionError] = useState({ error: "" });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { setApplications } = useContext(ApplicationsContext);
+
   const toggleNavbarSticky = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
@@ -26,6 +29,7 @@ const Navigation = ({ userAuth, setUserAuth }) => {
       if (response.ok) {
         setTimeout(() => {
           setUserAuth(null);
+          setApplications([]);
         }, 300);
       }
     } catch (error) {

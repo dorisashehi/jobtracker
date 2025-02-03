@@ -10,6 +10,7 @@ const ApplicationsProvider = ({ children }) => {
   const fetchApplications = async (userId) => {
     try {
       const results = await ApplicationsAPI.getApplByUser(userId);
+
       if (results.length > 0) {
         setApplications(results);
       }

@@ -34,3 +34,7 @@
 .login-container {
   @apply p-[20px] md:p-[35px] bg-[#FFFFFF];
 }
+
+.login-google-btn {
+  @apply flex flex-row justify-center border-[2px] border-borderColor py-[10px] px-5 outline-none text-[12px] rounded-md placeholder-[#7c848a] text-mainText mb-10;
+}

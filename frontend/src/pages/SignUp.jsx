@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../components/Spiner";
 import Auth from "../services/Auth";
+import LoginLinks from "../components/LoginLinks";
 
 const SignIn = () => {
   const [loading, setLoading] = useState(false);
@@ -202,14 +203,9 @@ const SignIn = () => {
                   Log In {loading && <Spinner style="w-fit ml-1" />}
                 </button>
               </div>
-              <div className="login-input-container">
-                <p className="text-secondaryText text-[12px]">
-                  {"Already have an account?  "}
-                  <Link to="/login" className="text-primaryGreen">
-                    <b>Log in now!</b>
-                  </Link>
-                </p>
-              </div>
+              <LoginLinks url="/login" title="Log in now!">
+                {"Already have an account?  "}
+              </LoginLinks>
               {errors.submission_error && (
                 <em className="err-message">{errors.submission_error}</em>
               )}
