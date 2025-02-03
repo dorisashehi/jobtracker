@@ -20,7 +20,6 @@ router.post("/users/signup", async (req, res) => {
 
   pool.query("SELECT * FROM users WHERE email=$1", [email], (err, results) => {
     if (err) {
-      console.log(err);
       throw err;
     }
     if (results.rows.length > 0) {
@@ -45,6 +44,7 @@ router.post("/users/signup", async (req, res) => {
 router.post("/users/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) {
+      console.log("error", JSON.stringify(user));
       return res
         .status(500)
         .json({ error: "Something went wrong during authentication." });
@@ -101,7 +101,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "/auth/google/callback",
+      callbackURL: "http://localhost:3000/auth/google/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
@@ -111,7 +111,6 @@ passport.use(
         );
 
         const usrObj = user.rows[0];
-        console.log(profile);
 
         if (usrObj) {
           return done(null, usrObj);
@@ -139,14 +138,12 @@ router.get(
   "/google/callback",
   passport.authenticate("google", { failureRedirect: false }),
   (req, res) => {
-    console.log(req.user);
-    //res.redirect("http://localhost:5173/dashboard");
+    res.redirect("http://localhost:5173/dashboard");
   }
 );
 
 router.get("/login/success", (req, res) => {
   if (req.user) {
-    console.log(req.user);
     res.status(200).json({ success: true, user: req.user });
   }
 });
