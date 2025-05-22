@@ -27,7 +27,7 @@ The following **required** functionality is completed:
 - React.js (frontend)
 - Node.js (backend)
 - PostgreeSQL (database)
-- PgAdmin (databased management web)
+- PgAdmin (web-based database management tool)
 
 ## Video Walkthrough
 
