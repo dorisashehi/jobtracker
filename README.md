@@ -22,11 +22,18 @@ The following **required** functionality is completed:
 - [x] **The web app has a Login page**
 - [x] **The web app has a Sign-up page**
 
+## Technologies Used
+
+- React.js (frontend)
+- Node.js (backend)
+- PostgreeSQL (database)
+- PgAdmin (databased management web)
+
 ## Video Walkthrough
 
 Here's a walkthrough of implemented required features:
 
-<img src='https://github.com/dorisashehi/jobtracker/blob/main/frontend/src/assets/JB-tracker.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://github.com/dorisashehi/jobtracker/blob/main/frontend/src/assets/JB-tracker-demo.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 ## Notes
 
