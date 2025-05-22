@@ -157,6 +157,7 @@ const Applications = ({ userAuth }) => {
           </ModalHeader>
         </div>
         <ApplicationsForm
+          userAuth={userAuth}
           crFormData={crFormData}
           setCrFormData={setCrFormData}
           closeModal={closeModal}

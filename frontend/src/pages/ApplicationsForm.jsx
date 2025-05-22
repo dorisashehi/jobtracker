@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import Button from "../components/Button";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Spinner from "../components/Spiner";
 import InputField from "../components/InputField";
 import SelectField from "../components/SelectField";
@@ -11,7 +11,12 @@ import CheckboxField from "../components/CheckboxField";
 import ApplicationsAPI from "../services/ApplicationsAPI";
 import { ApplicationsContext } from "../context/ApplicationsContext";
 
-const ApplicationsForm = ({ crFormData, setCrFormData, closeModal }) => {
+const ApplicationsForm = ({
+  userAuth,
+  crFormData,
+  setCrFormData,
+  closeModal,
+}) => {
   const [loadingSave, setLoadingSave] = useState(false);
 
   const { setApplications } = useContext(ApplicationsContext);
@@ -25,6 +30,14 @@ const ApplicationsForm = ({ crFormData, setCrFormData, closeModal }) => {
     position: "",
     location: "",
   });
+
+  useEffect(() => {
+    setCrFormData({ ...crFormData, user_id: userAuth?.id }); //user id of authenticated user
+    setCrFormData({
+      ...crFormData,
+      submissionError: null,
+    });
+  }, [userAuth, setCrFormData, crFormData]);
 
   const handleSelectedAction = (el, name) => {
     setCrFormData({ ...crFormData, [name]: el.value });
@@ -254,6 +267,7 @@ const ApplicationsForm = ({ crFormData, setCrFormData, closeModal }) => {
 };
 
 ApplicationsForm.propTypes = {
+  userAuth: PropTypes.object,
   crFormData: PropTypes.object,
   setCrFormData: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,

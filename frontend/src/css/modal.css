@@ -3,7 +3,7 @@
 }
 
 .ReactModal__Content--after-open {
-  @apply w-[85%] lg:w-[90%] xl:w-[80%] h-[79%] md:h-[70%] !top-1/2 !left-1/2 !transform !-translate-x-1/2 !-translate-y-1/2;
+  @apply w-[85%] lg:w-[90%] xl:w-[80%] h-[90%] md:h-[90%] !top-1/2 !left-1/2 !transform !-translate-x-1/2 !-translate-y-1/2;
 }
 
 .modal-input {
